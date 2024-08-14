@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTarget;
     public CameraController cameraController;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Vector2 inputMovement;
     [HideInInspector]
     public Vector2 inputView;
@@ -135,9 +135,11 @@ public class PlayerController : MonoBehaviour
         if (Physics.CheckSphere(transform.position, 0.2f, groundMask))
         {
             isGrounded = true;
+            characterAnimator.SetBool("isGrounded", true);
             return true;
         }
         isGrounded = false;
+        characterAnimator.SetBool("isGrounded", false);
         return false;
     }
 
@@ -201,16 +203,17 @@ public class PlayerController : MonoBehaviour
         if (inputMovement.x > 0.2f || inputMovement.x < -0.2f)
         {
             characterAnimator.SetBool("isMoving", true);
-
+            characterAnimator.SetBool("CanIdle", false);
             return true;
         }
         if (inputMovement.y > 0.2f || inputMovement.y < -0.2f)
         {
             characterAnimator.SetBool("isMoving", true);
-
+            characterAnimator.SetBool("CanIdle", false);
             return true;
         }
         characterAnimator.SetBool("isMoving", false);
+        characterAnimator.SetBool("CanIdle", true);
         return false;
     }
 
@@ -404,11 +407,13 @@ public class PlayerController : MonoBehaviour
 
         if (IsMoving() && IsInputMoving() && (isWalking || isRunning)) // there is no walking jump anim
         {
+            characterAnimator.SetBool("CanIdle", false);
             characterAnimator.SetTrigger("RunningJump");
             characterAnimator.SetTrigger("WalkingJump");
         }
         else
         {
+            characterAnimator.SetBool("CanIdle", false);
             characterAnimator.SetTrigger("Jump");
         }
     }
@@ -431,6 +436,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerStance == PlayerStance.Crouch)
         {
+            characterAnimator.SetBool("CanIdle", false); // there is no different crouch idle anim
             currentStance = playerCrouchStance;
         }
 

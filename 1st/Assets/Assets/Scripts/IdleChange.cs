@@ -22,7 +22,7 @@ public class IdleChange : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (animator.GetBool("isMoving"))
+        if (!animator.GetBool("CanIdle"))
         {
             ResetIdle();
             animator.SetFloat("IdleType", idleType, 0.2f, Time.deltaTime);
