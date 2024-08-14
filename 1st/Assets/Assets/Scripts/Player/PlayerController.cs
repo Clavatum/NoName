@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public bool isWalking;
     public bool isRunning;
     public bool isCrouching = false;
+    public bool isGrounded;
 
     [Header("Camera")]
     private float cameraHeight;
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     public bool jumpingTriggered; // make it private later
     public bool fallingTriggered;
-
+    
     #region - Awake / Start -
 
     private void Awake()
@@ -123,6 +124,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+
     }
 
     #endregion
@@ -133,8 +135,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics.CheckSphere(transform.position, 0.2f, groundMask))
         {
+            isGrounded = true;
             return true;
         }
+        isGrounded = false;
         return false;
     }
 
@@ -415,6 +419,7 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
 
     #region - Stance -
 
