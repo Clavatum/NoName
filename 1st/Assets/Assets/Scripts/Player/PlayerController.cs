@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-
+        Debug.Log(IsMoving());
     }
 
     #endregion
@@ -188,13 +188,15 @@ public class PlayerController : MonoBehaviour
     {
         if (relativePlayerVelocity.x > 0.4f || relativePlayerVelocity.x < -0.4f)
         {
+            characterAnimator.SetBool("isMoving", true);
             return true;
         }
         if (relativePlayerVelocity.z > 0.4f || relativePlayerVelocity.z < -0.4f)
         {
+            characterAnimator.SetBool("isMoving", true);
             return true;
         }
-
+        characterAnimator.SetBool("isMoving", false);
         return false;
     }
 

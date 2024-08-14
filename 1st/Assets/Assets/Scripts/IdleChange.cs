@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class IdleChange : StateMachineBehaviour
 {
+    [SerializeField]
+    private int numberOfIdleType = 4;
+    [SerializeField]
     private float timeUntilBored = 5f;
+
     private float idleType;
     private bool isBored;
-    private float idleTime;
+    public float idleTime;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ResetIdle();
@@ -15,13 +20,17 @@ public class IdleChange : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (animator.GetBool("isMoving"))
+        {
+            return;
+        }
         if (!isBored)
         {
             idleTime += Time.deltaTime;
             if(idleTime > timeUntilBored && stateInfo.normalizedTime % 1 < 0.02f)
             {
                 isBored = true;
-                idleType = Random.Range(1, 6);
+                idleType = Random.Range(1, numberOfIdleType + 1);
                 idleType = (idleType * 2) - 1;
                 animator.SetFloat("IdleType", idleType - 1);
                 
