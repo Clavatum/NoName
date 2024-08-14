@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IdleChange : StateMachineBehaviour
@@ -22,6 +24,8 @@ public class IdleChange : StateMachineBehaviour
     {
         if (animator.GetBool("isMoving"))
         {
+            ResetIdle();
+            animator.SetFloat("IdleType", idleType, 0.2f, Time.deltaTime);
             return;
         }
         if (!isBored)
@@ -32,8 +36,7 @@ public class IdleChange : StateMachineBehaviour
                 isBored = true;
                 idleType = Random.Range(1, numberOfIdleType + 1);
                 idleType = (idleType * 2) - 1;
-                animator.SetFloat("IdleType", idleType - 1);
-                
+                animator.SetFloat("IdleType", idleType - 1);      
             }
         }else if(stateInfo.normalizedTime % 1 > 0.98f) {
             ResetIdle();
