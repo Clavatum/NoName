@@ -403,6 +403,14 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        if (isCrouching)
+        {
+            isCrouching = false;
+            characterAnimator.SetBool("isCrouching", false);
+            playerStance = PlayerStance.Stand;
+            characterAnimator.SetTrigger("CrouchToStand");
+            return;
+        }
         jumpingTriggered = true;
 
         if (IsMoving() && IsInputMoving() && (isWalking || isRunning)) // there is no walking jump anim
@@ -420,7 +428,7 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyJumpForce()
     {
-        if (!IsGrounded()) { return; }
+        if (!IsGrounded() || isCrouching) { return; }
         characterRb.AddForce(transform.up * playerSettings.jumpingForce, ForceMode.Impulse);
         fallingTriggered = true;
     }
