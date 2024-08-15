@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool isRunning;
     public bool isCrouching = false;
     public bool isGrounded;
+    public bool isAttacking;
 
     [Header("Camera")]
     private float cameraHeight;
@@ -78,6 +79,10 @@ public class PlayerController : MonoBehaviour
 
     public bool jumpingTriggered; // make it private later
     public bool fallingTriggered;
+
+    [Header("Combat")]
+    public float combatCoolDown = 1.5f;
+    public float currentCombatCoolDown;
     
     #region - Awake / Start -
 
@@ -97,6 +102,8 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Actions.Run.performed += e => Run();
 
         playerInputActions.Actions.Crouch.performed += e => Crouch();
+
+        playerInputActions.Actions.Fire1.performed += e => Fire1();
 
         playerInputActions.Enable();
         cameraHeight = cameraHolder.localPosition.y;
@@ -124,6 +131,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        CalculateCombat();
     }
 
     #endregion
@@ -303,6 +311,7 @@ public class PlayerController : MonoBehaviour
         {
             characterAnimator.applyRootMotion = true;
         }
+
     }
 
     //private void ToggleWalking()
@@ -435,6 +444,56 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region - Combat -
+
+    public void Fire1()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            StartAttacking();
+            characterAnimator.SetTrigger("AttackSlash1");
+        }
+    }
+
+    public void CalculateCombat()
+    {
+        if(currentCombatCoolDown > 0)
+        {
+            if (!isAttacking)
+            {
+                currentCombatCoolDown -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            isTargetMode = false;
+        }
+
+        if (IsFalling())
+        {
+            isTargetMode = false;
+            isAttacking = false;
+        }
+    }
+
+    #endregion
+
+    #region - Events - 
+
+    public void StartAttacking()
+    {
+        isAttacking = true;
+        characterAnimator.SetBool("CanIdle", false);
+    }
+
+    public void FinishAttacking()
+    {
+        isAttacking = false;
+        currentCombatCoolDown = combatCoolDown;
+        characterAnimator.SetBool("CanIdle", true);
+    }
+
+    #endregion
 
     #region - Stance -
 
