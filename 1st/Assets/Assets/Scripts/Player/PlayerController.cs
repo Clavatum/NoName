@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static Models;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public bool isRunning;
     public bool isCrouching = false;
     public bool isGrounded;
+    public bool isAttacking;
 
     [Header("Camera")]
     private float cameraHeight;
@@ -75,9 +77,16 @@ public class PlayerController : MonoBehaviour
     public float fallingMovementSpeed;
     public float fallingRunningMovementSpeed;
     public float maxFallingMovementSpeed = 5f;
+    public float groundCheckDistance;
 
     public bool jumpingTriggered; // make it private later
     public bool fallingTriggered;
+
+    [Header("Combat")]
+    public float combatCoolDown = 1.5f;
+    public float currentCombatCoolDown;
+    private float fire1Timer;
+    private float kickTimer;
     
     #region - Awake / Start -
 
@@ -98,6 +107,12 @@ public class PlayerController : MonoBehaviour
 
         playerInputActions.Actions.Crouch.performed += e => Crouch();
 
+        playerInputActions.Actions.Fire1.performed += e => Fire1();
+        playerInputActions.Actions.BigAttack.performed += e => BigAttack();
+
+        playerInputActions.Actions.Kick.performed += e => Kick();
+        playerInputActions.Actions.KickHold.performed += e => KickHold();
+
         playerInputActions.Enable();
         cameraHeight = cameraHolder.localPosition.y;
 
@@ -117,13 +132,15 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         CalculateGravity();
+        IsNearGround();
+        CalculateStance();
         CalculateFalling();
         Movement();
         CalculateRunning();
-        CalculateStance();
     }
     private void Update()
-    {
+    {        
+        CalculateCombat();
     }
 
     #endregion
@@ -303,6 +320,7 @@ public class PlayerController : MonoBehaviour
         {
             characterAnimator.applyRootMotion = true;
         }
+
     }
 
     //private void ToggleWalking()
@@ -410,9 +428,8 @@ public class PlayerController : MonoBehaviour
             playerStance = PlayerStance.Stand;
             characterAnimator.SetTrigger("CrouchToStand");
             return;
-        }
+        }    
         jumpingTriggered = true;
-
         if (IsMoving() && IsInputMoving() && (isWalking || isRunning)) // there is no walking jump anim
         {
             characterAnimator.SetBool("CanIdle", false);
@@ -435,6 +452,95 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region - Combat -
+
+    public void Fire1()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            if (fire1Timer <= 0)
+            {
+                fire1Timer = 0.4f;
+                return;
+            }
+            StartAttacking();
+
+            var attack = Random.Range(1,3);
+            characterAnimator.SetTrigger("AttackSlash" + attack);
+        }
+    }
+    public void BigAttack()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            StartAttacking();
+            characterAnimator.SetTrigger("BigAttack");
+        }
+    }
+
+    public void Kick()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            if (kickTimer <= 0)
+            {
+                kickTimer = 0.4f;
+                return;
+            }
+            StartAttacking();
+            characterAnimator.SetTrigger("Kick");
+        }
+    }
+    public void KickHold()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            StartAttacking();
+            characterAnimator.SetTrigger("KickHold");
+        }
+    }
+
+    public void CalculateCombat()
+    {
+        if(fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
+        if(kickTimer >= 0) { kickTimer -= Time.deltaTime; }
+        if(currentCombatCoolDown > 0)
+        {
+            if (!isAttacking)
+            {
+                currentCombatCoolDown -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            isTargetMode = false;
+        }
+
+        if (IsFalling())
+        {
+            isTargetMode = false;
+            isAttacking = false;
+        }
+    }
+
+    #endregion
+
+    #region - Events - 
+
+    public void StartAttacking()
+    {
+        isAttacking = true;
+        characterAnimator.SetBool("CanIdle", false);
+    }
+
+    public void FinishAttacking()
+    {
+        isAttacking = false;
+        currentCombatCoolDown = combatCoolDown;
+        characterAnimator.SetBool("CanIdle", true);
+    }
+
+    #endregion
 
     #region - Stance -
 
@@ -444,15 +550,28 @@ public class PlayerController : MonoBehaviour
 
         if (playerStance == PlayerStance.Crouch)
         {
-            characterAnimator.SetBool("CanIdle", false); // there is no different crouch idle anim
+            characterAnimator.SetBool("CanIdle", false); // there is no any different crouch idle anim
             currentStance = playerCrouchStance;
         }
-
+        if (!IsGrounded()) 
+        {
+            currentStance.colliderHeight = 1.2f;
+            if(IsNearGround())
+            {
+                currentStance.colliderHeight = 1.8f;
+                return;
+            }
+        }
         cameraHeight = Mathf.SmoothDamp(cameraHolder.localPosition.y, currentStance.CameraHeight, ref cameraHeightVelocity, crouchSmoothing);
         cameraHolder.localPosition = new Vector3(cameraHolder.localPosition.x, cameraHeight, cameraHolder.localPosition.z);
 
         playerCapsuleCollider.height = Mathf.SmoothDamp(playerCapsuleCollider.height, currentStance.colliderHeight, ref crouchHeightVelocity, crouchSmoothing);
         playerCapsuleCollider.center = Vector3.SmoothDamp(playerCapsuleCollider.center, currentStance.colliderCenter, ref crouchCenterVelocity, crouchSmoothing);
+    }
+
+    private bool IsNearGround()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
     }
 
 
