@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static Models;
 
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour
     public float fallingMovementSpeed;
     public float fallingRunningMovementSpeed;
     public float maxFallingMovementSpeed = 5f;
+    public float groundCheckDistance;
 
     public bool jumpingTriggered; // make it private later
     public bool fallingTriggered;
@@ -130,13 +132,14 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         CalculateGravity();
+        IsNearGround();
+        CalculateStance();
         CalculateFalling();
         Movement();
         CalculateRunning();
-        CalculateStance();
     }
     private void Update()
-    {
+    {        
         CalculateCombat();
     }
 
@@ -425,9 +428,8 @@ public class PlayerController : MonoBehaviour
             playerStance = PlayerStance.Stand;
             characterAnimator.SetTrigger("CrouchToStand");
             return;
-        }
+        }    
         jumpingTriggered = true;
-
         if (IsMoving() && IsInputMoving() && (isWalking || isRunning)) // there is no walking jump anim
         {
             characterAnimator.SetBool("CanIdle", false);
@@ -548,15 +550,28 @@ public class PlayerController : MonoBehaviour
 
         if (playerStance == PlayerStance.Crouch)
         {
-            characterAnimator.SetBool("CanIdle", false); // there is no different crouch idle anim
+            characterAnimator.SetBool("CanIdle", false); // there is no any different crouch idle anim
             currentStance = playerCrouchStance;
         }
-
+        if (!IsGrounded()) 
+        {
+            currentStance.colliderHeight = 1.2f;
+            if(IsNearGround())
+            {
+                currentStance.colliderHeight = 1.8f;
+                return;
+            }
+        }
         cameraHeight = Mathf.SmoothDamp(cameraHolder.localPosition.y, currentStance.CameraHeight, ref cameraHeightVelocity, crouchSmoothing);
         cameraHolder.localPosition = new Vector3(cameraHolder.localPosition.x, cameraHeight, cameraHolder.localPosition.z);
 
         playerCapsuleCollider.height = Mathf.SmoothDamp(playerCapsuleCollider.height, currentStance.colliderHeight, ref crouchHeightVelocity, crouchSmoothing);
         playerCapsuleCollider.center = Vector3.SmoothDamp(playerCapsuleCollider.center, currentStance.colliderCenter, ref crouchCenterVelocity, crouchSmoothing);
+    }
+
+    private bool IsNearGround()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
     }
 
 
