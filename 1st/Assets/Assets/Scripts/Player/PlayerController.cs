@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour
     [Header("Combat")]
     public float combatCoolDown = 1.5f;
     public float currentCombatCoolDown;
+    private float fire1Timer;
+    private float kickTimer;
     
     #region - Awake / Start -
 
@@ -104,6 +106,10 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Actions.Crouch.performed += e => Crouch();
 
         playerInputActions.Actions.Fire1.performed += e => Fire1();
+        playerInputActions.Actions.BigAttack.performed += e => BigAttack();
+
+        playerInputActions.Actions.Kick.performed += e => Kick();
+        playerInputActions.Actions.KickHold.performed += e => KickHold();
 
         playerInputActions.Enable();
         cameraHeight = cameraHolder.localPosition.y;
@@ -450,13 +456,52 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
         {
+            if (fire1Timer <= 0)
+            {
+                fire1Timer = 0.4f;
+                return;
+            }
             StartAttacking();
-            characterAnimator.SetTrigger("AttackSlash1");
+
+            var attack = Random.Range(1,3);
+            characterAnimator.SetTrigger("AttackSlash" + attack);
+        }
+    }
+    public void BigAttack()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            StartAttacking();
+            characterAnimator.SetTrigger("BigAttack");
+        }
+    }
+
+    public void Kick()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            if (kickTimer <= 0)
+            {
+                kickTimer = 0.4f;
+                return;
+            }
+            StartAttacking();
+            characterAnimator.SetTrigger("Kick");
+        }
+    }
+    public void KickHold()
+    {
+        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        {
+            StartAttacking();
+            characterAnimator.SetTrigger("KickHold");
         }
     }
 
     public void CalculateCombat()
     {
+        if(fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
+        if(kickTimer >= 0) { kickTimer -= Time.deltaTime; }
         if(currentCombatCoolDown > 0)
         {
             if (!isAttacking)
