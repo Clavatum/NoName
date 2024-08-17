@@ -181,6 +181,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""602a914c-1bfc-40e6-8290-e49464c88266"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -260,6 +269,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""KickHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf8cb31a-e3b5-459b-8464-12191c85a2a9"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -279,6 +299,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Actions_BigAttack = m_Actions.FindAction("BigAttack", throwIfNotFound: true);
         m_Actions_Kick = m_Actions.FindAction("Kick", throwIfNotFound: true);
         m_Actions_KickHold = m_Actions.FindAction("KickHold", throwIfNotFound: true);
+        m_Actions_Slide = m_Actions.FindAction("Slide", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -401,6 +422,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_BigAttack;
     private readonly InputAction m_Actions_Kick;
     private readonly InputAction m_Actions_KickHold;
+    private readonly InputAction m_Actions_Slide;
     public struct ActionsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -412,6 +434,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @BigAttack => m_Wrapper.m_Actions_BigAttack;
         public InputAction @Kick => m_Wrapper.m_Actions_Kick;
         public InputAction @KickHold => m_Wrapper.m_Actions_KickHold;
+        public InputAction @Slide => m_Wrapper.m_Actions_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -442,6 +465,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @KickHold.started += instance.OnKickHold;
             @KickHold.performed += instance.OnKickHold;
             @KickHold.canceled += instance.OnKickHold;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
         }
 
         private void UnregisterCallbacks(IActionsActions instance)
@@ -467,6 +493,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @KickHold.started -= instance.OnKickHold;
             @KickHold.performed -= instance.OnKickHold;
             @KickHold.canceled -= instance.OnKickHold;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
         }
 
         public void RemoveCallbacks(IActionsActions instance)
@@ -498,5 +527,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBigAttack(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
         void OnKickHold(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
 }

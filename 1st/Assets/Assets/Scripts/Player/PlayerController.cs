@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTarget;
     public CameraController cameraController;
 
-    //[HideInInspector]
+    [HideInInspector]
     public Vector2 inputMovement;
     [HideInInspector]
     public Vector2 inputView;
@@ -66,8 +66,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Gravity")]
     public float gravity = 10f;
+    public float groundCheckDistance;
     public LayerMask groundMask;
-
     private Vector3 gravityDirection;
 
     [Header("Jumping / Falling")]
@@ -77,8 +77,6 @@ public class PlayerController : MonoBehaviour
     public float fallingMovementSpeed;
     public float fallingRunningMovementSpeed;
     public float maxFallingMovementSpeed = 5f;
-    public float groundCheckDistance;
-
     public bool jumpingTriggered; // make it private later
     public bool fallingTriggered;
 
@@ -92,14 +90,23 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        #region - Caching -
+
         playerCapsuleCollider = GetComponent<CapsuleCollider>();
         characterRb = GetComponent<Rigidbody>();
         characterAnimator = GetComponent<Animator>();
         playerInputActions = new PlayerInputActions();
 
+        #endregion
+
+        #region - Input -
+
+        #region - Movement Inputs -
         playerInputActions.Movement.Movement.performed += e => inputMovement = e.ReadValue<Vector2>();
         playerInputActions.Movement.View.performed += e => inputView = e.ReadValue<Vector2>();
+        #endregion
 
+        #region - Action Inputs -
         playerInputActions.Actions.Jump.performed += e => Jump();
 
         //playerInputActions.Actions.WalkingToggle.performed += e => ToggleWalking(); silinebilr
@@ -113,7 +120,14 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Actions.Kick.performed += e => Kick();
         playerInputActions.Actions.KickHold.performed += e => KickHold();
 
+        //playerInputActions.Actions.Slide.performed += e => Slide();
+
+        #endregion
+
         playerInputActions.Enable();
+
+        #endregion
+        
         cameraHeight = cameraHolder.localPosition.y;
 
         gravityDirection = Vector3.down;
