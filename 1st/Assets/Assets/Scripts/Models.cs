@@ -48,6 +48,9 @@ public static class Models
         [Header("Jumping")]
         public float jumpingForce;
 
+        [Header("Slide")]
+        [HideInInspector]
+        public float slideTime = 0.667f;
     }
 
     [Serializable]

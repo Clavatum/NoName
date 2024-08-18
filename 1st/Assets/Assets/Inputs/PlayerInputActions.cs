@@ -274,7 +274,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""cf8cb31a-e3b5-459b-8464-12191c85a2a9"",
                     ""path"": ""<Keyboard>/leftCtrl"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Slide"",
