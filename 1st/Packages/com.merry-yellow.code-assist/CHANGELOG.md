@@ -1,5 +1,28 @@
 List of new features, bug fixes and improvements
 
+# Version 1.2.4
+* Bugfix for exporter with long file paths
+* Bugfix for retrieving animation and animator data
+ 
+# Version 1.2.3
+* Bugfix for exporter when overwriting files
+* Bugfix for inline visuals when active game object changes
+
+# Version 1.2.2
+* Bugfix for exporter when facing race condition
+
+# Version 1.2.1
+* Typo fix for Options page
+* Bugfix for retrieving animation and animator data
+
+# Version 1.2.0
+* New gpt provider: Google Gemini, can be used as an alternative to OpenAI ChatGPT
+* New feature: CodeLens2Gpt. Can request gpt queries from the CodeLens of methods and classes
+* New feature: Context aware gpt, gpt prompts are embedded with Unity, scene and object information
+* New feature: Package, asset has relocated under Packages (from Assets), along with Unity setup menu items
+* New code completions: Animation and Animator classes and Invoke/Coroutine/Broadcast methods can be auto completed
+* New inline visuals: Animation and Animator classes can display inline information
+
 # Version 1.1.12
 * External binary files have been customized and minimized
 * Domain reloading time have been reduced

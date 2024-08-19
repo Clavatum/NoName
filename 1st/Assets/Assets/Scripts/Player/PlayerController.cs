@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jumping / Falling")]
     private float fallingSpeed;
     private float fallingSpeedPeak;
-    private float fallingThreshold;
+    private float fallingThreshold = -4f;
     public float fallingMovementSpeed;
     public float fallingRunningMovementSpeed;
     public float maxFallingMovementSpeed = 5f;
@@ -484,13 +484,22 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
+            if (isCrouching)
+            {
+                StartAttacking();
+                combatCoolDown += playerSettings.slashCd;
+                var crouchAttack = Random.Range(1, 3);
+                characterAnimator.SetTrigger("CrouchAttackSlash" + crouchAttack);
+                return;
+            }
+
             if (fire1Timer <= 0)
             {
                 fire1Timer = 0.4f;
                 return;
             }
             StartAttacking();
-
+            combatCoolDown += playerSettings.slashCd;
             var attack = Random.Range(1,3);
             characterAnimator.SetTrigger("AttackSlash" + attack);
         }
@@ -500,6 +509,7 @@ public class PlayerController : MonoBehaviour
         if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
             StartAttacking();
+            combatCoolDown += playerSettings.slashCd + 0.5f;
             characterAnimator.SetTrigger("BigAttack");
         }
     }
@@ -514,7 +524,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             StartAttacking();
-
+            combatCoolDown += playerSettings.kickCd;
             var attack = Random.Range(1, 3);
             characterAnimator.SetTrigger("Kick" + attack);
         }
@@ -524,7 +534,7 @@ public class PlayerController : MonoBehaviour
         if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
             StartAttacking();
-
+            combatCoolDown += playerSettings.kickCd;
             var attack = Random.Range(1, 3);
             characterAnimator.SetTrigger("KickHold" + attack);
         }
@@ -532,7 +542,7 @@ public class PlayerController : MonoBehaviour
 
     public void CalculateCombat()
     {
-        if(fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
+        if (fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
         if(kickTimer >= 0) { kickTimer -= Time.deltaTime; }
         if(combatCoolDown > 0)
         {
@@ -563,7 +573,7 @@ public class PlayerController : MonoBehaviour
     public void StartAttacking()
     {
         isAttacking = true;
-        combatCoolDown += 1f;
+        
         characterAnimator.SetBool("CanIdle", false);
     }
 

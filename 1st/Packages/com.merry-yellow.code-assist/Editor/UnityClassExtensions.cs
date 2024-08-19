@@ -89,6 +89,9 @@ namespace Meryel.UnityCodeAssist.Editor
             if (!animator.isActiveAndEnabled)
                 return null;
 
+            if (!animator.runtimeAnimatorController)
+                return null;
+
             var data = new Synchronizer.Model.Component_Animator();
 
             data.GameObjectId = GetId(go);
