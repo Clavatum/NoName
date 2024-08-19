@@ -262,6 +262,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 J. UnityCommandLineTools
+MIT License
 https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
 -------------------------------
 MIT License
@@ -289,7 +290,35 @@ SOFTWARE.
 
 
 
-K. NetMQ
+K. microscope
+MIT License
+https://github.com/bert2/microscope/blob/main/README.md
+-------------------------------
+MIT License
+
+Copyright (c) 2020 Robert Hofmann
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+L. NetMQ
 LGPLv3
 https://github.com/zeromq/netmq/blob/master/COPYING.LESSER
 -------------------------------
@@ -475,7 +504,7 @@ extend this exception to your version of the library.
 
 
 
-K. PlayerPrefs Editor for Unity 3D
+M. PlayerPrefs Editor for Unity 3D
 GPL-3.0 license
 https://github.com/Dysman/bgTools-playerPrefsEditor/blob/master/LICENSE.md
 -------------------------------
@@ -1157,25 +1186,29 @@ Public License instead of this License.  But first, please read
 
 
 
-M. Serilog
+N. Serilog
 Apache-2.0
 https://github.com/serilog/serilog/blob/dev/LICENSE
 
-N. Serilog.Sinks.PersistentFile
+O. Serilog.Sinks.PersistentFile
 Apache-2.0
 https://github.com/dfacto-lab/serilog-sinks-file/blob/dev/LICENSE
 
-O. Serilog.Settings.Reloader
+P. Serilog.Settings.Reloader
 Apache-2.0
 https://github.com/tagcode/serilog-settings-reloader/blob/master/LICENSE
 
-P. Community.VisualStudio.Toolkit.17
+Q. Community.VisualStudio.Toolkit.17
 Apache-2.0
 https://github.com/VsixCommunity/Community.VisualStudio.Toolkit/blob/master/LICENSE
 
-Q. Diffplex
+R. Diffplex
 Apache-2.0
 https://github.com/mmanela/diffplex/blob/master/License.txt
+
+S. generative-ai
+Apache-2.0
+https://github.com/mscraftsman/generative-ai/blob/main/README.md
 
 -------------------------------
                                  Apache License
@@ -1358,7 +1391,7 @@ https://github.com/mmanela/diffplex/blob/master/License.txt
 
 
 
-R. EditorCoroutines
+T. EditorCoroutines
 Unity Companion License
 https://unity.com/legal/licenses/unity-companion-license
 

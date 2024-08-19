@@ -51,6 +51,10 @@ public static class Models
         [Header("Slide")]
         [HideInInspector]
         public float slideTime = 0.667f;
+
+        [Header("Combat")]
+        public float slashCd;
+        public float kickCd;
     }
 
     [Serializable]
