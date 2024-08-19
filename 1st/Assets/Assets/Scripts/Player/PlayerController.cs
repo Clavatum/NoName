@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public bool isCrouching = false;
     public bool isGrounded;
     public bool isAttacking;
+    public bool isSliding;
 
     [Header("Camera")]
     private float cameraHeight;
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
     private float targetHorizontalSpeed;
     private float horizontalSpeedVelocity;
 
-    public Vector3 relativePlayerVelocity;
+    private Vector3 relativePlayerVelocity;
     private Vector3 cameraRelativeForward;
     private Vector3 cameraRelativeRight;
     Vector3 playerMovement;
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
     private float currentSpeed;
     private float crouchHeightVelocity;
     private Vector3 crouchCenterVelocity;
-    public float crouchSmoothing;
+    private float crouchSmoothing;
     public ChracterStance playerStandStance;
     public ChracterStance playerCrouchStance;
     public PlayerStance playerStance;
@@ -65,15 +66,13 @@ public class PlayerController : MonoBehaviour
     public PlayerStatsModel playerStats;
 
     [Header("Gravity")]
-    public float gravity = 10f;
-    public float groundCheckDistance;
+    private float groundCheckDistance = 0.72f;
     public LayerMask groundMask;
-    private Vector3 gravityDirection;
 
     [Header("Jumping / Falling")]
-    public float fallingSpeed;
+    private float fallingSpeed;
     private float fallingSpeedPeak;
-    public float fallingThreshold;
+    private float fallingThreshold;
     public float fallingMovementSpeed;
     public float fallingRunningMovementSpeed;
     public float maxFallingMovementSpeed = 5f;
@@ -81,8 +80,7 @@ public class PlayerController : MonoBehaviour
     public bool fallingTriggered;
 
     [Header("Combat")]
-    public float combatCoolDown = 1.5f;
-    public float currentCombatCoolDown;
+    public float combatCoolDown;
     private float fire1Timer;
     private float kickTimer;
     
@@ -109,7 +107,6 @@ public class PlayerController : MonoBehaviour
         #region - Action Inputs -
         playerInputActions.Actions.Jump.performed += e => Jump();
 
-        //playerInputActions.Actions.WalkingToggle.performed += e => ToggleWalking(); silinebilr
         playerInputActions.Actions.Run.performed += e => Run();
 
         playerInputActions.Actions.Crouch.performed += e => Crouch();
@@ -120,7 +117,7 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Actions.Kick.performed += e => Kick();
         playerInputActions.Actions.KickHold.performed += e => KickHold();
 
-        //playerInputActions.Actions.Slide.performed += e => Slide();
+        playerInputActions.Actions.Slide.performed += e => SlidePressed();
 
         #endregion
 
@@ -129,8 +126,6 @@ public class PlayerController : MonoBehaviour
         #endregion
         
         cameraHeight = cameraHolder.localPosition.y;
-
-        gravityDirection = Vector3.down;
     }
 
     private void Start()
@@ -145,11 +140,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CalculateGravity();
         IsNearGround();
         CalculateStance();
         CalculateFalling();
         Movement();
+        CalculateSlide();
         CalculateRunning();
     }
     private void Update()
@@ -181,11 +176,6 @@ public class PlayerController : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    private void CalculateGravity()
-    {
-        //Physics.gravity = gravityDirection * gravity;
     }
 
     private void CalculateFalling()
@@ -337,11 +327,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //private void ToggleWalking()
-    //{
-    //    isWalking = !isWalking;
-    //}
-
     #endregion
 
     #region - Running -
@@ -466,11 +451,38 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region - Slide -
+    private void CalculateSlide()
+    {
+        if (isSliding) { StartCoroutine(Slide()); }
+        isSliding = false;
+    }
+
+    private IEnumerator Slide()
+    {
+        playerStance = PlayerStance.Crouch;
+        characterAnimator.SetTrigger("Slide");
+        characterAnimator.SetBool("CanIdle", false);
+        yield return new WaitForSeconds(playerSettings.slideTime);
+        playerStance = PlayerStance.Stand;
+        characterAnimator.SetBool("CanIdle", true);
+    }
+
+    private void SlidePressed()
+    {
+        if (isRunning && IsGrounded())
+        { 
+            isSliding = true;
+        }
+    }
+
+    #endregion
+
     #region - Combat -
 
     public void Fire1()
     {
-        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
             if (fire1Timer <= 0)
             {
@@ -485,7 +497,7 @@ public class PlayerController : MonoBehaviour
     }
     public void BigAttack()
     {
-        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
             StartAttacking();
             characterAnimator.SetTrigger("BigAttack");
@@ -494,7 +506,7 @@ public class PlayerController : MonoBehaviour
 
     public void Kick()
     {
-        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
             if (kickTimer <= 0)
             {
@@ -502,15 +514,19 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             StartAttacking();
-            characterAnimator.SetTrigger("Kick");
+
+            var attack = Random.Range(1, 3);
+            characterAnimator.SetTrigger("Kick" + attack);
         }
     }
     public void KickHold()
     {
-        if (!isAttacking && currentCombatCoolDown <= 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
             StartAttacking();
-            characterAnimator.SetTrigger("KickHold");
+
+            var attack = Random.Range(1, 3);
+            characterAnimator.SetTrigger("KickHold" + attack);
         }
     }
 
@@ -518,12 +534,15 @@ public class PlayerController : MonoBehaviour
     {
         if(fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
         if(kickTimer >= 0) { kickTimer -= Time.deltaTime; }
-        if(currentCombatCoolDown > 0)
+        if(combatCoolDown > 0)
         {
             if (!isAttacking)
             {
-                currentCombatCoolDown -= Time.deltaTime;
+                combatCoolDown -= Time.deltaTime;
             }
+        }else if (combatCoolDown <= 0)
+        {
+            combatCoolDown = 0;
         }
         else
         {
@@ -544,13 +563,14 @@ public class PlayerController : MonoBehaviour
     public void StartAttacking()
     {
         isAttacking = true;
+        combatCoolDown += 1f;
         characterAnimator.SetBool("CanIdle", false);
     }
 
     public void FinishAttacking()
     {
         isAttacking = false;
-        currentCombatCoolDown = combatCoolDown;
+
         characterAnimator.SetBool("CanIdle", true);
     }
 
