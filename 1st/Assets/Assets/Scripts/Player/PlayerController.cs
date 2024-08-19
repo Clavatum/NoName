@@ -514,7 +514,9 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             StartAttacking();
-            characterAnimator.SetTrigger("Kick");
+
+            var attack = Random.Range(1, 3);
+            characterAnimator.SetTrigger("Kick" + attack);
         }
     }
     public void KickHold()
@@ -522,7 +524,9 @@ public class PlayerController : MonoBehaviour
         if (!isAttacking && combatCoolDown == 0 && IsGrounded())
         {
             StartAttacking();
-            characterAnimator.SetTrigger("KickHold");
+
+            var attack = Random.Range(1, 3);
+            characterAnimator.SetTrigger("KickHold" + attack);
         }
     }
 
