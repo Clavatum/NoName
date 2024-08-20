@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
     public float combatCoolDown;
     private float fire1Timer;
     private float kickTimer;
+    private int crouchAttackType;
     
     #region - Awake / Start -
 
@@ -488,8 +489,8 @@ public class PlayerController : MonoBehaviour
             {
                 StartAttacking();
                 combatCoolDown += playerSettings.slashCd;
-                var crouchAttack = Random.Range(1, 3);
-                characterAnimator.SetTrigger("CrouchAttackSlash" + crouchAttack);
+                crouchAttackType = Random.Range(1, 3);
+                characterAnimator.SetTrigger("CrouchAttackSlash" + crouchAttackType);
                 return;
             }
 
@@ -582,6 +583,11 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
 
         characterAnimator.SetBool("CanIdle", true);
+    }
+
+    public void SetIdleTypeAfterCrouchAttack()
+    {
+        characterAnimator.SetFloat("IdleType", crouchAttackType - 1);
     }
 
     #endregion
