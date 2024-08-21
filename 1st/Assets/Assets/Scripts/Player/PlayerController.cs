@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using static Models;
+using static UnityEditor.SceneView;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public Transform feetTransform;
     public Transform cameraHolder;
     public Transform cameraTarget;
+    public Transform target;
     public CameraController cameraController;
 
     [HideInInspector]
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     public PlayerSettingsModel playerSettings;
     public bool isTargetMode;
+    public bool isFaceTarget;
     public bool isWalking;
     public bool isRunning;
     public bool isCrouching = false;
@@ -257,6 +260,28 @@ public class PlayerController : MonoBehaviour
             }
 
             targetHorizontalSpeed = (isWalking ? playerSettings.walkingStrafingSpeed : playerSettings.runningStrafingSpeed);
+
+            if (isFaceTarget && target)
+            {
+                var lookDirection = target.position - transform.position;
+                lookDirection.y = 0;
+
+                var currentRotation = transform.rotation;
+                transform.LookAt(lookDirection + transform.position, Vector3.up);
+                var newRotation = transform.rotation;
+                transform.rotation = Quaternion.Lerp(currentRotation, newRotation, playerSettings.CharacterRotationSmoothDamp);
+            }
+            else
+            {
+                var currentRotation = transform.rotation;
+
+                var newRotation = currentRotation.eulerAngles;
+                newRotation.y = cameraController.targetRotation.y;
+
+                currentRotation = Quaternion.Lerp(currentRotation, Quaternion.Euler(newRotation), playerSettings.CharacterRotationSmoothDamp);
+
+                transform.rotation = currentRotation;
+            }
         }
         else
         {
@@ -289,8 +314,10 @@ public class PlayerController : MonoBehaviour
 
         if (isTargetMode)
         {
-            characterAnimator.SetFloat("Vertical", verticalSpeed);
-            characterAnimator.SetFloat("Horizontal", horizontalSpeed);
+            var relativeMovement = transform.InverseTransformDirection(playerMovement);
+
+            characterAnimator.SetFloat("Vertical", relativeMovement.z);
+            characterAnimator.SetFloat("Horizontal", relativeMovement.x);
         }
         else
         {
@@ -354,11 +381,6 @@ public class PlayerController : MonoBehaviour
 
     private bool CanRun()
     {
-        if (isTargetMode)
-        {
-            return false;
-        }
-
         var runFalloff = 0.4f;
 
         if ((inputMovement.y < 0 ? inputMovement.y * -1 : inputMovement.y) < runFalloff && (inputMovement.x < 0 ? inputMovement.x * -1 : inputMovement.x) < runFalloff)

@@ -5,7 +5,8 @@ public class CameraController : MonoBehaviour
 {
     [Header("References")]
     public PlayerController playerController;
-    private Vector3 targetRotation;
+    [HideInInspector]
+    public Vector3 targetRotation;
     public GameObject yGimbal;
     private Vector3 yGimbalRotation;
 
@@ -42,19 +43,6 @@ public class CameraController : MonoBehaviour
         yGimbalRotation.x = Mathf.Clamp(yGimbalRotation.x, cameraSettings.YClampMin, cameraSettings.YClampMax);
 
         yGimbal.transform.localRotation = Quaternion.Euler(yGimbalRotation);
-
-        if (playerController.isTargetMode)
-        {
-            var currentRotation = playerController.transform.rotation;
-
-            var newRotation = currentRotation.eulerAngles;
-            newRotation.y = targetRotation.y;
-
-            currentRotation = Quaternion.Lerp(currentRotation, Quaternion.Euler(newRotation), cameraSettings.CharacterRotationSmoothDamp);
-
-            playerController.transform.rotation = currentRotation;
-        }
-
     }
 
     private void FollowPlayerCameraTarget()
