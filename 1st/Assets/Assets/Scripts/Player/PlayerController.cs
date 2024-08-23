@@ -263,13 +263,13 @@ public class PlayerController : MonoBehaviour
 
             if (isFaceTarget && target)
             {
-                var lookDirection = target.position - transform.position;
-                lookDirection.y = 0;
+                //var lookDirection = target.position - transform.position;
+                //lookDirection.y = 0;
 
-                var currentRotation = transform.rotation;
-                transform.LookAt(lookDirection + transform.position, Vector3.up);
-                var newRotation = transform.rotation;
-                transform.rotation = Quaternion.Lerp(currentRotation, newRotation, playerSettings.CharacterRotationSmoothDamp);
+                //var currentRotation = transform.rotation;
+                //transform.LookAt(lookDirection + transform.position, Vector3.up);
+                //var newRotation = transform.rotation;
+                //transform.rotation = Quaternion.Lerp(currentRotation, newRotation, playerSettings.CharacterRotationSmoothDamp);
             }
             else
             {
@@ -285,9 +285,12 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            var originalRotation = transform.rotation;
+            Quaternion originalRotation = transform.rotation;
+
             transform.LookAt(playerMovement + transform.position, Vector3.up);
-            var newRotation = transform.rotation;
+
+            Quaternion newRotation = Quaternion.Euler(originalRotation.eulerAngles.x, transform.rotation.eulerAngles.y, originalRotation.eulerAngles.z);
+
             transform.rotation = Quaternion.Lerp(originalRotation, newRotation, playerSettings.CharacterRotationSmoothDamp);
 
             float playerSpeed;
