@@ -26,6 +26,8 @@ public static class Models
 
         [Header("Character")]
         public float CharacterRotationSmoothDamp = 1f;
+        public float sphereCastRadius;
+        public float sphereCastDistance;
 
     }
 

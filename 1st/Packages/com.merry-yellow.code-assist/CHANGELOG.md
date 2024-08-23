@@ -1,5 +1,8 @@
 List of new features, bug fixes and improvements
 
+# Version 1.2.5
+* Url changes
+
 # Version 1.2.4
 * Bugfix for exporter with long file paths
 * Bugfix for retrieving animation and animator data
