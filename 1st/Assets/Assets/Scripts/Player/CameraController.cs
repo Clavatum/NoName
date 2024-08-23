@@ -4,9 +4,15 @@ using static Models;
 
 public class CameraController : MonoBehaviour
 {
+    public CinemachineVirtualCamera[] cameras;
+
+    public CinemachineVirtualCamera thirdPersonCam;
+    public CinemachineVirtualCamera lookAtTargetCam;
+
+    public CinemachineVirtualCamera startCamera;
+    private CinemachineVirtualCamera currentCam;
+
     PlayerInputActions playerInputActions;
-    public CinemachineVirtualCamera faceTargetVirtualCamera; 
-    public CinemachineVirtualCamera defaultVirtualCamera;
     public Transform target; 
 
     [Header("References")]
@@ -28,6 +34,24 @@ public class CameraController : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        currentCam = startCamera;
+
+        for (int i = 0; i < cameras.Length; i++)
+        {
+            if (cameras[i] == currentCam)
+            {
+                cameras[i].Priority = 20;
+            }
+            else
+            {
+                cameras[i].Priority = 10;
+            }
+
+        }
+    }
+
     #region - Update -
 
     private void Update()
@@ -45,7 +69,6 @@ public class CameraController : MonoBehaviour
         {
             LookAtTarget();
         }
-        ChangeCamera();
     }
 
     #endregion
@@ -102,14 +125,15 @@ public class CameraController : MonoBehaviour
 
     private void DetectTarget()
     {
-        //playerController.isFaceTarget = !playerController.isFaceTarget;
         if (IsEnemyNearby() && !playerController.isFaceTarget)
         {
             Debug.Log("t");
             playerController.isFaceTarget = true;
+            ChangeCamera(lookAtTargetCam);
         }else if (playerController.isFaceTarget)
         {
             playerController.isFaceTarget = false;
+            ChangeCamera(thirdPersonCam);
         }
         else
         {
@@ -137,19 +161,18 @@ public class CameraController : MonoBehaviour
 
     #region - Events -
 
-    private void ChangeCamera()
+    private void ChangeCamera(CinemachineVirtualCamera newCam)
     {
-        if (playerController.isFaceTarget)
+        currentCam = newCam;
+
+        currentCam.Priority = 20;
+
+        for (int i = 0; i < cameras.Length; i++)
         {
-            Debug.Log("x");
-            SetVirtualCameraActive(faceTargetVirtualCamera, true);
-            SetVirtualCameraActive(defaultVirtualCamera, false);
-        }
-        else
-        {
-            Debug.Log("y");
-            SetVirtualCameraActive(faceTargetVirtualCamera, false);
-            SetVirtualCameraActive(defaultVirtualCamera, true);
+            if (cameras[i] != currentCam)
+            {
+                cameras[i].Priority = 10;
+            }
         }
     }
 
