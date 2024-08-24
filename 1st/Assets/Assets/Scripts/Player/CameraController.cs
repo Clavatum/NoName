@@ -48,7 +48,6 @@ public class CameraController : MonoBehaviour
             {
                 cameras[i].Priority = 10;
             }
-
         }
     }
 
