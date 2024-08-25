@@ -53,6 +53,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MapCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3338929-5b12-463d-a084-d6938eef1960"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -130,6 +139,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LockTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0db189d-1635-45c8-a0ad-d9cd9a96fe17"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MapCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -311,6 +331,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Movement_Movement = m_Movement.FindAction("Movement", throwIfNotFound: true);
         m_Movement_View = m_Movement.FindAction("View", throwIfNotFound: true);
         m_Movement_LockTarget = m_Movement.FindAction("LockTarget", throwIfNotFound: true);
+        m_Movement_MapCamera = m_Movement.FindAction("MapCamera", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Jump = m_Actions.FindAction("Jump", throwIfNotFound: true);
@@ -385,6 +406,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Movement;
     private readonly InputAction m_Movement_View;
     private readonly InputAction m_Movement_LockTarget;
+    private readonly InputAction m_Movement_MapCamera;
     public struct MovementActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -392,6 +414,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Movement_Movement;
         public InputAction @View => m_Wrapper.m_Movement_View;
         public InputAction @LockTarget => m_Wrapper.m_Movement_LockTarget;
+        public InputAction @MapCamera => m_Wrapper.m_Movement_MapCamera;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -410,6 +433,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LockTarget.started += instance.OnLockTarget;
             @LockTarget.performed += instance.OnLockTarget;
             @LockTarget.canceled += instance.OnLockTarget;
+            @MapCamera.started += instance.OnMapCamera;
+            @MapCamera.performed += instance.OnMapCamera;
+            @MapCamera.canceled += instance.OnMapCamera;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -423,6 +449,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LockTarget.started -= instance.OnLockTarget;
             @LockTarget.performed -= instance.OnLockTarget;
             @LockTarget.canceled -= instance.OnLockTarget;
+            @MapCamera.started -= instance.OnMapCamera;
+            @MapCamera.performed -= instance.OnMapCamera;
+            @MapCamera.canceled -= instance.OnMapCamera;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -547,6 +576,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnView(InputAction.CallbackContext context);
         void OnLockTarget(InputAction.CallbackContext context);
+        void OnMapCamera(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {

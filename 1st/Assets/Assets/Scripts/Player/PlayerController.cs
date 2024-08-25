@@ -248,6 +248,12 @@ public class PlayerController : MonoBehaviour
 
         relativePlayerVelocity = transform.InverseTransformDirection(characterRb.velocity);
 
+        if (cameraController.isMapCamActive)
+        {
+            inputMovement = new Vector2(0, 0);
+            characterAnimator.SetBool("CanIdle", false);
+        }
+
         if (isTargetMode)
         {
             if (inputMovement.y > 0)
@@ -442,7 +448,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (!IsGrounded())
+        if (!IsGrounded() || cameraController.isMapCamActive)
         {
             return;
         }
@@ -470,7 +476,7 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyJumpForce()
     {
-        if (!IsGrounded() || isCrouching) { return; }
+        if (!IsGrounded() || isCrouching || cameraController.isMapCamActive) { return; }
         characterRb.AddForce(transform.up * playerSettings.jumpingForce, ForceMode.Impulse);
         fallingTriggered = true;
     }
@@ -508,7 +514,7 @@ public class PlayerController : MonoBehaviour
 
     public void Fire1()
     {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
         {
             if (isCrouching)
             {
@@ -532,7 +538,7 @@ public class PlayerController : MonoBehaviour
     }
     public void BigAttack()
     {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
         {
             StartAttacking();
             combatCoolDown += playerSettings.slashCd + 0.5f;
@@ -542,7 +548,7 @@ public class PlayerController : MonoBehaviour
 
     public void Kick()
     {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
         {
             if (kickTimer <= 0)
             {
@@ -557,7 +563,7 @@ public class PlayerController : MonoBehaviour
     }
     public void KickHold()
     {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded())
+        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
         {
             StartAttacking();
             combatCoolDown += playerSettings.kickCd;
