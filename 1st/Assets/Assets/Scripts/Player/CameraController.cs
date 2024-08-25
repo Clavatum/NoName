@@ -8,12 +8,14 @@ public class CameraController : MonoBehaviour
 
     public CinemachineVirtualCamera thirdPersonCam;
     public CinemachineVirtualCamera lookAtTargetCam;
+    public CinemachineVirtualCamera mapCam;
 
     public CinemachineVirtualCamera startCamera;
     private CinemachineVirtualCamera currentCam;
 
     PlayerInputActions playerInputActions;
-    public Transform target; 
+    public Transform target;
+    public bool isMapCamActive;
 
     [Header("References")]
     public PlayerController playerController;
@@ -30,6 +32,7 @@ public class CameraController : MonoBehaviour
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Movement.LockTarget.performed += e => DetectTarget();
+        playerInputActions.Movement.MapCamera.performed += e => EnableMapCam();
         playerInputActions.Enable();
 
     }
@@ -62,6 +65,7 @@ public class CameraController : MonoBehaviour
     #region - LateUpdate -
     private void LateUpdate()
     {
+        CalculateCameraChange();
         CameraRotation();
         FollowPlayerCameraTarget();
         if (playerController.isFaceTarget)
@@ -83,7 +87,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Euler(targetRotation);
         yGimbalRotation.x += (cameraSettings.InvertedY ? (viewInput.y * cameraSettings.SensitivityY) : -(viewInput.y * cameraSettings.SensitivityY) * Time.deltaTime);
 
-        if (playerController.isFaceTarget)
+        if (playerController.isFaceTarget || isMapCamActive)
         {
             cameraSettings.SensitivityX = 0;
             cameraSettings.SensitivityY = 0;
@@ -126,7 +130,6 @@ public class CameraController : MonoBehaviour
     {
         if (IsEnemyNearby() && !playerController.isFaceTarget)
         {
-            Debug.Log("t");
             playerController.isFaceTarget = true;
             ChangeCamera(lookAtTargetCam);
         }else if (playerController.isFaceTarget)
@@ -136,7 +139,6 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            Debug.Log("f");
             playerController.isFaceTarget = false;
         }
     }
@@ -166,7 +168,7 @@ public class CameraController : MonoBehaviour
 
         currentCam.Priority = 20;
 
-        for (int i = 0; i < cameras.Length; i++)
+        for (int i = 0; i < cameras.Length; i++) 
         {
             if (cameras[i] != currentCam)
             {
@@ -175,14 +177,30 @@ public class CameraController : MonoBehaviour
         }
     }
 
-
-    void SetVirtualCameraActive(CinemachineVirtualCamera camera, bool isActive)
+    private void EnableMapCam()
     {
-        if (camera != null)
+        isMapCamActive = !isMapCamActive;
+    }
+
+    private void CalculateCameraChange()
+    {
+        if (isMapCamActive)
         {
-            camera.gameObject.SetActive(isActive);
+            ChangeCamera(mapCam);
+        }
+        else
+        {
+            ChangeCamera(thirdPersonCam);
         }
     }
+
+    //void SetVirtualCameraActive(CinemachineVirtualCamera camera, bool isActive)
+    //{
+    //    if (camera != null)
+    //    {
+    //        camera.gameObject.SetActive(isActive);
+    //    }
+    //}
 
     #endregion
 
