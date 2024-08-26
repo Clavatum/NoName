@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     private float currentSpeed;
     private float crouchHeightVelocity;
     private Vector3 crouchCenterVelocity;
-    private float crouchSmoothing;
+    public float crouchSmoothing;
     public ChracterStance playerStandStance;
     public ChracterStance playerCrouchStance;
     public PlayerStance playerStance;
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
         #endregion
         
-        cameraHeight = cameraHolder.localPosition.y;
+        cameraHeight = cameraTarget.localPosition.y;
     }
 
     private void Start()
@@ -244,6 +244,10 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+        if (isFaceTarget)
+        {
+            isTargetMode = false;
+        }
         characterAnimator.SetBool("isTargetMode", isTargetMode);
 
         relativePlayerVelocity = transform.InverseTransformDirection(characterRb.velocity);
@@ -267,27 +271,14 @@ public class PlayerController : MonoBehaviour
 
             targetHorizontalSpeed = (isWalking ? playerSettings.walkingStrafingSpeed : playerSettings.runningStrafingSpeed);
 
-            if (isFaceTarget && target)
-            {
-                //var lookDirection = target.position - transform.position;
-                //lookDirection.y = 0;
+            var currentRotation = transform.rotation;
 
-                //var currentRotation = transform.rotation;
-                //transform.LookAt(lookDirection + transform.position, Vector3.up);
-                //var newRotation = transform.rotation;
-                //transform.rotation = Quaternion.Lerp(currentRotation, newRotation, playerSettings.CharacterRotationSmoothDamp);
-            }
-            else
-            {
-                var currentRotation = transform.rotation;
+            var newRotation = currentRotation.eulerAngles;
+            newRotation.y = cameraController.targetRotation.y;
 
-                var newRotation = currentRotation.eulerAngles;
-                newRotation.y = cameraController.targetRotation.y;
+            currentRotation = Quaternion.Lerp(currentRotation, Quaternion.Euler(newRotation), playerSettings.CharacterRotationSmoothDamp);
 
-                currentRotation = Quaternion.Lerp(currentRotation, Quaternion.Euler(newRotation), playerSettings.CharacterRotationSmoothDamp);
-
-                transform.rotation = currentRotation;
-            }
+            transform.rotation = currentRotation;
         }
         else
         {
@@ -321,7 +312,7 @@ public class PlayerController : MonoBehaviour
         verticalSpeed = Mathf.SmoothDamp(verticalSpeed, targetVerticalSpeed, ref verticalSpeedVelocity, movementSmoothDamp);
         horizontalSpeed = Mathf.SmoothDamp(horizontalSpeed, targetHorizontalSpeed, ref horizontalSpeedVelocity, movementSmoothDamp);
 
-        if (isTargetMode)
+        if (isTargetMode )
         {
             var relativeMovement = transform.InverseTransformDirection(playerMovement);
 
@@ -643,8 +634,8 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
-        cameraHeight = Mathf.SmoothDamp(cameraHolder.localPosition.y, currentStance.CameraHeight, ref cameraHeightVelocity, crouchSmoothing);
-        cameraHolder.localPosition = new Vector3(cameraHolder.localPosition.x, cameraHeight, cameraHolder.localPosition.z);
+        cameraHeight = Mathf.SmoothDamp(cameraTarget.localPosition.y, currentStance.CameraHeight, ref cameraHeightVelocity, crouchSmoothing);
+        cameraTarget.localPosition = new Vector3(cameraTarget.localPosition.x, cameraHeight, cameraTarget.localPosition.z);
 
         playerCapsuleCollider.height = Mathf.SmoothDamp(playerCapsuleCollider.height, currentStance.colliderHeight, ref crouchHeightVelocity, crouchSmoothing);
         playerCapsuleCollider.center = Vector3.SmoothDamp(playerCapsuleCollider.center, currentStance.colliderCenter, ref crouchCenterVelocity, crouchSmoothing);
@@ -654,8 +645,6 @@ public class PlayerController : MonoBehaviour
     {
         return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
     }
-
-
 
     private void Crouch()
     {

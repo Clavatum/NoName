@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99846946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -214,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226921254}
   m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
-  m_LocalPosition: {x: 0.000000074505806, y: 0.664593, z: -3.939231}
+  m_LocalPosition: {x: 0, y: 0.44459295, z: -3.939231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 917376325}
-  m_Follow: {fileID: 543450653383113834}
+  m_Follow: {fileID: 99846947}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -480,7 +480,7 @@ MonoBehaviour:
     slideTime: 0.667
     slashCd: 0.2
     kickCd: 0.3
-  isTargetMode: 0
+  isTargetMode: 1
   isFaceTarget: 0
   isWalking: 0
   isRunning: 0
@@ -490,6 +490,7 @@ MonoBehaviour:
   isSliding: 0
   movementSpeedOffset: 1
   movementSmoothDamp: 0.25
+  crouchSmoothing: 0.1
   playerStandStance:
     CameraHeight: 0
     colliderHeight: 1.8
@@ -999,7 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 1.72, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 1.5, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
@@ -1010,12 +1011,12 @@ MonoBehaviour:
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 4
-  m_DeadZoneWidth: 0.04
-  m_DeadZoneHeight: 0.09
+  m_DeadZoneWidth: 0.02
+  m_DeadZoneHeight: 0.02
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.21
-  m_SoftZoneHeight: 0.21
+  m_SoftZoneWidth: 0.2
+  m_SoftZoneHeight: 0.14
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -1076,7 +1077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 1.72, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 1.5, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
@@ -1087,12 +1088,12 @@ MonoBehaviour:
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 4
-  m_DeadZoneWidth: 0.04
-  m_DeadZoneHeight: 0.09
+  m_DeadZoneWidth: 0.02
+  m_DeadZoneHeight: 0.02
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.21
-  m_SoftZoneHeight: 0.21
+  m_SoftZoneWidth: 0.2
+  m_SoftZoneHeight: 0.14
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -2833,7 +2834,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541695632567293267}
   m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
-  m_LocalPosition: {x: 0.000000074505806, y: 0.664593, z: -3.939231}
+  m_LocalPosition: {x: 0, y: 0.44459295, z: -3.939231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3720,7 +3721,7 @@ MonoBehaviour:
   m_Priority: 20
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 543450653383113834}
-  m_Follow: {fileID: 543450653383113834}
+  m_Follow: {fileID: 99846947}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
