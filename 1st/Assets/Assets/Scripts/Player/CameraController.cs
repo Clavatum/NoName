@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour
     #region - LateUpdate -
     private void LateUpdate()
     {
-        CalculateCameraChange();
+        //CalculateCameraChange();
         CameraRotation();
         FollowPlayerCameraTarget();
         if (playerController.isFaceTarget)
@@ -180,10 +180,7 @@ public class CameraController : MonoBehaviour
     private void EnableMapCam()
     {
         isMapCamActive = !isMapCamActive;
-    }
-
-    private void CalculateCameraChange()
-    {
+        
         if (isMapCamActive)
         {
             ChangeCamera(mapCam);
@@ -191,6 +188,15 @@ public class CameraController : MonoBehaviour
         else
         {
             ChangeCamera(thirdPersonCam);
+        }
+    }
+
+    private void CalculateCameraChange()
+    {
+        if (isMapCamActive)
+        {
+            Debug.Log("x");
+            ChangeCamera(mapCam);
         }
     }
 
