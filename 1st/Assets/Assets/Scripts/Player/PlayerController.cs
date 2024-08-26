@@ -115,12 +115,6 @@ public class PlayerController : MonoBehaviour
 
         playerInputActions.Actions.Crouch.performed += e => Crouch();
 
-        playerInputActions.Actions.Fire1.performed += e => Fire1();
-        playerInputActions.Actions.BigAttack.performed += e => BigAttack();
-
-        playerInputActions.Actions.Kick.performed += e => Kick();
-        playerInputActions.Actions.KickHold.performed += e => KickHold();
-
         playerInputActions.Actions.Slide.performed += e => SlidePressed();
 
         #endregion
@@ -153,14 +147,13 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {        
-        CalculateCombat();
     }
 
     #endregion
 
     #region - Gravity - 
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         if (Physics.CheckSphere(transform.position, 0.2f, groundMask))
         {
@@ -173,7 +166,7 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    private bool IsFalling()
+    public bool IsFalling()
     {
         if (fallingSpeed < fallingThreshold)
         {
@@ -499,120 +492,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region - Combat -
-
-    public void Fire1()
-    {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
-        {
-            if (isCrouching)
-            {
-                StartAttacking();
-                combatCoolDown += playerSettings.slashCd;
-                crouchAttackType = Random.Range(1, 3);
-                characterAnimator.SetTrigger("CrouchAttackSlash" + crouchAttackType);
-                return;
-            }
-
-            if (fire1Timer <= 0)
-            {
-                fire1Timer = 0.4f;
-                return;
-            }
-            StartAttacking();
-            combatCoolDown += playerSettings.slashCd;
-            var attack = Random.Range(1,3);
-            characterAnimator.SetTrigger("AttackSlash" + attack);
-        }
-    }
-    public void BigAttack()
-    {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
-        {
-            StartAttacking();
-            combatCoolDown += playerSettings.slashCd + 0.5f;
-            characterAnimator.SetTrigger("BigAttack");
-        }
-    }
-
-    public void Kick()
-    {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
-        {
-            if (kickTimer <= 0)
-            {
-                kickTimer = 0.4f;
-                return;
-            }
-            StartAttacking();
-            combatCoolDown += playerSettings.kickCd;
-            var attack = Random.Range(1, 3);
-            characterAnimator.SetTrigger("Kick" + attack);
-        }
-    }
-    public void KickHold()
-    {
-        if (!isAttacking && combatCoolDown == 0 && IsGrounded() && !cameraController.isMapCamActive)
-        {
-            StartAttacking();
-            combatCoolDown += playerSettings.kickCd;
-            var attack = Random.Range(1, 3);
-            characterAnimator.SetTrigger("KickHold" + attack);
-        }
-    }
-
-    public void CalculateCombat()
-    {
-        if (fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
-        if(kickTimer >= 0) { kickTimer -= Time.deltaTime; }
-        if(combatCoolDown > 0)
-        {
-            if (!isAttacking)
-            {
-                combatCoolDown -= Time.deltaTime;
-            }
-        }else if (combatCoolDown <= 0)
-        {
-            combatCoolDown = 0;
-        }
-        else
-        {
-            isTargetMode = false;
-        }
-
-        if (IsFalling())
-        {
-            isTargetMode = false;
-            isAttacking = false;
-        }
-    }
-
-    #endregion
-
-    #region - Events - 
-
-    public void StartAttacking()
-    {
-        isAttacking = true;
-        
-        characterAnimator.SetBool("CanIdle", false);
-    }
-
-    public void FinishAttacking()
-    {
-        isAttacking = false;
-
-        characterAnimator.SetBool("CanIdle", true);
-    }
-
-    public void SetIdleTypeAfterCrouchAttack()
-    {
-        characterAnimator.SetFloat("IdleType", crouchAttackType - 1);
-    }
-
-    #endregion
+    #endregion   
 
     #region - Stance -
 
@@ -710,5 +590,4 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-
 }

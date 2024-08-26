@@ -478,9 +478,7 @@ MonoBehaviour:
     runningStrafingSpeed: 3.4
     jumpingForce: 350
     slideTime: 0.667
-    slashCd: 0.2
-    kickCd: 0.3
-  isTargetMode: 1
+  isTargetMode: 0
   isFaceTarget: 0
   isWalking: 0
   isRunning: 0
@@ -3106,13 +3104,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5371da60d541a1f48bd674beba5fe0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combo:
+  slashCombo:
   - {fileID: 11400000, guid: dd7950f617bdb5141a6e1cf3dae10f0b, type: 2}
   - {fileID: 11400000, guid: dd7950f617bdb5141a6e1cf3dae10f0b, type: 2}
   - {fileID: 11400000, guid: 39877dce1c1c80441988ad54392ac881, type: 2}
   - {fileID: 11400000, guid: 0c8a00bf5410fa74a8f5ce79656e0f73, type: 2}
-  lastClickedTime: 0
-  lastComboEnd: 0
+  kickCombo:
+  - {fileID: 11400000, guid: ae607893738f39b419099ddd7ccdc20b, type: 2}
+  - {fileID: 11400000, guid: ae607893738f39b419099ddd7ccdc20b, type: 2}
+  - {fileID: 11400000, guid: bf17877e79e6fba4eadae2d136c7e683, type: 2}
+  lastSlashClickedTime: 0
+  lastSlashComboEnd: 0
+  slashComboCounter: 0
+  lastKickClickedTime: 0
+  lastKickComboEnd: 0
+  kickComboCounter: 0
+  combatCoolDown: 0
+  bigAttackCd: 0.7
+  isAttacking: 0
 --- !u!4 &5901452235449020137
 Transform:
   m_ObjectHideFlags: 0
