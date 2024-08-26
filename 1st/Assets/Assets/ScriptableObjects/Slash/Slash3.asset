@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603e45089a86df54388a2561506add30, type: 3}
+  m_Name: Slash3
+  m_EditorClassIdentifier: 
+  animatorOV: {fileID: 22100000, guid: d3c90c5556f307d48b7ad04a23b5a7a8, type: 2}
+  damage: 0
