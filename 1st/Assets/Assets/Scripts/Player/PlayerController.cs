@@ -110,13 +110,13 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Actions.Run.performed += e => Run();
 
         playerInputActions.Actions.Crouch.performed += e => Crouch();
-
+        /*
         playerInputActions.Actions.Fire1.performed += e => Fire1();
         playerInputActions.Actions.BigAttack.performed += e => BigAttack();
 
         playerInputActions.Actions.Kick.performed += e => Kick();
         playerInputActions.Actions.KickHold.performed += e => KickHold();
-
+        */
         playerInputActions.Actions.Slide.performed += e => SlidePressed();
 
         #endregion
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {        
-        CalculateCombat();
+        //CalculateCombat();
     }
 
     #endregion
@@ -479,7 +479,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region - Combat -
-
+    /*
     public void Fire1()
     {
         if (!isAttacking && combatCoolDown == 0 && IsGrounded())
@@ -565,7 +565,7 @@ public class PlayerController : MonoBehaviour
             isAttacking = false;
         }
     }
-
+    */
     #endregion
 
     #region - Events - 
