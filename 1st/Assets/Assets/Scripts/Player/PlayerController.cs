@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     PlayerInputActions playerInputActions;
     Rigidbody characterRb;
     Animator characterAnimator;
+    PlayerCombat playerCombat;
 
     [Header("References")]
     private CapsuleCollider playerCapsuleCollider;
@@ -30,7 +31,6 @@ public class PlayerController : MonoBehaviour
     public bool isRunning;
     public bool isCrouching = false;
     public bool isGrounded;
-    public bool isAttacking;
     public bool isSliding;
 
     [Header("Camera")]
@@ -81,12 +81,6 @@ public class PlayerController : MonoBehaviour
     public float maxFallingMovementSpeed = 5f;
     public bool jumpingTriggered; // make it private later
     public bool fallingTriggered;
-
-    [Header("Combat")]
-    public float combatCoolDown;
-    private float fire1Timer;
-    private float kickTimer;
-    private int crouchAttackType;
     
     #region - Awake / Start -
 
@@ -97,6 +91,7 @@ public class PlayerController : MonoBehaviour
         playerCapsuleCollider = GetComponent<CapsuleCollider>();
         characterRb = GetComponent<Rigidbody>();
         characterAnimator = GetComponent<Animator>();
+        playerCombat = GetComponent<PlayerCombat>();
         playerInputActions = new PlayerInputActions();
 
         #endregion
@@ -146,7 +141,8 @@ public class PlayerController : MonoBehaviour
         CalculateRunning();
     }
     private void Update()
-    {        
+    {
+        Debug.Log(isSliding);
     }
 
     #endregion
@@ -470,24 +466,28 @@ public class PlayerController : MonoBehaviour
     #region - Slide -
     private void CalculateSlide()
     {
+        if(playerSettings.slideCd <= 0) { playerSettings.slideCd = 0; }
+        if(playerSettings.slideCd > 0) { playerSettings.slideCd -= Time.deltaTime; }
         if (isSliding) { StartCoroutine(Slide()); }
         isSliding = false;
     }
 
     private IEnumerator Slide()
     {
-        playerStance = PlayerStance.Crouch;
+        playerStance = PlayerStance.Slide;
         characterAnimator.SetTrigger("Slide");
         characterAnimator.SetBool("CanIdle", false);
         yield return new WaitForSeconds(playerSettings.slideTime);
+        
         playerStance = PlayerStance.Stand;
         characterAnimator.SetBool("CanIdle", true);
     }
 
     private void SlidePressed()
     {
-        if (isRunning && IsGrounded())
-        { 
+        if (isRunning && IsGrounded() && playerSettings.slideCd == 0)
+        {
+            playerSettings.slideCd += 1f;
             isSliding = true;
         }
     }
@@ -500,7 +500,7 @@ public class PlayerController : MonoBehaviour
     {
         var currentStance = playerStandStance;
 
-        if (playerStance == PlayerStance.Crouch)
+        if (playerStance == PlayerStance.Crouch || playerStance == PlayerStance.Slide) //Crouch and Slide have same stance values
         {
             characterAnimator.SetBool("CanIdle", false); // there is no any different crouch idle anim
             currentStance = playerCrouchStance;

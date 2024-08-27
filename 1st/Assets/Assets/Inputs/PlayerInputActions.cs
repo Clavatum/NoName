@@ -214,15 +214,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""KickHold"",
-                    ""type"": ""Button"",
-                    ""id"": ""fc468a74-73aa-4e65-bba8-4856e3054ed2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Slide"",
                     ""type"": ""Button"",
                     ""id"": ""602a914c-1bfc-40e6-8290-e49464c88266"",
@@ -301,17 +292,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e9c22778-b6fd-45bb-98cb-22d279cc04c2"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""KickHold"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""cf8cb31a-e3b5-459b-8464-12191c85a2a9"",
                     ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": ""Press"",
@@ -340,7 +320,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Actions_Fire1 = m_Actions.FindAction("Fire1", throwIfNotFound: true);
         m_Actions_BigAttack = m_Actions.FindAction("BigAttack", throwIfNotFound: true);
         m_Actions_Kick = m_Actions.FindAction("Kick", throwIfNotFound: true);
-        m_Actions_KickHold = m_Actions.FindAction("KickHold", throwIfNotFound: true);
         m_Actions_Slide = m_Actions.FindAction("Slide", throwIfNotFound: true);
     }
 
@@ -479,7 +458,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_Fire1;
     private readonly InputAction m_Actions_BigAttack;
     private readonly InputAction m_Actions_Kick;
-    private readonly InputAction m_Actions_KickHold;
     private readonly InputAction m_Actions_Slide;
     public struct ActionsActions
     {
@@ -491,7 +469,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Fire1 => m_Wrapper.m_Actions_Fire1;
         public InputAction @BigAttack => m_Wrapper.m_Actions_BigAttack;
         public InputAction @Kick => m_Wrapper.m_Actions_Kick;
-        public InputAction @KickHold => m_Wrapper.m_Actions_KickHold;
         public InputAction @Slide => m_Wrapper.m_Actions_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
@@ -520,9 +497,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Kick.started += instance.OnKick;
             @Kick.performed += instance.OnKick;
             @Kick.canceled += instance.OnKick;
-            @KickHold.started += instance.OnKickHold;
-            @KickHold.performed += instance.OnKickHold;
-            @KickHold.canceled += instance.OnKickHold;
             @Slide.started += instance.OnSlide;
             @Slide.performed += instance.OnSlide;
             @Slide.canceled += instance.OnSlide;
@@ -548,9 +522,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Kick.started -= instance.OnKick;
             @Kick.performed -= instance.OnKick;
             @Kick.canceled -= instance.OnKick;
-            @KickHold.started -= instance.OnKickHold;
-            @KickHold.performed -= instance.OnKickHold;
-            @KickHold.canceled -= instance.OnKickHold;
             @Slide.started -= instance.OnSlide;
             @Slide.performed -= instance.OnSlide;
             @Slide.canceled -= instance.OnSlide;
@@ -586,7 +557,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnFire1(InputAction.CallbackContext context);
         void OnBigAttack(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
-        void OnKickHold(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
     }
 }

@@ -7,8 +7,8 @@ public class PlayerCombat : MonoBehaviour
 {
     private Animator playerAnimator;
     private PlayerInputActions playerInputActions;
-    private CameraController cameraController;
     private PlayerController playerController;
+    public CameraController cameraController;
 
     public List<AttackSO> slashCombo;
     public List<AttackSO> kickCombo;
@@ -24,22 +24,27 @@ public class PlayerCombat : MonoBehaviour
     public float combatCoolDown;
     private int crouchAttackType;
     public float bigAttackCd;
+    public float crouchSlashCd;
+    private float fire1Timer;
+    private float kickTimer;
     public bool isAttacking;
 
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
+        playerController = GetComponent<PlayerController>();
         playerInputActions = new PlayerInputActions();
-
+                
         playerInputActions.Actions.Fire1.performed += e => Slash();
         playerInputActions.Actions.BigAttack.performed += e => BigAttack();
         playerInputActions.Actions.Kick.performed += e => Kick();
-
+        
         playerInputActions.Enable();
     }
 
     void Update()
     {
+        CalculateCombat();
         ExitAttack();
     }
 
@@ -47,34 +52,62 @@ public class PlayerCombat : MonoBehaviour
 
     private void Slash()
     {
-        if ((playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Slash") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f) || cameraController.isMapCamActive)
+        if (playerController.playerStance == PlayerStance.Slide)
         {
             return;
         }
-        Debug.Log("x");
-        Debug.Log(slashComboCounter);
-        if (Time.time - lastSlashComboEnd > 0.5f && slashComboCounter <= slashCombo.Count)
+        if (playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Slash") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f)
         {
+            return;
+        }
+        
+        if (fire1Timer <= 0)
+        {
+            fire1Timer = 0.4f;
+            return;
+        }
+
+        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastSlashComboEnd > 0.5f && slashComboCounter <= slashCombo.Count)
+        { 
             CancelInvoke("EndCombo");
 
-            if (Time.time - lastSlashClickedTime >= 0.7f)
+            if (playerController.isCrouching)
             {
-                playerAnimator.runtimeAnimatorController = slashCombo[slashComboCounter].animatorOV;
-                playerAnimator.Play("Slash", 3, 0);
-                slashComboCounter++;
-                lastSlashClickedTime = Time.time;
-
-                if (slashComboCounter >= slashCombo.Count)
+                if(combatCoolDown == 0)
                 {
-                    slashComboCounter = 0;
+                    StartAttacking();
+                    combatCoolDown += crouchSlashCd;
+                    crouchAttackType = Random.Range(1, 3);
+                    playerAnimator.SetTrigger("CrouchAttackSlash" + crouchAttackType);
+                    return;
                 }
             }
+            else 
+            { 
+                if (Time.time - lastSlashClickedTime >= 0.7f)
+                {
+                    playerAnimator.runtimeAnimatorController = slashCombo[slashComboCounter].animatorOV;
+                    StartAttacking();
+                    playerAnimator.Play("Slash", 3, 0);
+                    slashComboCounter++;
+                    lastSlashClickedTime = Time.time;
+
+                    if (slashComboCounter >= slashCombo.Count)
+                    {
+                        slashComboCounter = 0;
+                    }
+                }
+            }          
         }
     }
 
     public void BigAttack()
     {
-        if (!isAttacking && combatCoolDown == 0 && playerController.IsGrounded() && !cameraController.isMapCamActive)
+        if (playerController.playerStance == PlayerStance.Slide)
+        {
+            return;
+        }
+        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && combatCoolDown == 0 && playerController.IsGrounded() && (!playerInputActions.Actions.Fire1.triggered || !playerInputActions.Actions.Kick.triggered))
         {
             StartAttacking();
             combatCoolDown += bigAttackCd;
@@ -84,18 +117,30 @@ public class PlayerCombat : MonoBehaviour
 
     public void Kick()
     {
-        if ((playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Kick") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f) || cameraController.isMapCamActive)
+        if (playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Kick") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f)
         {
             return;
         }
 
-        if (Time.time - lastKickComboEnd > 0.5f && kickComboCounter <= kickCombo.Count)
+        if (playerController.playerStance == PlayerStance.Slide)
+        {
+            return;
+        }
+
+        if (kickTimer <= 0)
+        {
+            kickTimer = 0.4f;
+            return;
+        }
+
+        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastKickComboEnd > 0.5f && kickComboCounter <= kickCombo.Count )
         {
             CancelInvoke("EndCombo");
 
             if (Time.time - lastKickClickedTime >= 0.7f)
             {
                 playerAnimator.runtimeAnimatorController = kickCombo[kickComboCounter].animatorOV;
+                StartAttacking();
                 playerAnimator.Play("Kick", 3, 0);
                 kickComboCounter++;
                 lastKickClickedTime = Time.time;
@@ -114,16 +159,38 @@ public class PlayerCombat : MonoBehaviour
 
     private void ExitAttack()
     {
+        if(kickComboCounter != 0 && playerInputActions.Actions.Fire1.triggered)
+        {
+            kickComboCounter = 0;
+        }else if (slashComboCounter != 0 && playerInputActions.Actions.Kick.triggered)
+        {
+            slashComboCounter = 0;
+        }
         if (playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && (playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Slash") || playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Kick")))
         {
-            Debug.Log("p");
             Invoke("EndCombo", 1.5f);
+        }
+    }
+
+    public void CalculateCombat()
+    {
+        if (fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
+        if (kickTimer >= 0) { kickTimer -= Time.deltaTime; }
+        if (combatCoolDown > 0)
+        {
+            if (!isAttacking)
+            {
+                combatCoolDown -= Time.deltaTime;
+            }
+        }
+        else if (combatCoolDown <= 0)
+        {
+            combatCoolDown = 0;
         }
     }
 
     private void EndCombo()
     {
-        Debug.Log("combo ended");
         slashComboCounter = 0;
         kickComboCounter = 0;
         lastSlashComboEnd = Time.time;
