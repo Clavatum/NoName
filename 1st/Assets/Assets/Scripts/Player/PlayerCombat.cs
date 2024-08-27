@@ -52,18 +52,22 @@ public class PlayerCombat : MonoBehaviour
 
     private void Slash()
     {
+        if (playerController.playerStance == PlayerStance.Slide)
+        {
+            return;
+        }
         if (playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Slash") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f)
         {
             return;
         }
-
+        
         if (fire1Timer <= 0)
         {
             fire1Timer = 0.4f;
             return;
         }
 
-        if (!playerController.isSliding && !playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastSlashComboEnd > 0.5f && slashComboCounter <= slashCombo.Count)
+        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastSlashComboEnd > 0.5f && slashComboCounter <= slashCombo.Count)
         { 
             CancelInvoke("EndCombo");
 
@@ -99,7 +103,11 @@ public class PlayerCombat : MonoBehaviour
 
     public void BigAttack()
     {
-        if (!playerController.isSliding && !playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && combatCoolDown == 0 && playerController.IsGrounded() && (!playerInputActions.Actions.Fire1.triggered || !playerInputActions.Actions.Kick.triggered))
+        if (playerController.playerStance == PlayerStance.Slide)
+        {
+            return;
+        }
+        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && combatCoolDown == 0 && playerController.IsGrounded() && (!playerInputActions.Actions.Fire1.triggered || !playerInputActions.Actions.Kick.triggered))
         {
             StartAttacking();
             combatCoolDown += bigAttackCd;
@@ -114,13 +122,18 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
+        if (playerController.playerStance == PlayerStance.Slide)
+        {
+            return;
+        }
+
         if (kickTimer <= 0)
         {
             kickTimer = 0.4f;
             return;
         }
 
-        if (!playerController.isSliding && !playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastKickComboEnd > 0.5f && kickComboCounter <= kickCombo.Count )
+        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastKickComboEnd > 0.5f && kickComboCounter <= kickCombo.Count )
         {
             CancelInvoke("EndCombo");
 

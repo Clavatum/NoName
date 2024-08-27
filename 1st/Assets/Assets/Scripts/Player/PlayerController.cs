@@ -466,24 +466,28 @@ public class PlayerController : MonoBehaviour
     #region - Slide -
     private void CalculateSlide()
     {
+        if(playerSettings.slideCd <= 0) { playerSettings.slideCd = 0; }
+        if(playerSettings.slideCd > 0) { playerSettings.slideCd -= Time.deltaTime; }
         if (isSliding) { StartCoroutine(Slide()); }
         isSliding = false;
     }
 
     private IEnumerator Slide()
     {
-        playerStance = PlayerStance.Crouch;
+        playerStance = PlayerStance.Slide;
         characterAnimator.SetTrigger("Slide");
         characterAnimator.SetBool("CanIdle", false);
         yield return new WaitForSeconds(playerSettings.slideTime);
+        
         playerStance = PlayerStance.Stand;
         characterAnimator.SetBool("CanIdle", true);
     }
 
     private void SlidePressed()
     {
-        if (isRunning && IsGrounded())
-        { 
+        if (isRunning && IsGrounded() && playerSettings.slideCd == 0)
+        {
+            playerSettings.slideCd += 1f;
             isSliding = true;
         }
     }
@@ -496,7 +500,7 @@ public class PlayerController : MonoBehaviour
     {
         var currentStance = playerStandStance;
 
-        if (playerStance == PlayerStance.Crouch)
+        if (playerStance == PlayerStance.Crouch || playerStance == PlayerStance.Slide) //Crouch and Slide have same stance values
         {
             characterAnimator.SetBool("CanIdle", false); // there is no any different crouch idle anim
             currentStance = playerCrouchStance;

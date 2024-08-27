@@ -8,7 +8,8 @@ public static class Models
     public enum PlayerStance // enum works like list
     {
         Stand,
-        Crouch
+        Crouch,
+        Slide
     }
 
     [Serializable]
@@ -53,6 +54,8 @@ public static class Models
         [Header("Slide")]
         [HideInInspector]
         public float slideTime = 0.667f;
+        [HideInInspector]
+        public float slideCd;
     }
 
     [Serializable]
