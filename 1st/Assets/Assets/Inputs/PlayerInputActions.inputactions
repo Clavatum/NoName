@@ -192,15 +192,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "KickHold",
-                    "type": "Button",
-                    "id": "fc468a74-73aa-4e65-bba8-4856e3054ed2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Slide",
                     "type": "Button",
                     "id": "602a914c-1bfc-40e6-8290-e49464c88266",
@@ -274,17 +265,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Kick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e9c22778-b6fd-45bb-98cb-22d279cc04c2",
-                    "path": "<Keyboard>/f",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KickHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
