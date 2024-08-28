@@ -65,7 +65,6 @@ public class CameraController : MonoBehaviour
     #region - LateUpdate -
     private void LateUpdate()
     {
-        //CalculateCameraChange();
         CameraRotation();
         FollowPlayerCameraTarget();
         if (playerController.isFaceTarget)
@@ -99,18 +98,6 @@ public class CameraController : MonoBehaviour
         }
 
         yGimbal.transform.localRotation = Quaternion.Euler(yGimbalRotation);
-
-        if (playerController.isTargetMode)
-        {
-            var currentRotation = playerController.transform.rotation;
-
-            var newRotation = currentRotation.eulerAngles;
-            newRotation.y = targetRotation.y;
-
-            currentRotation = Quaternion.Lerp(currentRotation, Quaternion.Euler(newRotation), cameraSettings.CharacterRotationSmoothDamp);
-
-            playerController.transform.rotation = currentRotation;
-        }
     }
 
     private void FollowPlayerCameraTarget()
@@ -188,15 +175,6 @@ public class CameraController : MonoBehaviour
         else
         {
             ChangeCamera(thirdPersonCam);
-        }
-    }
-
-    private void CalculateCameraChange()
-    {
-        if (isMapCamActive)
-        {
-            Debug.Log("x");
-            ChangeCamera(mapCam);
         }
     }
 
