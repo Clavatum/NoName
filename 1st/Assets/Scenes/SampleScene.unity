@@ -478,7 +478,8 @@ MonoBehaviour:
     runningStrafingSpeed: 3.4
     jumpingForce: 350
     slideTime: 0.667
-  isTargetMode: 0
+    slideCd: 0
+  isTargetMode: 1
   isFaceTarget: 0
   isWalking: 0
   isRunning: 0
@@ -3122,6 +3123,7 @@ MonoBehaviour:
   bigAttackCd: 0.7
   crouchSlashCd: 0.35
   isAttacking: 0
+  isBlocking: 0
 --- !u!4 &5901452235449020137
 Transform:
   m_ObjectHideFlags: 0
