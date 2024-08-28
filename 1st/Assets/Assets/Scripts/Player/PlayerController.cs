@@ -142,7 +142,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(isSliding);
     }
 
     #endregion
@@ -428,7 +427,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (!IsGrounded() || cameraController.isMapCamActive)
+        if (!IsGrounded() || cameraController.isMapCamActive || playerCombat.isBlocking)
         {
             return;
         }
