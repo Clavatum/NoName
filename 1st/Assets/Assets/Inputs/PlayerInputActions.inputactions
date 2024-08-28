@@ -199,6 +199,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "BlockPressed",
+                    "type": "Button",
+                    "id": "11aa1dfa-dddc-483e-95a2-09666c99ba23",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BlockReleased",
+                    "type": "Button",
+                    "id": "027c02b8-452a-4541-b0f7-92aa320d7e30",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -228,7 +246,7 @@
                     "name": "",
                     "id": "467e2af5-4784-40c3-a22c-7752ccf581ea",
                     "path": "<Keyboard>/c",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
@@ -276,6 +294,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf212aab-4cd9-4cca-ba06-38c2782aabdd",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BlockPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd622872-e204-4fd8-b912-39cc7fc6d28f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BlockReleased",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

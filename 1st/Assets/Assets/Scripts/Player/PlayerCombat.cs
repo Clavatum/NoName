@@ -28,6 +28,7 @@ public class PlayerCombat : MonoBehaviour
     private float fire1Timer;
     private float kickTimer;
     public bool isAttacking;
+    public bool isBlocking;
 
     private void Awake()
     {
@@ -38,7 +39,9 @@ public class PlayerCombat : MonoBehaviour
         playerInputActions.Actions.Fire1.performed += e => Slash();
         playerInputActions.Actions.BigAttack.performed += e => BigAttack();
         playerInputActions.Actions.Kick.performed += e => Kick();
-        
+
+        playerInputActions.Actions.BlockPressed.performed += e => BlockPressed();        
+        playerInputActions.Actions.BlockReleased.performed += e => BlockReleased();        
         playerInputActions.Enable();
     }
 
@@ -107,6 +110,13 @@ public class PlayerCombat : MonoBehaviour
         {
             return;
         }
+        if(playerController.playerStance == PlayerStance.Crouch)
+        {
+            playerAnimator.SetTrigger("CrouchToStand");
+            playerAnimator.SetBool("isCrouching", false);
+            playerController.playerStance = PlayerStance.Stand;
+            playerController.isCrouching = false;
+        }
         if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && combatCoolDown == 0 && playerController.IsGrounded() && (!playerInputActions.Actions.Fire1.triggered || !playerInputActions.Actions.Kick.triggered))
         {
             StartAttacking();
@@ -153,6 +163,18 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    private void BlockPressed()
+    {
+        isBlocking = true;
+        playerAnimator.SetTrigger("BlockPressed");
+    }
+
+    private void BlockReleased()
+    {
+        isBlocking = false;
+        playerAnimator.SetTrigger("BlockReleased");
+    }
+
     #endregion
 
     #region - Events -
@@ -174,6 +196,10 @@ public class PlayerCombat : MonoBehaviour
 
     public void CalculateCombat()
     {
+        if (isBlocking)
+        {
+            playerAnimator.SetBool("CanIdle", false);
+        }
         if (fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
         if (kickTimer >= 0) { kickTimer -= Time.deltaTime; }
         if (combatCoolDown > 0)

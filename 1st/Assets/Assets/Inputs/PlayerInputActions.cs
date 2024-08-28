@@ -221,6 +221,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BlockPressed"",
+                    ""type"": ""Button"",
+                    ""id"": ""11aa1dfa-dddc-483e-95a2-09666c99ba23"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BlockReleased"",
+                    ""type"": ""Button"",
+                    ""id"": ""027c02b8-452a-4541-b0f7-92aa320d7e30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -250,7 +268,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""467e2af5-4784-40c3-a22c-7752ccf581ea"",
                     ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Crouch"",
@@ -300,6 +318,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf212aab-4cd9-4cca-ba06-38c2782aabdd"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BlockPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd622872-e204-4fd8-b912-39cc7fc6d28f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BlockReleased"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -321,6 +361,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Actions_BigAttack = m_Actions.FindAction("BigAttack", throwIfNotFound: true);
         m_Actions_Kick = m_Actions.FindAction("Kick", throwIfNotFound: true);
         m_Actions_Slide = m_Actions.FindAction("Slide", throwIfNotFound: true);
+        m_Actions_BlockPressed = m_Actions.FindAction("BlockPressed", throwIfNotFound: true);
+        m_Actions_BlockReleased = m_Actions.FindAction("BlockReleased", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -459,6 +501,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_BigAttack;
     private readonly InputAction m_Actions_Kick;
     private readonly InputAction m_Actions_Slide;
+    private readonly InputAction m_Actions_BlockPressed;
+    private readonly InputAction m_Actions_BlockReleased;
     public struct ActionsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -470,6 +514,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @BigAttack => m_Wrapper.m_Actions_BigAttack;
         public InputAction @Kick => m_Wrapper.m_Actions_Kick;
         public InputAction @Slide => m_Wrapper.m_Actions_Slide;
+        public InputAction @BlockPressed => m_Wrapper.m_Actions_BlockPressed;
+        public InputAction @BlockReleased => m_Wrapper.m_Actions_BlockReleased;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -500,6 +546,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Slide.started += instance.OnSlide;
             @Slide.performed += instance.OnSlide;
             @Slide.canceled += instance.OnSlide;
+            @BlockPressed.started += instance.OnBlockPressed;
+            @BlockPressed.performed += instance.OnBlockPressed;
+            @BlockPressed.canceled += instance.OnBlockPressed;
+            @BlockReleased.started += instance.OnBlockReleased;
+            @BlockReleased.performed += instance.OnBlockReleased;
+            @BlockReleased.canceled += instance.OnBlockReleased;
         }
 
         private void UnregisterCallbacks(IActionsActions instance)
@@ -525,6 +577,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Slide.started -= instance.OnSlide;
             @Slide.performed -= instance.OnSlide;
             @Slide.canceled -= instance.OnSlide;
+            @BlockPressed.started -= instance.OnBlockPressed;
+            @BlockPressed.performed -= instance.OnBlockPressed;
+            @BlockPressed.canceled -= instance.OnBlockPressed;
+            @BlockReleased.started -= instance.OnBlockReleased;
+            @BlockReleased.performed -= instance.OnBlockReleased;
+            @BlockReleased.canceled -= instance.OnBlockReleased;
         }
 
         public void RemoveCallbacks(IActionsActions instance)
@@ -558,5 +616,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBigAttack(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
+        void OnBlockPressed(InputAction.CallbackContext context);
+        void OnBlockReleased(InputAction.CallbackContext context);
     }
 }
