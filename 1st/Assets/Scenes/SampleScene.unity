@@ -479,7 +479,7 @@ MonoBehaviour:
     jumpingForce: 350
     slideTime: 0.667
     slideCd: 0
-  isTargetMode: 1
+  isTargetMode: 0
   isFaceTarget: 0
   isWalking: 0
   isRunning: 0

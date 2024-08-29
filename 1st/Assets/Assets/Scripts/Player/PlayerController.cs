@@ -527,6 +527,7 @@ public class PlayerController : MonoBehaviour
 
     private void Crouch()
     {
+        if (cameraController.isMapCamActive) { return; }
         if (playerStance == PlayerStance.Crouch)
         {
             if (StanceCheck(playerStandStance.colliderHeight))
