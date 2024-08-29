@@ -70,7 +70,7 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
-        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastSlashComboEnd > 0.5f && slashComboCounter <= slashCombo.Count)
+        if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && Time.time - lastSlashComboEnd > 0.2f && slashComboCounter <= slashCombo.Count)
         { 
             CancelInvoke("EndCombo");
 
@@ -165,8 +165,11 @@ public class PlayerCombat : MonoBehaviour
 
     private void BlockPressed()
     {
-        isBlocking = true;
-        playerAnimator.SetTrigger("BlockPressed");
+        if (!cameraController.isMapCamActive)
+        {
+            isBlocking = true;
+            playerAnimator.SetTrigger("BlockPressed");
+        }
     }
 
     private void BlockReleased()
