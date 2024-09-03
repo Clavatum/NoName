@@ -57,7 +57,7 @@ public class Health : MonoBehaviour
         if(gameObject.tag == "Enemy")
         {
             Debug.Log("hit enemy");
-            //takeDamage.Invoke(damage);
+            takeDamage.Invoke(damage);
         }
     }
 }

@@ -9,7 +9,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] GameObject enemy;
     private HealthBar healthBar;
     private Health health;
-
     public LazyValue<float> _health;
 
     float damage;
@@ -28,9 +27,10 @@ public class Weapon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         damage = player.GetComponent<BaseStats>().GetBaseStat(Stat.Damage);
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && player.GetComponent<PlayerCombat>().isAttacking)
         {
             health.TakeDamage(enemy, damage);
+            Debug.Log(enemy.GetComponent<BaseStats>().GetBaseStat(Stat.Health));
         }
 
         //if (health.IsDead())
