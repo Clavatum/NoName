@@ -1,7 +1,7 @@
+using Combat;
 using System.Collections;
 using UnityEngine;
 using static Models;
-using static UnityEditor.SceneView;
 
 public class PlayerController : MonoBehaviour
 {

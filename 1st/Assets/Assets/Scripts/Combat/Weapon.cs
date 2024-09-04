@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using Attributes;
+using Combat;
+using Stats;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Weapon : MonoBehaviour
 {

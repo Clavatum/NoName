@@ -1,27 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthBar : MonoBehaviour
+namespace Attributes
 {
-    Slider _healthSlider;
-    private void Start()
+    public class PlayerHealthBar : MonoBehaviour
     {
-        _healthSlider = GetComponent<Slider>();
+        Slider _healthSlider;
+        private void Start()
+        {
+            _healthSlider = GetComponent<Slider>();
+        }
+
+        public void SetMaxHealth(float maxHealth
+            )
+        {
+            _healthSlider.maxValue = maxHealth;
+            _healthSlider.value = maxHealth;
+        }
+
+        public void SetHealth(float health)
+        {
+            _healthSlider.value = health;
+        }
+
+
     }
-
-    public void SetMaxHealth(float maxHealth
-        )
-    {
-        _healthSlider.maxValue = maxHealth;
-        _healthSlider.value = maxHealth;
-    }
-
-    public void SetHealth(float health)
-    {
-        _healthSlider.value = health;
-    }
-
-
 }

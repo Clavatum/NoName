@@ -1,63 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour
+namespace Attributes
 {
-    [SerializeField] TakeDamageEvent takeDamage;
-    [SerializeField] UnityEvent onDie;
-    [SerializeField] private PlayerHealthBar healthBar;
-
-    public LazyValue<float> _health;
-
-    private void Awake()
+    public class Health : MonoBehaviour
     {
-        _health = new LazyValue<float>(GetInitialHealth);
-    }
+        [SerializeField] TakeDamageEvent takeDamage;
+        [SerializeField] UnityEvent onDie;
+        [SerializeField] private PlayerHealthBar healthBar;
 
-    public void Start()
-    {
-        _health.ForceInit();
-    }
+        public LazyValue<float> _health;
 
-    [System.Serializable]
-    public class TakeDamageEvent : UnityEvent<float>
-    {
-
-    }
-
-    private float GetInitialHealth()
-    {
-        return GetComponent<BaseStats>().GetBaseStat(Stat.Health);
-    }
-
-    public float GetFraction()
-    {
-        return _health.value / GetComponent<BaseStats>().GetBaseStat(Stat.Health);
-    }
-
-    public bool IsDead()
-    {
-        return _health.value <= 0;
-    }
-
-    public void TakeDamage(GameObject instigator, float damage)
-    {
-        _health.value = Mathf.Max(_health.value - damage, 0);
-        if (gameObject.tag == "Player")
+        private void Awake()
         {
-            healthBar.SetHealth(_health.value);
+            _health = new LazyValue<float>(GetInitialHealth);
         }
-        //if (IsDead())
-        //{
-        //    onDie.Invoke();
-        //}
-        if(gameObject.tag == "Enemy")
+
+        public void Start()
         {
-            Debug.Log("hit enemy");
-            takeDamage.Invoke(damage);
+            _health.ForceInit();
+        }
+
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float>
+        {
+
+        }
+
+        private float GetInitialHealth()
+        {
+            return GetComponent<BaseStats>().GetBaseStat(Stat.Health);
+        }
+
+        public float GetFraction()
+        {
+            return _health.value / GetComponent<BaseStats>().GetBaseStat(Stat.Health);
+        }
+
+        public bool IsDead()
+        {
+            return _health.value <= 0;
+        }
+
+        public void TakeDamage(GameObject instigator, float damage)
+        {
+            _health.value = Mathf.Max(_health.value - damage, 0);
+            if (gameObject.tag == "Player")
+            {
+                healthBar.SetHealth(_health.value);
+            }
+            //if (IsDead())
+            //{
+            //    onDie.Invoke();
+            //}
+            if (gameObject.tag == "Enemy")
+            {
+                Debug.Log("hit enemy");
+                takeDamage.Invoke(damage);
+            }
         }
     }
 }

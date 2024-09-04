@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Weapon/Melee")]
-public class WeaponSO : ScriptableObject
+namespace Combat
 {
-    [SerializeField] GameObject weapon;
-    [SerializeField] float weaponDamage;
-
-    private float GetDamage()
+    [CreateAssetMenu(menuName = "Weapon/Melee")]
+    public class WeaponSO : ScriptableObject
     {
-        return weaponDamage;
+        [SerializeField] GameObject weapon;
+        [SerializeField] float weaponDamage;
+
+        private float GetDamage()
+        {
+            return weaponDamage;
+        }
     }
 }

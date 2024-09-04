@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum Characters
+namespace Stats
 {
-    Player,
-    Enemy
+    public enum Characters
+    {
+        Player,
+        Enemy
+    }
 }
