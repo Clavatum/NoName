@@ -13,20 +13,19 @@ public class CameraController : MonoBehaviour
     public CinemachineVirtualCamera startCamera;
     private CinemachineVirtualCamera currentCam;
 
-    PlayerInputActions playerInputActions;
-    public Transform target;
-    public bool isMapCamActive;
-
     [Header("References")]
+    private PlayerInputActions playerInputActions;
     public PlayerController playerController;
-    public Transform Player;
-    [HideInInspector]
-    public Vector3 targetRotation;
     public GameObject yGimbal;
+    public Transform Player;
+    public Transform target;
+    [HideInInspector]
+    public Vector3 targetRotation;   
     private Vector3 yGimbalRotation;
 
     [Header("Settings")]
     public CameraSettingsModel cameraSettings;
+    public bool isMapCamActive;
 
     private void Awake()
     {
@@ -34,7 +33,6 @@ public class CameraController : MonoBehaviour
         playerInputActions.Movement.LockTarget.performed += e => DetectTarget();
         playerInputActions.Movement.MapCamera.performed += e => EnableMapCam();
         playerInputActions.Enable();
-
     }
 
     private void Start()
@@ -107,7 +105,7 @@ public class CameraController : MonoBehaviour
 
     private void LookAtTarget()
     {
-        var directionToTarget = playerController.target.position - transform.position;
+        var directionToTarget = target.position - transform.position;
         var rotationToTarget = Quaternion.LookRotation(directionToTarget);
 
         transform.rotation = Quaternion.Euler(0, rotationToTarget.eulerAngles.y, 0);
@@ -118,8 +116,10 @@ public class CameraController : MonoBehaviour
         if (IsEnemyNearby() && !playerController.isFaceTarget)
         {
             playerController.isFaceTarget = true;
+            lookAtTargetCam.LookAt = target; 
             ChangeCamera(lookAtTargetCam);
-        }else if (playerController.isFaceTarget)
+        }
+        else if (playerController.isFaceTarget)
         {
             playerController.isFaceTarget = false;
             ChangeCamera(thirdPersonCam);
@@ -142,6 +142,11 @@ public class CameraController : MonoBehaviour
         RaycastHit hitInfo;
         bool isHit = Physics.SphereCast(ray, cameraSettings.sphereCastRadius, out hitInfo, cameraSettings.sphereCastDistance, LayerMask.GetMask("Enemy"));
 
+        if (isHit)
+        {
+            target = hitInfo.transform;  
+        }
+
         return isHit;
     }
 
@@ -151,15 +156,22 @@ public class CameraController : MonoBehaviour
 
     private void ChangeCamera(CinemachineVirtualCamera newCam)
     {
-        currentCam = newCam;
-
-        currentCam.Priority = 20;
-
-        for (int i = 0; i < cameras.Length; i++) 
+        if (newCam != null)
         {
-            if (cameras[i] != currentCam)
+            if (newCam == lookAtTargetCam && target != null)
             {
-                cameras[i].Priority = 10;
+                lookAtTargetCam.LookAt = target; 
+            }
+
+            currentCam = newCam;
+            currentCam.Priority = 20;
+
+            foreach (var cam in cameras)
+            {
+                if (cam != currentCam)
+                {
+                    cam.Priority = 10;
+                }
             }
         }
     }

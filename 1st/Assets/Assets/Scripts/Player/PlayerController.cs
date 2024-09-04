@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     public Transform feetTransform;
     public Transform cameraHolder;
     public Transform cameraTarget;
-    public Transform target;
     public CameraController cameraController;
 
     [HideInInspector]

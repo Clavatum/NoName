@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    [SerializeField] GameObject enemy;
     private HealthBar healthBar;
     private Health health;
     public LazyValue<float> _health;
@@ -15,7 +14,6 @@ public class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        health = enemy.GetComponent<Health>();
         _health = new LazyValue<float>(GetInitialHealth);
     }
 
@@ -26,11 +24,18 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        damage = player.GetComponent<BaseStats>().GetBaseStat(Stat.Damage);
+
         if (other.CompareTag("Enemy") && player.GetComponent<PlayerCombat>().isAttacking)
         {
+            GameObject enemy = other.gameObject;
+
+            health = enemy.GetComponent<Health>();
+
+            damage = player.GetComponent<BaseStats>().GetBaseStat(Stat.Damage);
+
             health.TakeDamage(enemy, damage);
-            Debug.Log(enemy.GetComponent<BaseStats>().GetBaseStat(Stat.Health));
+
+            Debug.Log("Enemy Health after damage: " + enemy.GetComponent<BaseStats>().GetBaseStat(Stat.Health));
         }
 
         //if (health.IsDead())
