@@ -1,7 +1,7 @@
+using Combat;
 using System.Collections;
 using UnityEngine;
 using static Models;
-using static UnityEditor.SceneView;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     public Transform feetTransform;
     public Transform cameraHolder;
     public Transform cameraTarget;
-    public Transform target;
     public CameraController cameraController;
 
     [HideInInspector]
