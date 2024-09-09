@@ -56,15 +56,23 @@ namespace Combat
 
         private void Slash()
         {
-            if (combatCoolDown == 0 && playerController.isRunning) 
+            if(combatCoolDown == 0 && playerController.playerStance == PlayerStance.Slide)
             {
+                StartAttacking();
+                playerAnimator.SetTrigger("SlideAttack");
+                combatCoolDown += bigAttackCd;
+                return;
+            }
+            if (combatCoolDown == 0 && playerController.isRunning ) 
+            {
+                StartAttacking();
                 playerAnimator.SetTrigger("RunningAttack");
                 combatCoolDown += bigAttackCd;
                 return; 
             }
             if (playerController.playerStance == PlayerStance.Slide)
             {
-                return;
+                //return;
             }
             if (playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Slash") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f)
             {
