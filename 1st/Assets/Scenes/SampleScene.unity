@@ -650,6 +650,7 @@ MonoBehaviour:
     StaminaRestore: 35
     StaminaDelay: 2
     StaminaCurrentDelay: 0
+  groundCheckDistance: 0.72
   groundMask:
     serializedVersion: 2
     m_Bits: 55
@@ -3870,21 +3871,18 @@ MonoBehaviour:
   cameraController: {fileID: 9148690325818993963}
   slashCombo:
   - {fileID: 11400000, guid: dd7950f617bdb5141a6e1cf3dae10f0b, type: 2}
-  - {fileID: 11400000, guid: 7e12c2bfdd54c8943b562574c62abf9c, type: 2}
   - {fileID: 11400000, guid: 39877dce1c1c80441988ad54392ac881, type: 2}
   - {fileID: 11400000, guid: 0c8a00bf5410fa74a8f5ce79656e0f73, type: 2}
   kickCombo:
   - {fileID: 11400000, guid: ae607893738f39b419099ddd7ccdc20b, type: 2}
-  - {fileID: 11400000, guid: 2af2157f05170444fa7c3c1711bd4a86, type: 2}
   - {fileID: 11400000, guid: bf17877e79e6fba4eadae2d136c7e683, type: 2}
-  lastSlashClickedTime: 0
   lastSlashComboEnd: 0
   slashComboCounter: 0
-  lastKickClickedTime: 0
   lastKickComboEnd: 0
   kickComboCounter: 0
   combatCoolDown: 0
-  bigAttackCd: 0.7
+  slashCd: 0.5
+  bigAttackCd: 1.3
   crouchSlashCd: 0.35
   isAttacking: 0
   isBlocking: 0
