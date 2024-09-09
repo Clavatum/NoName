@@ -63,6 +63,7 @@ namespace Combat
                 combatCoolDown += bigAttackCd;
                 return;
             }
+
             if (combatCoolDown == 0 && playerController.isRunning ) 
             {
                 StartAttacking();
@@ -70,10 +71,7 @@ namespace Combat
                 combatCoolDown += bigAttackCd;
                 return; 
             }
-            if (playerController.playerStance == PlayerStance.Slide)
-            {
-                //return;
-            }
+            
             if (playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Slash") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f)
             {
                 return;

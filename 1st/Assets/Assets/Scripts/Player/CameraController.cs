@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     [Header("References")]
     private PlayerInputActions playerInputActions;
     public PlayerController playerController;
+    public Animator playerAnimator;
     public GameObject yGimbal;
     public Transform Player;
     public Transform target;
@@ -182,10 +183,12 @@ public class CameraController : MonoBehaviour
         
         if (isMapCamActive)
         {
+            playerAnimator.SetTrigger("UnequipSword");
             ChangeCamera(mapCam);
         }
         else
         {
+            playerAnimator.SetTrigger("EquipSword");
             ChangeCamera(thirdPersonCam);
         }
     }

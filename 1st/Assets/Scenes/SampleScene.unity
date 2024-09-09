@@ -4979,6 +4979,7 @@ MonoBehaviour:
   mapCam: {fileID: 1540190653}
   startCamera: {fileID: 8093437976267327317}
   playerController: {fileID: 359127942}
+  playerAnimator: {fileID: 5866666021689452048}
   yGimbal: {fileID: 75159035210786261}
   Player: {fileID: 543450653383113834}
   target: {fileID: 0}

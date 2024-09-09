@@ -475,13 +475,6 @@ public class PlayerController : MonoBehaviour
         playerStance = PlayerStance.Slide;
         characterAnimator.SetTrigger("Slide");
         characterAnimator.SetBool("CanIdle", false);
-        //if (playerInputActions.Actions.Fire1.triggered && playerCombat.combatCoolDown == 0)
-        //{
-        //    Debug.Log("x");
-        //    playerCombat.StartAttacking();
-        //    characterAnimator.SetTrigger("SlideAttack");
-        //    playerCombat.combatCoolDown += playerCombat.bigAttackCd;
-        //}
         yield return new WaitForSeconds(playerSettings.slideTime);
         
         playerStance = PlayerStance.Stand;
