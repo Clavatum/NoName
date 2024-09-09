@@ -357,7 +357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226921254}
   m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
-  m_LocalPosition: {x: 0.020015132, y: 0.4462533, z: -3.8608706}
+  m_LocalPosition: {x: 0, y: 0.44459295, z: -3.939231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3597,7 +3597,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541695632567293267}
   m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
-  m_LocalPosition: {x: 0.020015132, y: 0.4462533, z: -3.8608706}
+  m_LocalPosition: {x: 0, y: 0.44459295, z: -3.939231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3871,12 +3871,10 @@ MonoBehaviour:
   cameraController: {fileID: 9148690325818993963}
   slashCombo:
   - {fileID: 11400000, guid: dd7950f617bdb5141a6e1cf3dae10f0b, type: 2}
-  - {fileID: 11400000, guid: 7e12c2bfdd54c8943b562574c62abf9c, type: 2}
   - {fileID: 11400000, guid: 39877dce1c1c80441988ad54392ac881, type: 2}
   - {fileID: 11400000, guid: 0c8a00bf5410fa74a8f5ce79656e0f73, type: 2}
   kickCombo:
   - {fileID: 11400000, guid: ae607893738f39b419099ddd7ccdc20b, type: 2}
-  - {fileID: 11400000, guid: 2af2157f05170444fa7c3c1711bd4a86, type: 2}
   - {fileID: 11400000, guid: bf17877e79e6fba4eadae2d136c7e683, type: 2}
   lastSlashComboEnd: 0
   slashComboCounter: 0
