@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     public PlayerStatsModel playerStats;
 
     [Header("Gravity")]
-    private float groundCheckDistance = 0.72f;
+    public float groundCheckDistance = 0.72f;
     public LayerMask groundMask;
 
     [Header("Jumping / Falling")]

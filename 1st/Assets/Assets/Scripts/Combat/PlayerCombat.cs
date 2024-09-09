@@ -15,16 +15,15 @@ namespace Combat
         public List<AttackSO> slashCombo;
         public List<AttackSO> kickCombo;
 
-        public float lastSlashClickedTime;
         public float lastSlashComboEnd;
         public int slashComboCounter;
 
-        public float lastKickClickedTime;
         public float lastKickComboEnd;
         public int kickComboCounter;
 
         public float combatCoolDown;
         private int crouchAttackType;
+        public float slashCd;
         public float bigAttackCd;
         public float crouchSlashCd;
         private float fire1Timer;
@@ -57,6 +56,12 @@ namespace Combat
 
         private void Slash()
         {
+            if (combatCoolDown == 0 && playerController.isRunning) 
+            {
+                playerAnimator.SetTrigger("RunningAttack");
+                combatCoolDown += bigAttackCd;
+                return; 
+            }
             if (playerController.playerStance == PlayerStance.Slide)
             {
                 return;
@@ -89,13 +94,13 @@ namespace Combat
                 }
                 else
                 {
-                    if (Time.time - lastSlashClickedTime >= 0.7f)
+                    if (combatCoolDown == 0)
                     {
                         playerAnimator.runtimeAnimatorController = slashCombo[slashComboCounter].animatorOV;
                         StartAttacking();
                         playerAnimator.Play("Slash", 3, 0);
                         slashComboCounter++;
-                        lastSlashClickedTime = Time.time;
+                        combatCoolDown += slashCd;
 
                         if (slashComboCounter >= slashCombo.Count)
                         {
@@ -149,13 +154,13 @@ namespace Combat
             {
                 CancelInvoke("EndCombo");
 
-                if (Time.time - lastKickClickedTime >= 0.7f)
+                if (combatCoolDown == 0)
                 {
                     playerAnimator.runtimeAnimatorController = kickCombo[kickComboCounter].animatorOV;
                     StartAttacking();
                     playerAnimator.Play("Kick", 3, 0);
                     kickComboCounter++;
-                    lastKickClickedTime = Time.time;
+                    combatCoolDown += slashCd;
 
                     if (kickComboCounter >= kickCombo.Count)
                     {
@@ -202,6 +207,7 @@ namespace Combat
 
         public void CalculateCombat()
         {
+            
             if (isBlocking)
             {
                 playerAnimator.SetBool("CanIdle", false);
