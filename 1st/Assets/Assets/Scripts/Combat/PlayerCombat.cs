@@ -213,11 +213,13 @@ namespace Combat
 
         public void CalculateCombat()
         {
-            
             if (isBlocking)
             {
+                playerAnimator.SetBool("IsBlocking", true);
                 playerAnimator.SetBool("CanIdle", false);
             }
+            else { playerAnimator.SetBool("IsBlocking", false); }
+
             if (fire1Timer >= 0) { fire1Timer -= Time.deltaTime; }
             if (kickTimer >= 0) { kickTimer -= Time.deltaTime; }
             if (combatCoolDown > 0)

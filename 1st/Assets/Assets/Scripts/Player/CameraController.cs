@@ -57,6 +57,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        
     }
 
     #endregion
@@ -75,7 +76,7 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region - Position / Rotation -  
-
+    
     private void CameraRotation()
     {
         var viewInput = playerController.inputView;

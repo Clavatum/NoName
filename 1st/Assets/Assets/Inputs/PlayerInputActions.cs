@@ -334,7 +334,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""cd622872-e204-4fd8-b912-39cc7fc6d28f"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press(behavior=1)"",
+                    ""interactions"": ""Press(pressPoint=0.2,behavior=1)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BlockReleased"",
