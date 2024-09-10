@@ -314,6 +314,10 @@ public class PlayerController : MonoBehaviour
             float animatorVertical = verticalActualSpeed > horizontalActualSpeed ? verticalActualSpeed : horizontalActualSpeed;
 
             characterAnimator.SetFloat("Vertical", animatorVertical);
+            if(animatorVertical < 0.01f)
+            {
+                characterAnimator.SetFloat("Vertical", 0);
+            }
         }
 
         if (IsInputMoving())
@@ -526,6 +530,7 @@ public class PlayerController : MonoBehaviour
 
     private void Crouch()
     {
+        if (playerCombat.isBlocking) { return; }
         if (cameraController.isMapCamActive) { return; }
         if (playerStance == PlayerStance.Crouch)
         {
