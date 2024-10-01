@@ -17,10 +17,12 @@ public class authManager : MonoBehaviour
 
     async void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         await UnityServices.InitializeAsync();
     }
 
-    void Update() // this part will be updated when it s added on other scenes.
+    void Update()
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
