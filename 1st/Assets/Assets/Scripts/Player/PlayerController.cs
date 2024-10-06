@@ -120,12 +120,6 @@ public class PlayerController : MonoBehaviour
         cameraHeight = cameraTarget.localPosition.y;
     }
 
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
     #endregion
 
     #region - FixedUpdate / Update -

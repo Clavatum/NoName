@@ -57,7 +57,16 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        
+        if (isMapCamActive)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     #endregion
