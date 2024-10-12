@@ -385,7 +385,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.13, y: 7.8}
+  m_AnchoredPosition: {x: 4.130005, y: 7.800007}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8075740379924100663
@@ -604,6 +604,7 @@ GameObject:
   - component: {fileID: 6854764825899499672}
   - component: {fileID: 1065918949760240471}
   - component: {fileID: 7140863515902242730}
+  - component: {fileID: 5481001987804244627}
   m_Layer: 0
   m_Name: AxeWielderTower
   m_TagString: Tower
@@ -698,6 +699,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5481001987804244627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826445455064455224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182853006026d7a42be84d16b0396ef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 1997736638195704847, guid: 218161b12c8e6054fb15a1cbb04d058a,
+    type: 3}
+  unitSpacing: 1
+  produceUnitButton: {fileID: 3841671498716498843}
+  upgradeTowerButton: {fileID: 4056809758970081284}
+  roadLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  unitLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &8818515727370362501
 GameObject:
   m_ObjectHideFlags: 0

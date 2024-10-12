@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6854764825899499672}
   - component: {fileID: 1065918949760240471}
   - component: {fileID: 7140863515902242730}
+  - component: {fileID: 4257829832579768997}
   m_Layer: 0
   m_Name: ArcherTower
   m_TagString: Tower
@@ -106,6 +107,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4257829832579768997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826445455064455224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182853006026d7a42be84d16b0396ef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 1997736638195704847, guid: 218161b12c8e6054fb15a1cbb04d058a,
+    type: 3}
+  unitSpacing: 1
+  produceUnitButton: {fileID: 3185512662371130441}
+  upgradeTowerButton: {fileID: 2389656337033291734}
+  roadLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  unitLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &5643078193369596408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417,6 +441,30 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c6993092e0b5345811c25b04a71ec1, type: 3}
+--- !u!114 &2389656337033291734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8032731171201558062, guid: 57c6993092e0b5345811c25b04a71ec1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5643078193369596408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3185512662371130441 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7090085645912087985, guid: 57c6993092e0b5345811c25b04a71ec1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5643078193369596408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5166905067806561435 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 712894199460713827, guid: 57c6993092e0b5345811c25b04a71ec1,

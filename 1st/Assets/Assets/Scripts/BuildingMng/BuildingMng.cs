@@ -18,14 +18,16 @@ public class BuildingMng : MonoBehaviour
     private Transform currentTowerPreview;
     private bool isPlacingTower = false;
 
-    private BoxCollider towerCollider; 
+    private BoxCollider towerCollider;
 
-    private GameObject selectedTower;  
-    private bool isPanelActive = false;  
+    private GameObject selectedTower;
+    private bool isPanelActive = false;
 
-    private GameObject towerUIPanel;  
-    private Button produceUnitButton; 
-    private Button upgradeTowerButton; 
+    private GameObject towerUIPanel;
+    private Button produceUnitButton;
+    private Button upgradeTowerButton;
+
+    private Color originalColor;
 
     private void Awake()
     {
@@ -42,7 +44,7 @@ public class BuildingMng : MonoBehaviour
         }
 
         InstantiateTower();
-        DetectTowerClick();  
+        DetectTowerClick();
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -59,6 +61,25 @@ public class BuildingMng : MonoBehaviour
         return Vector3.zero;
     }
 
+    private bool CanBuildHere(Vector3 position)
+    {
+        Ray ray = new Ray(position + Vector3.up * 10f, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.CompareTag("Buildable"))
+            {
+                return true;
+            }
+            else if (hit.collider.CompareTag("Path"))
+            {
+                return false;
+            }
+        }
+        return false;
+    }
+
     private void MoveTowerWithMouse()
     {
         mouseWorldPosition = GetMouseWorldPosition();
@@ -66,24 +87,34 @@ public class BuildingMng : MonoBehaviour
         if (mouseWorldPosition != Vector3.zero && currentTowerPreview != null)
         {
             currentTowerPreview.position = new Vector3(mouseWorldPosition.x, (currentTowerPreview.localScale.y / 2), mouseWorldPosition.z);
+
+            if (CanBuildHere(mouseWorldPosition) && !IsCollidingWithOtherTower())
+            {
+                currentTowerPreview.GetComponent<Renderer>().material.color = originalColor;
+            }
+            else
+            {
+                currentTowerPreview.GetComponent<Renderer>().material.color = Color.red;
+            }
         }
     }
 
-    private void InstantiateTower()
+    private bool IsCollidingWithOtherTower()
     {
-        if (towerInputActions.Actions.MouseLeft.triggered && isPlacingTower)
-        {
-            if (mouseWorldPosition != Vector3.zero)
-            {
-                if (towerCollider != null)
-                {
-                    towerCollider.enabled = true;
-                }
+        Collider[] colliders = Physics.OverlapBox(
+            currentTowerPreview.position,
+            currentTowerPreview.localScale / 2,
+            Quaternion.identity);
 
-                isPlacingTower = false;
-                currentTowerPreview = null;
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Tower"))
+            {
+                Debug.Log("You can not build tower here");
+                return true;
             }
         }
+        return false;
     }
 
     public void SelectTower(int towerType)
@@ -107,13 +138,38 @@ public class BuildingMng : MonoBehaviour
         }
 
         towerCollider = currentTowerPreview.GetComponent<BoxCollider>();
-
         if (towerCollider != null)
         {
-            towerCollider.enabled = false; 
+            towerCollider.enabled = false;
         }
 
+        originalColor = currentTowerPreview.GetComponent<Renderer>().material.color;
+
         isPlacingTower = true;
+    }
+
+    private void InstantiateTower()
+    {
+        if (towerInputActions.Actions.MouseLeft.triggered && isPlacingTower)
+        {
+            if (mouseWorldPosition != Vector3.zero)
+            {
+                if (!IsCollidingWithOtherTower() && CanBuildHere(mouseWorldPosition))
+                {
+                    if (towerCollider != null)
+                    {
+                        towerCollider.enabled = true;
+                    }
+
+                    isPlacingTower = false;
+                    currentTowerPreview = null;
+                }
+                else
+                {
+                    Debug.Log("You can not build tower here");
+                }
+            }
+        }
     }
 
     private void DetectTowerClick()
@@ -125,44 +181,25 @@ public class BuildingMng : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider != null && hit.collider.gameObject.CompareTag("Tower"))  
+                if (hit.collider != null && hit.collider.gameObject.CompareTag("Tower"))
                 {
                     selectedTower = hit.collider.gameObject;
 
                     towerUIPanel = selectedTower.transform.Find("Canvas/TowerUIPanel")?.gameObject;
-
-                    produceUnitButton = towerUIPanel.transform.Find("ProduceUnitButton")?.GetComponent<Button>();
-                    upgradeTowerButton = towerUIPanel.transform.Find("UpgradeTowerButton")?.GetComponent<Button>();
-
-                    produceUnitButton.onClick.RemoveAllListeners();  
-                    produceUnitButton.onClick.AddListener(() => ProduceUnit());
-
-                    upgradeTowerButton.onClick.RemoveAllListeners();  
-                    upgradeTowerButton.onClick.AddListener(() => UpgradeTower());
 
                     isPanelActive = !isPanelActive;
                     towerUIPanel.SetActive(isPanelActive);
 
                     if (isPanelActive)
                     {
-                        Vector3 panelPosition = selectedTower.transform.position + new Vector3(0, 2, 0);  
+                        Vector3 panelPosition = selectedTower.transform.position + new Vector3(0, 2, 0);
                         towerUIPanel.transform.position = panelPosition;
 
                         towerUIPanel.transform.LookAt(mapCamera.transform);
-                        towerUIPanel.transform.Rotate(0, 180, 0); 
+                        towerUIPanel.transform.Rotate(0, 180, 0);
                     }
                 }
             }
         }
-    }
-
-    private void ProduceUnit()
-    {
-        Debug.Log("Units produced");
-    }
-
-    private void UpgradeTower()
-    {
-        Debug.Log("Tower updated");
     }
 }
