@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 182853006026d7a42be84d16b0396ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 1997736638195704847, guid: 218161b12c8e6054fb15a1cbb04d058a,
+  unitPrefab: {fileID: 1997736638195704847, guid: ac754933ce1c86f41b362c5ea90674ed,
     type: 3}
   unitSpacing: 1
   produceUnitButton: {fileID: 3841671498716498843}

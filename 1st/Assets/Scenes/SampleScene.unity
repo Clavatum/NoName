@@ -1239,9 +1239,9 @@ GameObject:
   - component: {fileID: 426018580}
   - component: {fileID: 426018579}
   - component: {fileID: 426018578}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1347,6 +1347,7 @@ GameObject:
   - component: {fileID: 426786575}
   - component: {fileID: 426786574}
   - component: {fileID: 426786573}
+  - component: {fileID: 426786579}
   m_Layer: 7
   m_Name: Capsule (1)
   m_TagString: Enemy
@@ -1475,6 +1476,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &426786579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426786572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d05b070b3366c6c4b9d8cd348a32524e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 10
+  attackRange: 2
+  attackInterval: 1.5
+  damage: 10
 --- !u!1 &530316757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,6 +2004,7 @@ GameObject:
   - component: {fileID: 917376322}
   - component: {fileID: 917376327}
   - component: {fileID: 917376326}
+  - component: {fileID: 917376328}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Enemy
@@ -2115,6 +2133,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   healthBar: {fileID: 0}
+--- !u!114 &917376328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917376321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d05b070b3366c6c4b9d8cd348a32524e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 10
+  attackRange: 2
+  attackInterval: 1.5
+  damage: 10
 --- !u!1 &989098689
 GameObject:
   m_ObjectHideFlags: 0
