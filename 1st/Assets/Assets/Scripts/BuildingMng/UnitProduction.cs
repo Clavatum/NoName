@@ -49,7 +49,7 @@ public class UnitProduction : MonoBehaviour
     private Vector3 GetNearestRoadPosition()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f, roadLayerMask);
-        Debug.Log($"Detected road colliders: {hitColliders.Length}"); 
+        Debug.Log($"Detected road colliders: {hitColliders.Length}");
 
         if (hitColliders.Length > 0)
         {
@@ -66,10 +66,12 @@ public class UnitProduction : MonoBehaviour
                 }
             }
 
-            return new Vector3(nearestRoad.transform.position.x, nearestRoad.transform.position.y + unitPrefab.localScale.y, nearestRoad.transform.position.z);
+            // Askerin doðrudan yolun üzerine yerleþmesini saðla
+            return new Vector3(nearestRoad.transform.position.x, nearestRoad.transform.position.y, nearestRoad.transform.position.z);
         }
-        return Vector3.zero; 
+        return Vector3.zero;
     }
+
 
     private Vector3 FindEmptySpawnPosition(Vector3 roadPosition, int index)
     {

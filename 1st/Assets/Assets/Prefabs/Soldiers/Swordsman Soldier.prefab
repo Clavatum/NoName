@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7671296733507754823}
   - component: {fileID: 4372180034010947194}
   - component: {fileID: 3749822832356173941}
-  - component: {fileID: 8771315864638333759}
+  - component: {fileID: 9106863770183034607}
   m_Layer: 9
   m_Name: Swordsman Soldier
   m_TagString: Soldier
@@ -108,7 +108,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8771315864638333759
+--- !u!114 &9106863770183034607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,10 +117,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6072776984652478175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fde70e630aa28449bd37d96679d8ca9, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c07d76ca13e8b46b824c6120cfe824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 2
   detectionRange: 8
-  attackRange: 1.5
-  attackInterval: 2
-  damage: 20
+  attackInterval: 1.5
+  damage: 10
+  moveSpeed: 1.54

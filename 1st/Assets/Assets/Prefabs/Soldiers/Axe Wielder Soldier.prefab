@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4372180034010947194}
   - component: {fileID: 3749822832356173941}
   - component: {fileID: 2743733411141813742}
-  - component: {fileID: 8896192771383842991}
+  - component: {fileID: 3528497134753366668}
   m_Layer: 9
   m_Name: Axe Wielder Soldier
   m_TagString: Soldier
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43bcd35a1c0c40ccb6d472893fe2093f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8896192771383842991
+--- !u!114 &3528497134753366668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,10 +130,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6072776984652478175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fde70e630aa28449bd37d96679d8ca9, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c07d76ca13e8b46b824c6120cfe824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 10
   attackRange: 2
-  attackInterval: 1.5
-  damage: 12
+  detectionRange: 5
+  attackInterval: 2
+  damage: 20
+  moveSpeed: 1

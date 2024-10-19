@@ -1058,7 +1058,7 @@ MonoBehaviour:
   groundCheckDistance: 0.72
   groundMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 311
   fallingMovementSpeed: 100
   fallingRunningMovementSpeed: 150
   maxFallingMovementSpeed: 5
@@ -1344,7 +1344,9 @@ GameObject:
   - component: {fileID: 426786578}
   - component: {fileID: 426786577}
   - component: {fileID: 426786576}
+  - component: {fileID: 426786581}
   - component: {fileID: 426786575}
+  - component: {fileID: 426786580}
   - component: {fileID: 426786574}
   - component: {fileID: 426786573}
   - component: {fileID: 426786579}
@@ -1469,7 +1471,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426786572}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.54, y: 1, z: 5.21}
+  m_LocalPosition: {x: -1.8, y: 1, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1485,13 +1487,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 426786572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d05b070b3366c6c4b9d8cd348a32524e, type: 3}
+  m_Script: {fileID: 11500000, guid: f8035e3521f20c34daf71725f7e6aabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 10
   attackRange: 2
+  detectionRange: 10
   attackInterval: 1.5
   damage: 10
+  moveSpeed: 5
+  rotationSpeed: 5
+--- !u!54 &426786580
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426786572}
+  serializedVersion: 4
+  m_Mass: 90
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!95 &426786581
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426786572}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: facd5dabc77514c45952a66ad09bd97b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &530316757
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,16 +2054,18 @@ GameObject:
   - component: {fileID: 917376324}
   - component: {fileID: 917376323}
   - component: {fileID: 917376322}
+  - component: {fileID: 917376329}
   - component: {fileID: 917376327}
   - component: {fileID: 917376326}
   - component: {fileID: 917376328}
+  - component: {fileID: 917376330}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &917376322
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2093,7 +2147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917376321}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.29, y: 1, z: 5.66}
+  m_LocalPosition: {x: -3.26, y: 1, z: 5.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2142,13 +2196,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 917376321}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d05b070b3366c6c4b9d8cd348a32524e, type: 3}
+  m_Script: {fileID: 11500000, guid: f8035e3521f20c34daf71725f7e6aabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 10
   attackRange: 2
+  detectionRange: 10
   attackInterval: 1.5
   damage: 10
+  moveSpeed: 5
+  rotationSpeed: 5
+--- !u!54 &917376329
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917376321}
+  serializedVersion: 4
+  m_Mass: 90
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!95 &917376330
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917376321}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: facd5dabc77514c45952a66ad09bd97b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &989098689
 GameObject:
   m_ObjectHideFlags: 0
