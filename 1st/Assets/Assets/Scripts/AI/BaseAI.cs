@@ -61,6 +61,7 @@ public abstract class BaseAI : MonoBehaviour
         if (distanceToTarget > attackRange)
         {
             MoveTowardsTarget(target); // Hedefe doðru hareket et
+            animator.SetFloat(verticalParam, 1f);
         }
         else
         {
