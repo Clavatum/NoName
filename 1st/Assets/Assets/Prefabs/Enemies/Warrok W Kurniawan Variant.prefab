@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c1d653ec48486c248998f90e0f5150c2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1d653ec48486c248998f90e0f5150c2,
         type: 3}
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 2
   detectionRange: 10
-  attackInterval: 1.5
+  attackInterval: 2
   damage: 10
   moveSpeed: 2
   rotationSpeed: 5
