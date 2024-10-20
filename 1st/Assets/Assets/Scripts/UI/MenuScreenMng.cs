@@ -22,11 +22,17 @@ public class MenuManager : MonoBehaviour
     public Slider soundSlider;
     public TMP_Text soundValueText;
 
+    [Header("UI References")]
+    public TMP_Text usernameText; 
+
     private int gamesPlayed = 0;
     private int gamesWon = 0;
 
     void Start()
     {
+        string username = PlayerPrefs.GetString("Username", "Guest"); 
+        usernameText.text = username; 
+
         statsPanel.SetActive(false);
         settingsPanel.SetActive(false);
 

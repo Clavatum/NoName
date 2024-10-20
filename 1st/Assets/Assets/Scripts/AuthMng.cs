@@ -88,7 +88,7 @@ public class authManager : MonoBehaviour
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
             Debug.Log("SignIn is successful.");
             logTxt.text = "SignIn is successful.";
-            LoadGameSceneByIndex(1);
+            LoadGameSceneByIndex(1, username); 
         }
         catch (AuthenticationException ex)
         {
@@ -102,8 +102,9 @@ public class authManager : MonoBehaviour
         }
     }
 
-    void LoadGameSceneByIndex(int sceneIndex)
+    void LoadGameSceneByIndex(int sceneIndex, string username)
     {
+        PlayerPrefs.SetString("Username", username); 
         SceneManager.LoadScene(sceneIndex);
     }
 }
