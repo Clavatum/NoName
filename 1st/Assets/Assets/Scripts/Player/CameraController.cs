@@ -15,11 +15,13 @@ public class CameraController : MonoBehaviour
 
     [Header("References")]
     private PlayerInputActions playerInputActions;
+    public PausePanelMng pausePanelMng;
     public PlayerController playerController;
     public Animator playerAnimator;
     public GameObject yGimbal;
     public Transform Player;
     public Transform target;
+    public GameObject towerButtons;
     [HideInInspector]
     public Vector3 targetRotation;   
     private Vector3 yGimbalRotation;
@@ -57,7 +59,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (isMapCamActive)
+        if (isMapCamActive || pausePanelMng.isPaused)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -193,11 +195,13 @@ public class CameraController : MonoBehaviour
         
         if (isMapCamActive)
         {
+            towerButtons.SetActive(true);
             playerAnimator.SetTrigger("UnequipSword");
             ChangeCamera(mapCam);
         }
         else
         {
+            towerButtons.SetActive(false);
             playerAnimator.SetTrigger("EquipSword");
             ChangeCamera(thirdPersonCam);
         }
