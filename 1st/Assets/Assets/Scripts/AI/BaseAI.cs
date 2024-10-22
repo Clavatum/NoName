@@ -20,7 +20,7 @@ public abstract class BaseAI : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    protected virtual void FixedUpdate()
+    protected virtual void Update()
     {
         if (target == null)
         {
@@ -92,12 +92,7 @@ public abstract class BaseAI : MonoBehaviour
     {
         if (attackCooldown <= 0f)
         {
-            Debug.Log($"Attacking target for {damage} damage!");
-
-            if (animator != null)
-            {
-                animator.SetTrigger(attackTrigger);
-            }
+            animator.SetTrigger(attackTrigger);
 
             attackCooldown = attackInterval;
         }
