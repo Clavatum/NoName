@@ -30,26 +30,18 @@ public class UnitProduction : MonoBehaviour
                 if (spawnPosition != Vector3.zero)
                 {
                     Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
-                    Debug.Log($"Unit spawned at: {spawnPosition}"); 
                 }
                 else
                 {
-                    Debug.Log("No valid spawn position found for unit."); 
                     break; 
                 }
             }
-            Debug.Log("Units produced");
-        }
-        else
-        {
-            Debug.Log("No road found nearby.");
         }
     }
 
     private Vector3 GetNearestRoadPosition()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f, roadLayerMask);
-        Debug.Log($"Detected road colliders: {hitColliders.Length}");
 
         if (hitColliders.Length > 0)
         {
@@ -66,7 +58,6 @@ public class UnitProduction : MonoBehaviour
                 }
             }
 
-            // Askerin doðrudan yolun üzerine yerleþmesini saðla
             return new Vector3(nearestRoad.transform.position.x, nearestRoad.transform.position.y, nearestRoad.transform.position.z);
         }
         return Vector3.zero;
@@ -100,7 +91,6 @@ public class UnitProduction : MonoBehaviour
             }
         }
 
-        Debug.Log("No valid spawn position found for unit."); 
         return Vector3.zero; 
     }
 
@@ -115,8 +105,6 @@ public class UnitProduction : MonoBehaviour
         {
             return true; 
         }
-
-        Debug.Log("Spawn position is not valid (not on road)."); 
         return false; 
     }
 

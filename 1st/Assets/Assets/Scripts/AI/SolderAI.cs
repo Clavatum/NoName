@@ -14,8 +14,8 @@ public class SoldierAI : BaseAI
 
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
-        Vector3 direction = (target.position - transform.position).normalized; // Hedefin yönünü bul
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)); // Yalnýzca y eksenini kullan
+        Vector3 direction = (target.position - transform.position).normalized; 
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)); 
 
         Quaternion currentRotation = transform.rotation;
 
