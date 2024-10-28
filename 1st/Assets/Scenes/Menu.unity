@@ -2852,6 +2852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalKills: 0
+  totalKillsInGame: 0
   goldSpent: 0
   goldEarned: 0
   totalGold: 0
@@ -2875,7 +2876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1965060211
 RectTransform:
   m_ObjectHideFlags: 0

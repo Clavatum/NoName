@@ -15,12 +15,12 @@ public abstract class BaseAI : MonoBehaviour
     protected string verticalParam = "Vertical";
     protected string attackTrigger = "Attack";
 
-    public bool isAttacking; // Tracks whether the AI is currently attacking
+    public bool isAttacking; 
 
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
-        isAttacking = false; // Initialize isAttacking as false
+        isAttacking = false; 
     }
 
     protected virtual void Update()
@@ -63,13 +63,13 @@ public abstract class BaseAI : MonoBehaviour
         if (distanceToTarget > attackRange)
         {
             MoveTowardsTarget(target);
-            animator.SetFloat(verticalParam, 1f); // Move animation
+            animator.SetFloat(verticalParam, 1f); 
         }
         else
         {
             LookAtTarget(target);
 
-            animator.SetFloat(verticalParam, 0f); // Stop movement when in attack range
+            animator.SetFloat(verticalParam, 0f); 
             HandleAttack();
         }
 
@@ -92,40 +92,20 @@ public abstract class BaseAI : MonoBehaviour
     {
         if (attackCooldown <= 0f)
         {
-            animator.SetTrigger(attackTrigger); // Trigger attack animation
+            animator.SetTrigger(attackTrigger); 
 
-            //StartAttack(); // Start attack sequence
             attackCooldown = attackInterval;
         }
-        else
-        {
-            //StopAttack(); // Ensure attack stops when not attacking
-        }
     }
 
-    /*// New method to start attack
-    protected void StartAttack()
-    {
-        isAttacking = true; // Set isAttacking to true at the start of attack
-        animator.SetTrigger(attackTrigger); // Trigger attack animation
-    }
-
-    // New method to stop attack
-    protected void StopAttack()
-    {
-        isAttacking = false; // Reset isAttacking when attack ends
-    }*/
-
-    // Animation event method to call when attack starts (if using animation events)
     public void OnAttackStart()
     {
-        isAttacking = true; // Can be triggered via animation event
+        isAttacking = true; 
     }
 
-    // Animation event method to call when attack ends (if using animation events)
     public void OnAttackEnd()
     {
-        isAttacking = false; // Can be triggered via animation event
+        isAttacking = false; 
     }
 
     public abstract void MoveTowardsTarget(Transform target);

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class DamageTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject character; // Character object assigned in Inspector
-    public float damageAmount = 10f; // Damage dealt
+    [SerializeField] private GameObject character; 
+    public float damageAmount = 10f; 
     private Collider triggerCollider;
     private bool isAttacking = false;
 
@@ -14,14 +14,12 @@ public class DamageTrigger : MonoBehaviour
 
     private void Start()
     {
-        // Ensure character is assigned
         if (character == null)
         {
             Debug.LogError("Character reference is missing on DamageTrigger.");
-            return; // Exit early if character is not assigned
+            return; 
         }
 
-        // Fetch only the relevant component
         if (character.tag == "Player")
         {
             playerCombat = character.GetComponent<PlayerCombat>();
@@ -47,7 +45,6 @@ public class DamageTrigger : MonoBehaviour
             }
         }
 
-        // Get the trigger collider and disable it initially
         triggerCollider = GetComponent<Collider>();
         if (triggerCollider == null)
         {
@@ -55,17 +52,16 @@ public class DamageTrigger : MonoBehaviour
             return;
         }
 
-        triggerCollider.enabled = false; // Start with the collider disabled
+        triggerCollider.enabled = false; 
     }
 
     private void Update()
     {
         if (character == null)
         {
-            return; // Exit early if character is not set
+            return; 
         }
 
-        // Update isAttacking flag based on which component is available
         if (playerCombat != null)
         {
             isAttacking = playerCombat.isAttacking;
@@ -79,7 +75,6 @@ public class DamageTrigger : MonoBehaviour
             isAttacking = soldierAI.isAttacking;
         }
 
-        // Enable or disable collider based on isAttacking state
         if (isAttacking)
         {
             EnableCollider();
@@ -95,7 +90,6 @@ public class DamageTrigger : MonoBehaviour
         HealthSystem health = other.GetComponent<HealthSystem>();
         if (health != null)
         {
-            // Attack eden karakterin tag'ini ekliyoruz
             health.TakeDamage(damageAmount, character.tag);
             Debug.Log($"Damage applied to {other.name} by {character.name}.");
         }

@@ -7,6 +7,8 @@ public class YouWinPanelMng : MonoBehaviour
 {
     public GameObject youWinPanel;
 
+    private GameStatsManager gameStatsManager;
+
     private Animator animator;
 
     public bool gameWon;
@@ -16,6 +18,8 @@ public class YouWinPanelMng : MonoBehaviour
     {
         youWinPanel.SetActive(false);
 
+        gameStatsManager = GameStatsManager.Instance;
+
         animator = youWinPanel.GetComponent<Animator>();
     }
 
@@ -23,6 +27,7 @@ public class YouWinPanelMng : MonoBehaviour
     {
         if (gameWon && !hasShownYouWin)
         {
+            gameStatsManager.CompleteGame();
             ShowGameOverPanel();
         }
     }
@@ -40,7 +45,6 @@ public class YouWinPanelMng : MonoBehaviour
     {
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-        //Time.timeScale = 0f;
         StartCoroutine(LoadGameReviewScene());
     }
 

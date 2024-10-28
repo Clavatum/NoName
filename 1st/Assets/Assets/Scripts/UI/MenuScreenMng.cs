@@ -11,10 +11,10 @@ public class MenuScreenManager : MonoBehaviour
     public TMP_Text gamesPlayedText;
     public TMP_Text gamesWonText;
 
-    public TMP_Text totalKillsText;           // Toplam öldürülen düþman sayýsý
-    public TMP_Text bestCompletionTimeText;   // En kýsa sürede oyunu bitirme süresi
-    public TMP_Text totalPlayTimeText;        // Toplam oynama süresi
-    public TMP_Text totalGoldText;            // Toplam altýn miktarý
+    public TMP_Text totalKillsText;           
+    public TMP_Text bestCompletionTimeText;   
+    public TMP_Text totalPlayTimeText;        
+    public TMP_Text totalGoldText;            
 
     public Button startButton;
     public Button settingsButton;
@@ -102,7 +102,6 @@ public class MenuScreenManager : MonoBehaviour
         gamesPlayedText.text = "Games Played: " + gamesPlayed.ToString();
         gamesWonText.text = "Games Won: " + gamesWon.ToString();
 
-        // Yeni eklenen istatistiklerin güncellenmesi
         totalKillsText.text = "Total Kills: " + PlayerPrefs.GetInt("TotalKills", 0);
         totalGoldText.text = "Total Gold: " + PlayerPrefs.GetFloat("TotalGold", 0f).ToString("F2");
         totalPlayTimeText.text = "Total Play Time: " + FormatTime(PlayerPrefs.GetFloat("TotalPlayTime", 0f));

@@ -4,16 +4,17 @@ public class GameStatsManager : MonoBehaviour
 {
     public static GameStatsManager Instance;
 
-    public int totalKills = 0;         // Öldürülen düþman sayýsý
-    public float goldSpent = 0f;       // Harcanan altýn
-    public float goldEarned = 0f;      // Kazanýlan altýn
-    public float totalGold = 0f;       // Toplam altýn (kalýcý)
+    public int totalKills = 0;         
+    public int totalKillsInGame = 0;         
+    public float goldSpent = 0f;       
+    public float goldEarned = 0f;      
+    public float totalGold = 0f;       
 
-    public float completionTime = 0f;  // Bu oyun için tamamlanma süresi
-    public float bestCompletionTime = Mathf.Infinity; // En kýsa tamamlanma süresi
-    public float totalPlayTime = 0f;   // Toplam oynama süresi (kalýcý)
+    public float completionTime = 0f;  
+    public float bestCompletionTime = Mathf.Infinity;
+    public float totalPlayTime = 0f;   
 
-    private float startTime;           // Oyun baþlangýç zamaný
+    private float startTime;           
 
     void Awake()
     {
@@ -21,7 +22,7 @@ public class GameStatsManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadGameStats();  // Oyun istatistiklerini yükle
+            LoadGameStats();  
         }
         else
         {
@@ -31,12 +32,13 @@ public class GameStatsManager : MonoBehaviour
 
     void Start()
     {
-        startTime = Time.time;  // Oyun baþlangýç zamaný
+        startTime = Time.time;  
     }
 
     public void AddKill()
     {
         totalKills++;
+        totalKillsInGame++;
     }
 
     public void SpendGold(float amount)
@@ -53,20 +55,17 @@ public class GameStatsManager : MonoBehaviour
 
     public void CompleteGame()
     {
-        completionTime = Time.time - startTime;  // Oyun süresi
-        totalPlayTime += completionTime;         // Toplam oynama süresi artar
+        completionTime = Time.time - startTime; 
+        totalPlayTime += completionTime;         
 
-        // En kýsa tamamlanma süresi güncellenir
         if (completionTime < bestCompletionTime)
         {
             bestCompletionTime = completionTime;
         }
 
-        // Altýn ve diðer deðerler kaydedilir
         SaveGameStats();
     }
 
-    // Ýstatistikleri PlayerPrefs ile kaydetme
     public void SaveGameStats()
     {
         PlayerPrefs.SetFloat("TotalGold", totalGold);
@@ -76,7 +75,6 @@ public class GameStatsManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // Ýstatistikleri yükleme
     public void LoadGameStats()
     {
         totalGold = PlayerPrefs.GetFloat("TotalGold", 0f);

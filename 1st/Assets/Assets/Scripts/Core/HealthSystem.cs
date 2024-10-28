@@ -11,7 +11,7 @@ public class HealthSystem : MonoBehaviour
     private CharacterStats characterStats;
     private bool isDead = false;
 
-    public float goldOnDeath = 10f;  // Düþman öldüðünde kazandýrdýðý altýn miktarý
+    public float goldOnDeath = 10f;  
 
     void Start()
     {
@@ -87,11 +87,10 @@ public class HealthSystem : MonoBehaviour
 
         DisableActions();
 
-        // Eðer Player karakteri bu düþmaný öldürdüyse, öldürülen düþman sayýsýný artýr
         if (attackerTag == "Player")
         {
-            GameStatsManager.Instance.AddKill();  // Düþman öldürme sayýsýný artýr
-            GameStatsManager.Instance.EarnGold(goldOnDeath);  // Altýn kazan
+            GameStatsManager.Instance.AddKill();  
+            GameStatsManager.Instance.EarnGold(goldOnDeath);  
         }
 
         Invoke(nameof(DestroyCharacter), 4f);
