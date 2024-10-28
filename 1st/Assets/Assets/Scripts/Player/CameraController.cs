@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     [Header("References")]
     private PlayerInputActions playerInputActions;
     public PausePanelMng pausePanelMng;
+    public GameOverPanelMng gameOverPanelMng;
+    public YouWinPanelMng youWinPanelMng;
     public PlayerController playerController;
     public Animator playerAnimator;
     public GameObject yGimbal;
@@ -59,7 +61,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (isMapCamActive || pausePanelMng.isPaused)
+        if (isMapCamActive || pausePanelMng.isPaused || gameOverPanelMng.isGameOver || youWinPanelMng.gameWon)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
