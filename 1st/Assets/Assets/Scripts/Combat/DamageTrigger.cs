@@ -11,6 +11,7 @@ public class DamageTrigger : MonoBehaviour
     private PlayerCombat playerCombat;
     private EnemyAI enemyAI;
     private SoldierAI soldierAI;
+    [SerializeField] private bool isRanged = false;
 
     private void Start()
     {
@@ -51,8 +52,10 @@ public class DamageTrigger : MonoBehaviour
             Debug.LogError("Trigger collider is missing on DamageTrigger.");
             return;
         }
-
-        triggerCollider.enabled = false; 
+        if (!isRanged) 
+        {
+            triggerCollider.enabled = false;
+        }
     }
 
     private void Update()
@@ -75,11 +78,11 @@ public class DamageTrigger : MonoBehaviour
             isAttacking = soldierAI.isAttacking;
         }
 
-        if (isAttacking)
+        if (isAttacking && !isRanged)
         {
             EnableCollider();
         }
-        else
+        else if(!isAttacking && !isRanged)
         {
             DisableCollider();
         }
@@ -92,6 +95,10 @@ public class DamageTrigger : MonoBehaviour
         {
             health.TakeDamage(damageAmount, character.tag);
             Debug.Log($"Damage applied to {other.name} by {character.name}.");
+        }
+        if (isRanged)
+        {
+            Destroy(gameObject);
         }
     }
 

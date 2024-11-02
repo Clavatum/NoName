@@ -9,6 +9,7 @@ TagManager:
   - Buildable
   - Path
   - Soldier
+  - Arrow
   layers:
   - Default
   - TransparentFX

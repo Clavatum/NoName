@@ -29,7 +29,7 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage, string attackerTag)
     {
-        if (attackerTag == gameObject.tag || (attackerTag == "Player" && gameObject.tag == "Soldier"))
+        if (attackerTag == gameObject.tag || (attackerTag == "Player" && gameObject.tag == "Soldier") || (attackerTag == "Soldier" && gameObject.tag == "Player") || (attackerTag == "Arrow" && gameObject.tag == "Player"))
         {
             Debug.Log("Friendly fire prevented!");
             return;

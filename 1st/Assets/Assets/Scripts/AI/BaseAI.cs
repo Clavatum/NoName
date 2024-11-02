@@ -92,8 +92,7 @@ public abstract class BaseAI : MonoBehaviour
     {
         if (attackCooldown <= 0f)
         {
-            animator.SetTrigger(attackTrigger); 
-
+            animator.SetTrigger(attackTrigger);
             attackCooldown = attackInterval;
         }
     }
