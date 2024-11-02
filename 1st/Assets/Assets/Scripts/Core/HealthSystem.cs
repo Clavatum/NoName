@@ -7,21 +7,20 @@ public class HealthSystem : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
     public Slider healthBar;
-    private Animator animator;  // Animator fetched from component
-    private CharacterStats characterStats; // Reference to CharacterStats script
-    private bool isDead = false; // Track if the character is dead
+    private Animator animator;
+    private CharacterStats characterStats;
+    private bool isDead = false;
+
+    public float goldOnDeath = 10f;  
 
     void Start()
     {
-        // Fetch the Animator component
         animator = GetComponent<Animator>();
-
-        // Fetch the CharacterStats script to access its properties
         characterStats = GetComponent<CharacterStats>();
 
         if (characterStats != null)
         {
-            maxHealth = characterStats.maxHealth; // Use maxHealth from CharacterStats
+            maxHealth = characterStats.maxHealth;
             currentHealth = maxHealth;
         }
 
@@ -30,27 +29,24 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage, string attackerTag)
     {
-        // Eðer karakter ölmüþse hiçbir iþlem yapýlmaz
-        // Karakterlerin ayný tag'e sahip olup olmadýðýný kontrol et
-        if (attackerTag == gameObject.tag)
+        if (attackerTag == gameObject.tag || (attackerTag == "Player" && gameObject.tag == "Soldier") || (attackerTag == "Soldier" && gameObject.tag == "Player") || (attackerTag == "Arrow" && gameObject.tag == "Player"))
         {
             Debug.Log("Friendly fire prevented!");
-            return; // Ayný tag'e sahiplerse hasar iþlemini sonlandýr
+            return;
         }
 
         if (characterStats != null && characterStats.hasShield && characterStats.shield > 0)
         {
             characterStats.shield -= damage;
-            Debug.Log($"{gameObject.name} kalkan hasarý: {characterStats.shield}");
 
             if (characterStats.shield < 0)
             {
-                damage = -characterStats.shield; // Eðer kalkan sýfýrýn altýna düþerse kalan hasar
+                damage = -characterStats.shield;
                 characterStats.shield = 0;
             }
             else
             {
-                damage = 0; // Kalkan hasarý tamamen emdi
+                damage = 0;
             }
         }
 
@@ -58,7 +54,7 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth <= 0 && !isDead)
         {
             currentHealth = 0;
-            Die();
+            Die(attackerTag);
         }
         else
         {
@@ -67,52 +63,54 @@ public class HealthSystem : MonoBehaviour
         UpdateHealthBar();
     }
 
-
     void TriggerImpact()
     {
         if (animator != null)
         {
-            animator.SetTrigger("Impact"); // Play Impact animation
+            animator.SetTrigger("Impact");
         }
     }
 
-    void Die()
+    void Die(string attackerTag)
     {
         if (isDead)
         {
-            return; // Ensure Die() is only called once
+            return;
         }
 
-        isDead = true; // Set isDead to true to prevent further actions
+        isDead = true;
 
         if (animator != null)
         {
-            animator.SetTrigger("Death"); // Play Death animation
+            animator.SetTrigger("Death");
         }
 
-        // Disable any movement, combat, or other scripts here
         DisableActions();
 
-        // Optionally destroy the character after some time
+        if (attackerTag == "Player")
+        {
+            GameStatsManager.Instance.AddKill();  
+            GameStatsManager.Instance.EarnGold(goldOnDeath);  
+        }
+
         Invoke(nameof(DestroyCharacter), 4f);
     }
 
     void DestroyCharacter()
     {
-        Destroy(gameObject); // Destroy the character after 5 seconds
+        Destroy(gameObject);
     }
 
     void UpdateHealthBar()
     {
         if (healthBar != null)
         {
-            healthBar.value = currentHealth / maxHealth; // Update health bar
+            healthBar.value = currentHealth / maxHealth;
         }
     }
 
     void DisableActions()
     {
-        // Here you can disable other scripts like movement and combat
         if (TryGetComponent(out PlayerCombat playerCombat))
         {
             playerCombat.enabled = false;
@@ -125,18 +123,9 @@ public class HealthSystem : MonoBehaviour
         {
             soldierAI.enabled = false;
         }
-
-        // If there's a movement script, disable it as well
         if (TryGetComponent(out BaseAI movement))
         {
             movement.enabled = false;
         }
-
-        /*// Disable collider interaction but leave the collider itself active if needed
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (Collider col in colliders)
-        {
-            col.isTrigger = true; // Optionally make colliders triggers instead of disabling them
-        }*/
     }
 }

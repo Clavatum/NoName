@@ -65,8 +65,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8390977777147551277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 14.876608}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6942805805714431482}
@@ -75,7 +75,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 368.12686, y: 197.5}
+  m_AnchoredPosition: {x: 1.78, y: 0.8}
   m_SizeDelta: {x: 702, y: 395}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8858026278199823473
@@ -270,7 +270,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2608135994329353697, guid: 6c740dbd50e735a45afbf1d363a68cb6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -902,6 +903,7 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 2
   rotationSpeed: 5
+  isAttacking: 0
 --- !u!114 &-2863356862631345641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,7 +935,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   healthBar: {fileID: 4278497450524653265}
-  healthBarPosition: {fileID: 6942805805714431482}
+  goldOnDeath: 10
 --- !u!1 &8569843381452642167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2715566404302941441, guid: b9e2d185c99b0204e8594e5aabfde3a8,
@@ -952,6 +954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 658116eb2859ba04e9f7e91ecfa07ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 6881776992615434023}
   damageAmount: 30
 --- !u!65 &7138394430493952090
 BoxCollider:

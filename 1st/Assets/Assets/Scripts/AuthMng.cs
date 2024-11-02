@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class authManager : MonoBehaviour
+public class AuthMng : MonoBehaviour
 {
     [Header("UI References")]
     public TMP_InputField userNameInput;
@@ -88,7 +88,7 @@ public class authManager : MonoBehaviour
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
             Debug.Log("SignIn is successful.");
             logTxt.text = "SignIn is successful.";
-            LoadGameSceneByIndex(1, username); 
+            LoadGameSceneByIndex(1, username);
         }
         catch (AuthenticationException ex)
         {
@@ -104,7 +104,7 @@ public class authManager : MonoBehaviour
 
     void LoadGameSceneByIndex(int sceneIndex, string username)
     {
-        PlayerPrefs.SetString("Username", username); 
+        PlayerPrefs.SetString("Username", username);
         SceneManager.LoadScene(sceneIndex);
     }
 }
