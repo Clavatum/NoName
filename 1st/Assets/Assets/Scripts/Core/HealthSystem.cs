@@ -4,17 +4,18 @@ using UnityEngine.UI;
 
 public class HealthSystem : MonoBehaviour
 {
-    public float maxHealth = 100f;
+    public float maxHealth;
     public float currentHealth;
     public Slider healthBar;
     private Animator animator;
     private CharacterStats characterStats;
+    [SerializeField] private GameOverPanelMng gameOverPanelMng;
     private bool isDead = false;
 
-    public float goldOnDeath = 10f;  
+    public float goldOnDeath = 10f;
 
     void Start()
-    {
+    {       
         animator = GetComponent<Animator>();
         characterStats = GetComponent<CharacterStats>();
 
@@ -34,7 +35,10 @@ public class HealthSystem : MonoBehaviour
             Debug.Log("Friendly fire prevented!");
             return;
         }
-
+        if (PlayerCombat.isBlocking)
+        {
+            damage /= 2f;
+        }
         if (characterStats != null && characterStats.hasShield && characterStats.shield > 0)
         {
             characterStats.shield -= damage;
@@ -51,7 +55,14 @@ public class HealthSystem : MonoBehaviour
         }
 
         currentHealth -= damage;
-        if (currentHealth <= 0 && !isDead)
+        if(currentHealth <= 0 && !isDead && gameObject.CompareTag("Player"))
+        {
+            Debug.Log("d");
+            gameOverPanelMng.isGameOver = true;
+            currentHealth = 0;
+            Die(attackerTag);
+        }
+        else if (currentHealth <= 0 && !isDead)
         {
             currentHealth = 0;
             Die(attackerTag);
@@ -82,7 +93,9 @@ public class HealthSystem : MonoBehaviour
 
         if (animator != null)
         {
+            animator.SetBool("IsDead", true);
             animator.SetTrigger("Death");
+            gameObject.tag = "Dead";
         }
 
         DisableActions();

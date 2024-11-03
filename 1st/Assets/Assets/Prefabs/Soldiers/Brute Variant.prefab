@@ -935,6 +935,8 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   healthBar: {fileID: 4278497450524653265}
+  gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
+    type: 3}
   goldOnDeath: 10
 --- !u!1 &8569843381452642167 stripped
 GameObject:
@@ -956,6 +958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 6881776992615434023}
   damageAmount: 30
+  isRanged: 0
 --- !u!65 &7138394430493952090
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -424,7 +424,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (!IsGrounded() || cameraController.isMapCamActive || playerCombat.isBlocking)
+        if (!IsGrounded() || cameraController.isMapCamActive || PlayerCombat.isBlocking)
         {
             return;
         }
@@ -524,7 +524,7 @@ public class PlayerController : MonoBehaviour
 
     private void Crouch()
     {
-        if (playerCombat.isBlocking) { return; }
+        if (PlayerCombat.isBlocking) { return; }
         if (cameraController.isMapCamActive) { return; }
         if (playerStance == PlayerStance.Crouch)
         {
