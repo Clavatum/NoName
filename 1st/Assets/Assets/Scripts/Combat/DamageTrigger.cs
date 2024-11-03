@@ -13,6 +13,7 @@ public class DamageTrigger : MonoBehaviour
     private SoldierAI soldierAI;
     [SerializeField] private bool isRanged = false;
 
+
     private void Start()
     {
         if (character == null)
@@ -111,6 +112,5 @@ public class DamageTrigger : MonoBehaviour
     public void DisableCollider()
     {
         triggerCollider.enabled = false;
-        Debug.Log("Collider disabled");
     }
 }

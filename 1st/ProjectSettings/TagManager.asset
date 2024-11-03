@@ -10,6 +10,7 @@ TagManager:
   - Path
   - Soldier
   - Arrow
+  - Dead
   layers:
   - Default
   - TransparentFX

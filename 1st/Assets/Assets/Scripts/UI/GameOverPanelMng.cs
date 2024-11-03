@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
+
 
 public class GameOverPanelMng : MonoBehaviour
 {
@@ -27,7 +29,8 @@ public class GameOverPanelMng : MonoBehaviour
     {
         if (isGameOver && !hasShownGameOver)
         {
-            ShowGameOverPanel();  
+            ShowGameOverPanel();
+            hasShownGameOver = true;
         }
     }
 
@@ -45,12 +48,11 @@ public class GameOverPanelMng : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    public void ShowGameOverPanel()
+    async void ShowGameOverPanel()
     {
+        await Task.Delay(2000);
         gameOverPanel.SetActive(true);    
         animator.SetTrigger("Show");      
-        hasShownGameOver = true;          
-
         StartCoroutine(StopGameAfterAnimation());
     }
 

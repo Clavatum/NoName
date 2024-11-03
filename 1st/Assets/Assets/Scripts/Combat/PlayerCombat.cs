@@ -29,7 +29,7 @@ namespace Combat
         private float fire1Timer;
         private float kickTimer;
         public bool isAttacking;
-        public bool isBlocking;
+        public static bool isBlocking;
 
         private void Awake()
         {

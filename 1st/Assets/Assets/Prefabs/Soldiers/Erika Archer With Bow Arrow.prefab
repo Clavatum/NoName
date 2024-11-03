@@ -624,6 +624,8 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   healthBar: {fileID: 4376911887161051162}
+  gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
+    type: 3}
   goldOnDeath: 10
 --- !u!114 &3591837847752268852
 MonoBehaviour:

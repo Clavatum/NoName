@@ -722,6 +722,8 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   healthBar: {fileID: 5911394865256303293}
+  gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
+    type: 3}
   goldOnDeath: 10
 --- !u!114 &3268139088970493058
 MonoBehaviour:
@@ -780,6 +782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 6404831172947844036}
   damageAmount: 20
+  isRanged: 0
 --- !u!1001 &7920755702274162032
 PrefabInstance:
   m_ObjectHideFlags: 0
