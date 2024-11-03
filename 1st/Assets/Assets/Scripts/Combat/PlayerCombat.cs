@@ -132,7 +132,7 @@ namespace Combat
             }
             if (!playerController.jumpingTriggered && !isAttacking && !cameraController.isMapCamActive && combatCoolDown == 0 && playerController.IsGrounded() && (!playerInputActions.Actions.Fire1.triggered || !playerInputActions.Actions.Kick.triggered))
             {
-                StartAttacking();
+                //StartAttacking();
                 combatCoolDown += bigAttackCd;
                 playerAnimator.SetTrigger("BigAttack");
             }
@@ -163,7 +163,7 @@ namespace Combat
                 if (combatCoolDown == 0)
                 {
                     playerAnimator.runtimeAnimatorController = kickCombo[kickComboCounter].animatorOV;
-                    StartAttacking();
+                    //StartAttacking();
                     playerAnimator.Play("Kick", 3, 0);
                     kickComboCounter++;
                     combatCoolDown += slashCd;
