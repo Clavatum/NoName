@@ -328,6 +328,13 @@ MonoBehaviour:
   moveSpeed: 4
   rotationSpeed: 5
   isAttacking: 0
+  patrolPath: {fileID: 0}
+  waypointTolerance: 0.5
+  maxAllowedEscapes: 5
+  escapeCounterText: {fileID: 6498355958796397348, guid: eb2c6218f9eda5941b3b214d311abe5a,
+    type: 3}
+  gameOverManager: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
+    type: 3}
 --- !u!114 &7239484351814649332
 MonoBehaviour:
   m_ObjectHideFlags: 0
