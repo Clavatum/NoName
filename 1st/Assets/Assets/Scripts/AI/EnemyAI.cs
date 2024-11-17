@@ -1,6 +1,5 @@
-using System.Collections;
 using UnityEngine;
-using TMPro; 
+using TMPro;
 
 public class EnemyAI : BaseAI
 {
@@ -14,9 +13,9 @@ public class EnemyAI : BaseAI
     private bool returningToPatrol = false; 
 
     [Header("Game Over Settings")]
-    [SerializeField] private int maxAllowedEscapes = 5; 
     [SerializeField] private TMP_Text escapeCounterText; 
-    private int escapedEnemiesCount = 0; 
+    [SerializeField] private int maxAllowedEscapes = 5; 
+    private static int escapedEnemiesCount = 0; 
 
     public GameOverPanelMng gameOverManager; 
 
@@ -38,26 +37,19 @@ public class EnemyAI : BaseAI
 
     protected override void Update()
     {
-        if (returningToPatrol)
+        base.Update();
+        if (target == null)
         {
-            ReturnToPatrolPath();
-        }
-        else if (target == null) 
-        {
-            if (isPatrolling && waypoints != null && waypoints.Length > 0)
+            if (returningToPatrol)
+            {
+                ReturnToPatrolPath();
+            }
+            else if (isPatrolling && waypoints != null && waypoints.Length > 0)
             {
                 Patrol();
             }
-            else
-            {
-                animator.SetFloat(verticalParam, 0f); 
-            }
         }
-        else
-        {
-            isPatrolling = false; 
-            base.Update(); 
-        }
+        CheckGameOver();
     }
 
     private void Patrol()
@@ -92,7 +84,7 @@ public class EnemyAI : BaseAI
         }
         else
         {
-            MoveTowardsTarget(closestWaypoint);
+            MoveTowardsTarget(closestWaypoint); 
         }
     }
 
@@ -116,7 +108,7 @@ public class EnemyAI : BaseAI
 
     private void HandlePatrolEnd()
     {
-        escapedEnemiesCount++;
+        escapedEnemiesCount++; 
         UpdateEscapeCounterUI();
 
         if (escapedEnemiesCount >= maxAllowedEscapes)
@@ -124,14 +116,23 @@ public class EnemyAI : BaseAI
             gameOverManager.isGameOver = true;
         }
 
-        Destroy(gameObject);
+        Destroy(gameObject); 
     }
 
     private void UpdateEscapeCounterUI()
     {
         if (escapeCounterText != null)
         {
-            escapeCounterText.text = $"{escapedEnemiesCount}/{maxAllowedEscapes}"; 
+            if(escapedEnemiesCount >= 5) { escapedEnemiesCount = 5; }
+            escapeCounterText.text = $"{escapedEnemiesCount}/{maxAllowedEscapes}";
+        }
+    }
+
+    private void CheckGameOver()
+    {
+        if (escapedEnemiesCount >= maxAllowedEscapes)
+        {
+            gameOverManager.isGameOver = true;
         }
     }
 
@@ -150,15 +151,14 @@ public class EnemyAI : BaseAI
         transform.rotation = Quaternion.Euler(currentRotation.eulerAngles.x, lookRotation.eulerAngles.y, currentRotation.eulerAngles.z);
     }
 
-    protected override void HandleAttack()
-    {
-        base.HandleAttack();
-
-        returningToPatrol = true;
-    }
-
     protected override bool IsValidTarget(Collider hitCollider)
     {
         return hitCollider.CompareTag("Player") || hitCollider.CompareTag("Soldier");
+    }
+
+    protected override void HandleAttack()
+    {
+        base.HandleAttack();
+        returningToPatrol = true; 
     }
 }
