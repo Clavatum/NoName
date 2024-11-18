@@ -132,6 +132,7 @@ public class EnemyAI : BaseAI
     {
         if (escapedEnemiesCount >= maxAllowedEscapes)
         {
+            escapeCounterText.gameObject.SetActive(false);
             gameOverManager.isGameOver = true;
         }
     }
