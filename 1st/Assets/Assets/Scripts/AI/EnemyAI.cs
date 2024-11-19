@@ -15,7 +15,7 @@ public class EnemyAI : BaseAI
     [Header("Game Over Settings")]
     [SerializeField] private TMP_Text escapeCounterText; 
     [SerializeField] private int maxAllowedEscapes = 5; 
-    private static int escapedEnemiesCount = 0; 
+    public static int escapedEnemiesCount = 0; 
 
     public GameOverPanelMng gameOverManager; 
 
@@ -108,7 +108,7 @@ public class EnemyAI : BaseAI
 
     private void HandlePatrolEnd()
     {
-        escapedEnemiesCount++; 
+        escapedEnemiesCount++;
         UpdateEscapeCounterUI();
 
         if (escapedEnemiesCount >= maxAllowedEscapes)
@@ -123,7 +123,10 @@ public class EnemyAI : BaseAI
     {
         if (escapeCounterText != null)
         {
-            if(escapedEnemiesCount >= 5) { escapedEnemiesCount = 5; }
+            if(escapedEnemiesCount >= 5) 
+            {
+                escapedEnemiesCount = 5; 
+            }
             escapeCounterText.text = $"{escapedEnemiesCount}/{maxAllowedEscapes}";
         }
     }
@@ -133,8 +136,9 @@ public class EnemyAI : BaseAI
         if (escapedEnemiesCount >= maxAllowedEscapes)
         {
             escapeCounterText.gameObject.SetActive(false);
-            gameOverManager.isGameOver = true;
+            //gameOverManager.isGameOver = true;
         }
+       
     }
 
     public override void MoveTowardsTarget(Transform target)

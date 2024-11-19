@@ -3,17 +3,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using TMPro;
 
 
 public class GameOverPanelMng : MonoBehaviour
 {
     public GameObject gameOverPanel;      
+    public TMP_Text escapeCounterText; 
     public Button playAgainButton;        
     public Button backToMenuButton;       
 
     private Animator animator;
     public bool isGameOver;
-    private bool hasShownGameOver = false;  
+    public bool hasShownGameOver = false;  
 
     void Awake()
     {
@@ -39,6 +41,9 @@ public class GameOverPanelMng : MonoBehaviour
         Time.timeScale = 1f;       
         isGameOver = false;
         SceneManager.LoadScene("GameScene");
+        escapeCounterText.gameObject.SetActive(true);
+        EnemyAI.escapedEnemiesCount = 0;
+
     }
 
     void BackToMenu()
