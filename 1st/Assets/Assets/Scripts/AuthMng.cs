@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
@@ -14,6 +12,13 @@ public class AuthMng : MonoBehaviour
     public TMP_InputField userNameInput;
     public TMP_InputField passwordInput;
     public TMP_Text logTxt;
+
+    public Button loginButton;
+
+    [SerializeField] private TMP_Text userNameText;
+    [SerializeField] private LoginController loginController;
+
+    private PlayerProfile playerProfile;
 
     async void Start()
     {
@@ -107,4 +112,30 @@ public class AuthMng : MonoBehaviour
         PlayerPrefs.SetString("Username", username);
         SceneManager.LoadScene(sceneIndex);
     }
+
+    #region - UnityAccount -
+
+    private void OnEnable()
+    {
+        loginButton.onClick.AddListener(LoginButtonPressed);
+        loginController.OnSignedIn += LoginController_OnSignedIn;
+    }
+
+    private void OnDisable()
+    {
+        loginButton.onClick.RemoveListener(LoginButtonPressed);
+        loginController.OnSignedIn -= LoginController_OnSignedIn;
+    }
+
+    private async void LoginButtonPressed()
+    {
+        await loginController.InitSignIn();
+        LoadGameSceneByIndex(1, playerProfile.Name);
+    }
+
+    private void LoginController_OnSignedIn(PlayerProfile profile)
+    {
+        userNameText.text = profile.Name;
+    }
+    #endregion
 }

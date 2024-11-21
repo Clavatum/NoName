@@ -35,9 +35,6 @@ public class MenuScreenManager : MonoBehaviour
 
     void Start()
     {
-        string username = PlayerPrefs.GetString("Username", "Guest");
-        usernameText.text = username;
-
         statsPanel.SetActive(false);
         settingsPanel.SetActive(false);
 
@@ -62,6 +59,8 @@ public class MenuScreenManager : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        string username = PlayerPrefs.GetString("Username", "Guest");
+        usernameText.text = username;
     }
 
     public void StartGame()

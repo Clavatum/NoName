@@ -907,11 +907,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 92f5fbca-73fd-42a0-bb1e-8f0acdf35570
+  cloudProjectId: 8674717d-e875-4e6f-bb28-ec4c31c7143f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 1st 2024-08-13_17-15-00
-  organizationId: vasarecta
+  projectName: 1st
+  organizationId: glatois
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

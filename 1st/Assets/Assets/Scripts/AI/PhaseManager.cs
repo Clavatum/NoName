@@ -26,13 +26,13 @@ public class PhaseManager : MonoBehaviour
     [Header("Spawn Settings")]
     public Transform spawnPoint;              
     public Transform patrolPath;              
+
+    [Header("Phase Timing")]
+    public float phaseInterval = 2.0f;        
+
     private void Start()
     {
         StartPhase();
-    }
-    private void Update()
-    {
-
     }
 
     public void StartPhase()
@@ -41,16 +41,10 @@ public class PhaseManager : MonoBehaviour
         {
             StartCoroutine(SpawnPhaseEnemies(phases[currentPhaseIndex]));
         }
-        else
-        {
-            Debug.Log("All phases completed!");
-        }
     }
 
     private IEnumerator SpawnPhaseEnemies(PhaseConfig phaseConfig)
     {
-        Debug.Log($"Starting Phase: {phaseConfig.phaseName}");
-
         foreach (EnemySpawnConfig enemyConfig in phaseConfig.enemies)
         {
             for (int i = 0; i < enemyConfig.spawnCount; i++)
@@ -60,15 +54,15 @@ public class PhaseManager : MonoBehaviour
                 EnemyAI enemyAI = enemy.GetComponent<EnemyAI>();
                 if (enemyAI != null)
                 {
-                    enemyAI.patrolPath = patrolPath;
+                    enemyAI.patrolPath = patrolPath; 
                 }
 
-                yield return new WaitForSeconds(phaseConfig.spawnDelay);
+                yield return new WaitForSeconds(phaseConfig.spawnDelay); 
             }
         }
 
         currentPhaseIndex++;
-        yield return new WaitForSeconds(2.0f); 
+        yield return new WaitForSeconds(phaseInterval); 
         StartPhase(); 
     }
 }
