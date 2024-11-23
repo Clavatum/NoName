@@ -96,7 +96,8 @@ public class GoogleAuth : MonoBehaviour
 
     private void OnGoogleAuthSuccess(string userName)
     {
-        PlayerPrefs.SetString("Username", userName); 
+        PlayerPrefs.SetString("Username", userName);
         Debug.Log("Google Sign In successful, UserName: " + userName);
         AuthMng.LoadGameSceneByIndex(1, userName);
+    }
 }
