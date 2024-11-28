@@ -107,7 +107,7 @@ public class AuthMng : MonoBehaviour
         }
     }
 
-    void LoadGameSceneByIndex(int sceneIndex, string username)
+    public static void LoadGameSceneByIndex(int sceneIndex, string username)
     {
         PlayerPrefs.SetString("Username", username);
         SceneManager.LoadScene(sceneIndex);
