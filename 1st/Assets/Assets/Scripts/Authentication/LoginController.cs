@@ -10,12 +10,12 @@ public class LoginController : MonoBehaviour
     public event Action<PlayerProfile> OnSignedIn;
 
     private PlayerInfo playerInfo;
-
     private PlayerProfile playerProfile;
     public PlayerProfile PlayerProfile => playerProfile;
 
     private async void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         await UnityServices.InitializeAsync();
         PlayerAccountService.Instance.SignedIn += SignedIn;
     }
@@ -26,7 +26,6 @@ public class LoginController : MonoBehaviour
         {
             var accessToken = PlayerAccountService.Instance.AccessToken;
             await SignInWithUnityAsync(accessToken);
-
         }
         catch (Exception ex)
         {
@@ -47,13 +46,26 @@ public class LoginController : MonoBehaviour
             Debug.Log("SignIn is successful.");
 
             playerInfo = AuthenticationService.Instance.PlayerInfo;
-
             var name = await AuthenticationService.Instance.GetPlayerNameAsync();
 
             playerProfile.playerInfo = playerInfo;
             playerProfile.Name = name;
             PlayerPrefs.SetString("Username", name);
+
             OnSignedIn?.Invoke(playerProfile);
+
+            var cloudData = await CloudSaveManager.LoadFromCloud();
+            if (cloudData == null || cloudData.Count == 0)
+            {
+                Debug.Log("New player detected. Initializing stats.");
+                await CloudSaveManager.InitializeNewPlayerData();
+                await CloudSaveManager.ApplyCloudDataToGame();
+            }
+            else
+            {
+                Debug.Log("Returning player detected. Loading stats.");
+                await CloudSaveManager.ApplyCloudDataToGame();
+            }
         }
         catch (AuthenticationException ex)
         {
@@ -64,13 +76,7 @@ public class LoginController : MonoBehaviour
             Debug.LogException(ex);
         }
     }
-
-    //private void OnDestroy()
-    //{
-    //    PlayerAccountService.Instance.SignedIn -= SignedIn;
-    //}
 }
-
 
 [Serializable]
 public struct PlayerProfile

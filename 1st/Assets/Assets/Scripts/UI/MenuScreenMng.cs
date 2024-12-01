@@ -11,10 +11,10 @@ public class MenuScreenManager : MonoBehaviour
     public TMP_Text gamesPlayedText;
     public TMP_Text gamesWonText;
 
-    public TMP_Text totalKillsText;           
-    public TMP_Text bestCompletionTimeText;   
-    public TMP_Text totalPlayTimeText;        
-    public TMP_Text totalGoldText;            
+    public TMP_Text totalKillsText;
+    public TMP_Text bestCompletionTimeText;
+    public TMP_Text totalPlayTimeText;
+    public TMP_Text totalGoldText;
 
     public Button startButton;
     public Button settingsButton;
@@ -29,9 +29,6 @@ public class MenuScreenManager : MonoBehaviour
 
     [Header("UI References")]
     public TMP_Text usernameText;
-
-    private int gamesPlayed = 0;
-    private int gamesWon = 0;
 
     void Start()
     {
@@ -52,7 +49,7 @@ public class MenuScreenManager : MonoBehaviour
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume", 0.6f);
         UpdateSoundValueText();
 
-        LoadStats();
+        UpdateStats();
     }
 
     private void Update()
@@ -61,13 +58,12 @@ public class MenuScreenManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         string username = PlayerPrefs.GetString("Username", "Guest");
         usernameText.text = username;
+        totalGoldText.text = "Total Gold: " + PlayerPrefs.GetFloat("TotalGold", 0f).ToString("F2");
     }
 
     public void StartGame()
     {
-        gamesPlayed++;
-        PlayerPrefs.SetInt("GamesPlayed", gamesPlayed);
-        PlayerPrefs.Save();
+        GameStatsManager.Instance.StartGamePlayTime(); 
         SceneManager.LoadScene("GameScene");
     }
 
@@ -96,37 +92,21 @@ public class MenuScreenManager : MonoBehaviour
 
     public void ExitGame()
     {
-        PlayerPrefs.SetInt("GamesPlayed", gamesPlayed);
-        PlayerPrefs.SetInt("GamesWon", gamesWon);
-        PlayerPrefs.Save();
         Application.Quit();
     }
 
     void UpdateStats()
     {
-        gamesPlayedText.text = "Games Played: " + gamesPlayed.ToString();
-        gamesWonText.text = "Games Won: " + gamesWon.ToString();
+        gamesPlayedText.text = "Games Played: " + GameStatsManager.Instance.gamesPlayed.ToString();
+        gamesWonText.text = "Games Won: " + GameStatsManager.Instance.gamesWon.ToString();
 
-        totalKillsText.text = "Total Kills: " + PlayerPrefs.GetInt("TotalKills", 0);
-        totalGoldText.text = "Total Gold: " + PlayerPrefs.GetFloat("TotalGold", 0f).ToString("F2");
-        totalPlayTimeText.text = "Total Play Time: " + FormatTime(PlayerPrefs.GetFloat("TotalPlayTime", 0f));
+        totalKillsText.text = "Total Kills: " + GameStatsManager.Instance.totalKills;
+        totalPlayTimeText.text = "Total Play Time: " + FormatTime(GameStatsManager.Instance.totalPlayTime);
 
-        float bestCompletionTime = PlayerPrefs.GetFloat("BestCompletionTime", Mathf.Infinity);
-        if (bestCompletionTime != Mathf.Infinity)
-        {
-            bestCompletionTimeText.text = "Best Completion Time: " + FormatTime(bestCompletionTime);
-        }
-        else
-        {
-            bestCompletionTimeText.text = "Best Completion Time: N/A";
-        }
-    }
-
-    void LoadStats()
-    {
-        gamesPlayed = PlayerPrefs.GetInt("GamesPlayed", 0);
-        gamesWon = PlayerPrefs.GetInt("GamesWon", 0);
-        UpdateStats();
+        float bestCompletionTime = GameStatsManager.Instance.bestCompletionTime;
+        bestCompletionTimeText.text = bestCompletionTime != Mathf.Infinity
+            ? "Best Completion Time: " + FormatTime(bestCompletionTime)
+            : "Best Completion Time: N/A";
     }
 
     void PopulateQualityDropdown()

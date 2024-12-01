@@ -20,7 +20,11 @@ public class TowerUpgrading : MonoBehaviour
     {
         upgradeButton.onClick.AddListener(UpgradeTowers);
 
+    }
+    private void Update()
+    {
         UpdateBalanceUI();
+
     }
 
     private void UpgradeTowers()
@@ -63,6 +67,7 @@ public class TowerUpgrading : MonoBehaviour
 
     private void UpdateBalanceUI()
     {
+        PlayerPrefs.GetFloat("TotalGold", GameStatsManager.Instance.totalGold);
         balanceText.text = "Gold: " + GameStatsManager.Instance.totalGold.ToString("F2");
     }
 

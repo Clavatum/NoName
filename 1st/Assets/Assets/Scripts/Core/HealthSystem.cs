@@ -10,12 +10,19 @@ public class HealthSystem : MonoBehaviour
     private Animator animator;
     private CharacterStats characterStats;
     [SerializeField] private GameOverPanelMng gameOverPanelMng;
+    private GameStatsManager gameStatsManager;
+
     private bool isDead = false;
 
     public float goldOnDeath = 10f;
 
+    private void Awake()
+    {
+        gameStatsManager = GameStatsManager.Instance;
+    }
+
     void Start()
-    {       
+    {
         animator = GetComponent<Animator>();
         characterStats = GetComponent<CharacterStats>();
 
@@ -55,12 +62,10 @@ public class HealthSystem : MonoBehaviour
         }
 
         currentHealth -= damage;
-        if(currentHealth <= 0 && !isDead && gameObject.CompareTag("Player"))
+        if (currentHealth <= 0 && !isDead && gameObject.CompareTag("Player"))
         {
-            Debug.Log("d");
-            gameOverPanelMng.isGameOver = true;
-            currentHealth = 0;
             Die(attackerTag);
+            HandlePlayerDeath();
         }
         else if (currentHealth <= 0 && !isDead)
         {
@@ -88,6 +93,11 @@ public class HealthSystem : MonoBehaviour
         {
             return;
         }
+        if (attackerTag == "Player")
+        {
+            GameStatsManager.Instance.AddKill();
+            GameStatsManager.Instance.EarnGold(goldOnDeath);
+        }
 
         isDead = true;
 
@@ -99,14 +109,16 @@ public class HealthSystem : MonoBehaviour
         }
 
         DisableActions();
-
-        if (attackerTag == "Player")
-        {
-            GameStatsManager.Instance.AddKill();  
-            GameStatsManager.Instance.EarnGold(goldOnDeath);  
-        }
-
         Invoke(nameof(DestroyCharacter), 4f);
+    }
+
+    private async void HandlePlayerDeath()
+    {
+        gameStatsManager.CompleteGame(); 
+        gameOverPanelMng.isGameOver = true;
+
+        await CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave());
+        Debug.Log("Player data saved to the cloud on death.");
     }
 
     void DestroyCharacter()

@@ -28,6 +28,8 @@ public class PausePanelMng : MonoBehaviour
     private float countdownDuration = 3f;
     private float countdownTimer;
 
+    private bool settingsChanged = false; 
+
     private void Awake()
     {
         UIInputs = new UIInputActions();
@@ -66,13 +68,13 @@ public class PausePanelMng : MonoBehaviour
 
     void SetPauseFlag()
     {
-        isPaused = true; 
+        isPaused = true;
     }
 
     void PauseGame()
     {
         Time.timeScale = 0;
-        if (!settingsPanel.activeSelf) 
+        if (!settingsPanel.activeSelf)
         {
             pausePanel.SetActive(true);
         }
@@ -81,8 +83,8 @@ public class PausePanelMng : MonoBehaviour
     public void ResumeGame()
     {
         isPaused = false;
-        pausePanel.SetActive(false); 
-        countdownText.gameObject.SetActive(true); 
+        pausePanel.SetActive(false);
+        countdownText.gameObject.SetActive(true);
         StartCoroutine(ResumeAfterCountdown());
     }
 
@@ -93,26 +95,28 @@ public class PausePanelMng : MonoBehaviour
         while (countdownTimer > 0)
         {
             countdownText.text = "Resuming in " + countdownTimer.ToString("F0") + "...";
-            yield return new WaitForSecondsRealtime(1f); 
+            yield return new WaitForSecondsRealtime(1f);
             countdownTimer--;
         }
 
         countdownText.text = "";
-        countdownText.gameObject.SetActive(false); 
-        Time.timeScale = 1; 
-        isPaused = false; 
+        countdownText.gameObject.SetActive(false);
+        Time.timeScale = 1;
+        isPaused = false;
     }
 
     public void RestartGame()
     {
+        GameStatsManager.Instance.StopGamePlayTime(); 
+        GameStatsManager.Instance.StartGamePlayTime(); 
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OpenSettings()
     {
         settingsPanel.SetActive(true);
-        pausePanel.SetActive(false); 
+        pausePanel.SetActive(false);
     }
 
     public void CloseSettings()
@@ -120,14 +124,20 @@ public class PausePanelMng : MonoBehaviour
         settingsPanel.SetActive(false);
         if (isPaused)
         {
-            pausePanel.SetActive(true); 
+            pausePanel.SetActive(true);
         }
     }
 
     public void ExitToMenu()
     {
+        GameStatsManager.Instance.StopGamePlayTime(); 
+        if (settingsChanged)
+        {
+            SaveSettings();
+        }
+
         Time.timeScale = 1;
-        SceneManager.LoadScene("Menu"); 
+        SceneManager.LoadScene("Menu");
     }
 
     void PopulateQualityDropdown()
@@ -144,6 +154,7 @@ public class PausePanelMng : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
+        settingsChanged = true; 
     }
 
     public void SetSoundVolume(float volume)
@@ -151,11 +162,18 @@ public class PausePanelMng : MonoBehaviour
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("SoundVolume", volume);
         UpdateSoundValueText();
+        settingsChanged = true; 
     }
 
     void UpdateSoundValueText()
     {
         soundValueText.text = (soundSlider.value * 100).ToString("0") + "%";
+    }
+
+    private void SaveSettings()
+    {
+        PlayerPrefs.Save();
+        Debug.Log("Settings saved.");
     }
 
     private void OnDestroy()
@@ -170,7 +188,7 @@ public class PausePanelMng : MonoBehaviour
         soundSlider.onValueChanged.RemoveListener(SetSoundVolume);
     }
 
-    #region - Enable/Disable -
+    #region - Enable/Disable - 
 
     private void OnEnable()
     {
