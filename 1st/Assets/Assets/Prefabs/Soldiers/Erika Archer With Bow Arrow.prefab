@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3592236361892554703}
   m_Layer: 9
   m_Name: Erika_Archer_Body_Mesh
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ SkinnedMeshRenderer:
   - {fileID: 783195824315455198}
   - {fileID: 3086923596010219018}
   - {fileID: 7857410319999927976}
-  - {fileID: 4102938321858177418}
+  - {fileID: 0}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 5293315785412179933}
   m_AABB:
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 5902798366474448807}
   m_Layer: 9
   m_Name: mixamorig:RightArm
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 6959158489878219071}
   m_Layer: 9
   m_Name: mixamorig:RightShoulder
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 229825369859089864}
   m_Layer: 9
   m_Name: Erika_Archer_Arrow_Mesh
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -367,7 +367,7 @@ SkinnedMeshRenderer:
   - {fileID: 783195824315455198}
   - {fileID: 3086923596010219018}
   - {fileID: 7857410319999927976}
-  - {fileID: 4102938321858177418}
+  - {fileID: 0}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 5293315785412179933}
   m_AABB:
@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 5197761224374095870}
   m_Layer: 9
   m_Name: mixamorig:RightHandPinky2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 139123381119587306}
   m_Layer: 9
   m_Name: mixamorig:RightHandThumb4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 5293315785412179933}
   m_Layer: 9
   m_Name: mixamorig:Hips
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -466,81 +466,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4102938321858177418}
   - {fileID: 2390041347114585761}
   - {fileID: 8354233895857045730}
   - {fileID: 5556698113999078478}
   m_Father: {fileID: 370966864580024137}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1030188412735083768
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4102938321858177418}
-  - component: {fileID: 4222476210839870432}
-  - component: {fileID: 2339934783981858559}
-  m_Layer: 9
-  m_Name: mixamorig:arrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4102938321858177418
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030188412735083768}
-  m_LocalRotation: {x: 0.0000031070967, y: 0.000005829984, z: -0.00020147303, w: 1}
-  m_LocalPosition: {x: -0.00042018993, y: -1.0422584, z: -0.015548762}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5293315785412179933}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4222476210839870432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030188412735083768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 658116eb2859ba04e9f7e91ecfa07ebe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 1039804612704194035}
-  damageAmount: 15
---- !u!65 &2339934783981858559
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030188412735083768}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.09, y: 0.06, z: 0.79}
-  m_Center: {x: 0, y: 0, z: 0.08}
 --- !u!1 &1039804612704194035
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +487,7 @@ GameObject:
   - component: {fileID: 7165862295207911436}
   - component: {fileID: -4420456103519033144}
   - component: {fileID: 3591837847752268852}
+  - component: {fileID: 2720483773111569135}
   m_Layer: 9
   m_Name: Erika Archer With Bow Arrow
   m_TagString: Soldier
@@ -583,6 +515,7 @@ Transform:
   - {fileID: 2746845923985871650}
   - {fileID: 5293315785412179933}
   - {fileID: 1945535875770561128}
+  - {fileID: 4196109278957654455}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -669,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c07d76ca13e8b46b824c6120cfe824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 10
+  attackRange: 50
   detectionRange: 50
   attackInterval: 1
   damage: 8
@@ -691,6 +624,9 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   healthBar: {fileID: 4376911887161051162}
+  gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
+    type: 3}
+  goldOnDeath: 10
 --- !u!114 &3591837847752268852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -707,6 +643,23 @@ MonoBehaviour:
   maxHealth: 100
   shield: 50
   hasShield: 1
+--- !u!114 &2720483773111569135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039804612704194035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a38a2202d92f047a5f10c1fe07eb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 7606342212473484132, guid: ea1b3072cd137e64da53f5ab56619c34,
+    type: 3}
+  arrowSpawnPoint: {fileID: 4196109278957654455}
+  launchForce: 100
+  noHitLifetime: 5
 --- !u!1 &1169309035409016655
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +671,7 @@ GameObject:
   - component: {fileID: 6567325915915468812}
   m_Layer: 9
   m_Name: mixamorig:LeftToeBase
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -750,7 +703,7 @@ GameObject:
   - component: {fileID: 7255392868723371673}
   m_Layer: 9
   m_Name: mixamorig:LeftHandIndex3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -782,7 +735,7 @@ GameObject:
   - component: {fileID: 1664301296533778065}
   m_Layer: 9
   m_Name: mixamorig:LeftHandRing2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -815,7 +768,7 @@ GameObject:
   - component: {fileID: 5556698113999078478}
   m_Layer: 9
   m_Name: mixamorig:Spine
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -848,7 +801,7 @@ GameObject:
   - component: {fileID: 2449945221427734021}
   m_Layer: 9
   m_Name: Erika_Archer_Bow_Mesh
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -984,7 +937,7 @@ SkinnedMeshRenderer:
   - {fileID: 783195824315455198}
   - {fileID: 3086923596010219018}
   - {fileID: 7857410319999927976}
-  - {fileID: 4102938321858177418}
+  - {fileID: 0}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 5293315785412179933}
   m_AABB:
@@ -1019,7 +972,7 @@ RectTransform:
   m_GameObject: {fileID: 1968877574087297016}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2756286299579798320}
@@ -1028,7 +981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 351, y: 197.5}
+  m_AnchoredPosition: {x: 1.66, y: 0.41}
   m_SizeDelta: {x: 702, y: 395}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4077904361636965252
@@ -1106,7 +1059,7 @@ GameObject:
   - component: {fileID: 8325485238358062596}
   m_Layer: 9
   m_Name: mixamorig:RightHandIndex1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1138,7 +1091,7 @@ GameObject:
   - component: {fileID: 3371686019314665912}
   m_Layer: 9
   m_Name: mixamorig:RightHandMiddle3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1170,7 +1123,7 @@ GameObject:
   - component: {fileID: 1309780040867412170}
   m_Layer: 9
   m_Name: mixamorig:RightHandPinky1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1202,7 +1155,7 @@ GameObject:
   - component: {fileID: 6435675192721514749}
   m_Layer: 9
   m_Name: mixamorig:LeftHandRing1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1234,7 +1187,7 @@ GameObject:
   - component: {fileID: 276504841573355399}
   m_Layer: 9
   m_Name: mixamorig:LeftEye
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1265,7 +1218,7 @@ GameObject:
   - component: {fileID: 2538060205887811670}
   m_Layer: 9
   m_Name: mixamorig:LeftShoulder
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1297,7 +1250,7 @@ GameObject:
   - component: {fileID: 6155407069221572646}
   m_Layer: 9
   m_Name: mixamorig:RightHandRing2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1329,7 +1282,7 @@ GameObject:
   - component: {fileID: 1953126082507771754}
   m_Layer: 9
   m_Name: mixamorig:RightHand
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1366,7 +1319,7 @@ GameObject:
   - component: {fileID: 762541666793314818}
   m_Layer: 9
   m_Name: Erika_Archer_Clothes_Mesh
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1502,7 +1455,7 @@ SkinnedMeshRenderer:
   - {fileID: 783195824315455198}
   - {fileID: 3086923596010219018}
   - {fileID: 7857410319999927976}
-  - {fileID: 4102938321858177418}
+  - {fileID: 0}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 5293315785412179933}
   m_AABB:
@@ -1520,7 +1473,7 @@ GameObject:
   - component: {fileID: 3351164925094090431}
   m_Layer: 9
   m_Name: mixamorig:LeftHandMiddle3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1553,7 +1506,7 @@ GameObject:
   - component: {fileID: 7030659555734738559}
   m_Layer: 9
   m_Name: mixamorig:LeftLeg
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1585,7 +1538,7 @@ GameObject:
   - component: {fileID: 2390041347114585761}
   m_Layer: 9
   m_Name: mixamorig:LeftUpLeg
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1617,7 +1570,7 @@ GameObject:
   - component: {fileID: 3549098997465368745}
   m_Layer: 9
   m_Name: mixamorig:RightHandIndex2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1649,7 +1602,7 @@ GameObject:
   - component: {fileID: 8795580325509300516}
   m_Layer: 9
   m_Name: mixamorig:HeadTop_End
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1680,7 +1633,7 @@ GameObject:
   - component: {fileID: 6534555628256636846}
   m_Layer: 9
   m_Name: mixamorig:RightHandMiddle2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1712,7 +1665,7 @@ GameObject:
   - component: {fileID: 2515673722593646096}
   m_Layer: 9
   m_Name: mixamorig:RightHandRing4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1743,7 +1696,7 @@ GameObject:
   - component: {fileID: 3086923596010219018}
   m_Layer: 9
   m_Name: mixamorig:RightToeBase
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1775,7 +1728,7 @@ GameObject:
   - component: {fileID: 7827961068100161919}
   m_Layer: 9
   m_Name: mixamorig:RightHandIndex4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1806,7 +1759,7 @@ GameObject:
   - component: {fileID: 2359085691236245194}
   m_Layer: 9
   m_Name: mixamorig:RightHandPinky3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1838,7 +1791,7 @@ GameObject:
   - component: {fileID: 4745845493448438810}
   m_Layer: 9
   m_Name: mixamorig:Left_arch2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1869,7 +1822,7 @@ GameObject:
   - component: {fileID: 7239546786571144795}
   m_Layer: 9
   m_Name: mixamorig:LeftForeArm
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1902,7 +1855,7 @@ GameObject:
   - component: {fileID: 6396022619213016240}
   m_Layer: 9
   m_Name: mixamorig:Neck
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1934,7 +1887,7 @@ GameObject:
   - component: {fileID: 1078129043644470332}
   m_Layer: 9
   m_Name: mixamorig:LeftHandIndex4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1954,6 +1907,37 @@ Transform:
   m_Father: {fileID: 7255392868723371673}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3858099370923014967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4196109278957654455}
+  m_Layer: 9
+  m_Name: ArrowSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4196109278957654455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858099370923014967}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
+  m_LocalPosition: {x: 0.145, y: 1.351, z: 0.427}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 370966864580024137}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 180, y: 180, z: 0}
 --- !u!1 &3985068735232428945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1965,7 +1949,7 @@ GameObject:
   - component: {fileID: 974548321832860663}
   m_Layer: 9
   m_Name: mixamorig:RightHandRing3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1997,7 +1981,7 @@ GameObject:
   - component: {fileID: 8083131014803484320}
   m_Layer: 9
   m_Name: mixamorig:LeftHandRing4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2028,7 +2012,7 @@ GameObject:
   - component: {fileID: 1828881740509954488}
   m_Layer: 9
   m_Name: mixamorig:RightHandThumb3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2060,7 +2044,7 @@ GameObject:
   - component: {fileID: 936289977733246228}
   m_Layer: 9
   m_Name: mixamorig:LeftHandThumb3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2092,7 +2076,7 @@ GameObject:
   - component: {fileID: 6382495464266425697}
   m_Layer: 9
   m_Name: mixamorig:LeftHand
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2129,7 +2113,7 @@ GameObject:
   - component: {fileID: 1213863189618015054}
   m_Layer: 9
   m_Name: mixamorig:LeftHandIndex1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2161,7 +2145,7 @@ GameObject:
   - component: {fileID: 4905042553175079904}
   m_Layer: 9
   m_Name: mixamorig:RightHandIndex3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2193,7 +2177,7 @@ GameObject:
   - component: {fileID: 5669348941475413624}
   m_Layer: 9
   m_Name: mixamorig:RightLeg
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2226,7 +2210,7 @@ GameObject:
   - component: {fileID: 1638499084644193128}
   m_Layer: 9
   m_Name: mixamorig:Left_arch1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2258,7 +2242,7 @@ GameObject:
   - component: {fileID: 7832502562226540444}
   m_Layer: 9
   m_Name: mixamorig:LeftHandMiddle4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2289,7 +2273,7 @@ GameObject:
   - component: {fileID: 704397901590810763}
   m_Layer: 9
   m_Name: mixamorig:RightHandMiddle4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2320,7 +2304,7 @@ GameObject:
   - component: {fileID: 3041846527225249977}
   m_Layer: 9
   m_Name: mixamorig:LeftHandThumb4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2352,7 +2336,7 @@ GameObject:
   - component: {fileID: 7927004813718108540}
   m_Layer: 9
   m_Name: Erika_Archer_Eyes_Mesh
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2488,7 +2472,7 @@ SkinnedMeshRenderer:
   - {fileID: 783195824315455198}
   - {fileID: 3086923596010219018}
   - {fileID: 7857410319999927976}
-  - {fileID: 4102938321858177418}
+  - {fileID: 0}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 5293315785412179933}
   m_AABB:
@@ -2506,7 +2490,7 @@ GameObject:
   - component: {fileID: 8616890410672383068}
   m_Layer: 9
   m_Name: mixamorig:RightHandThumb1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2538,7 +2522,7 @@ GameObject:
   - component: {fileID: 557218717552517325}
   m_Layer: 9
   m_Name: mixamorig:Spine2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2572,7 +2556,7 @@ GameObject:
   - component: {fileID: 6663633986780310152}
   m_Layer: 9
   m_Name: mixamorig:LeftHandMiddle2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2604,7 +2588,7 @@ GameObject:
   - component: {fileID: 3454397580420977931}
   m_Layer: 9
   m_Name: mixamorig:RightEye
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2635,7 +2619,7 @@ GameObject:
   - component: {fileID: 6842064120441392917}
   m_Layer: 9
   m_Name: mixamorig:LeftHandPinky2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2668,7 +2652,7 @@ GameObject:
   - component: {fileID: 308478876806654696}
   m_Layer: 9
   m_Name: mixamorig:LeftHandPinky4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2699,7 +2683,7 @@ GameObject:
   - component: {fileID: 8354233895857045730}
   m_Layer: 9
   m_Name: mixamorig:RightUpLeg
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2731,7 +2715,7 @@ GameObject:
   - component: {fileID: 4849456735408780583}
   m_Layer: 9
   m_Name: mixamorig:LeftHandPinky1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2763,7 +2747,7 @@ GameObject:
   - component: {fileID: 2465677526976474771}
   m_Layer: 9
   m_Name: mixamorig:LeftFoot
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2795,7 +2779,7 @@ GameObject:
   - component: {fileID: 2484708131676459384}
   m_Layer: 9
   m_Name: mixamorig:LeftHandThumb2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2827,7 +2811,7 @@ GameObject:
   - component: {fileID: 6001436361037350346}
   m_Layer: 9
   m_Name: mixamorig:Head
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2861,7 +2845,7 @@ GameObject:
   - component: {fileID: 4945367439648750836}
   m_Layer: 9
   m_Name: mixamorig:LeftHandThumb1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2893,7 +2877,7 @@ GameObject:
   - component: {fileID: 8945063265968969646}
   m_Layer: 9
   m_Name: mixamorig:RightHandRing1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2925,7 +2909,7 @@ GameObject:
   - component: {fileID: 6238377121472036722}
   m_Layer: 9
   m_Name: mixamorig:RightHandPinky4
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2956,7 +2940,7 @@ GameObject:
   - component: {fileID: 4230814781924771290}
   m_Layer: 9
   m_Name: mixamorig:LeftToe_End
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2987,7 +2971,7 @@ GameObject:
   - component: {fileID: 1344277337529179630}
   m_Layer: 9
   m_Name: mixamorig:LeftHandPinky3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3058,7 +3042,7 @@ GameObject:
   - component: {fileID: 7857410319999927976}
   m_Layer: 9
   m_Name: mixamorig:RightToe_End
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3089,7 +3073,7 @@ GameObject:
   - component: {fileID: 3733185053624575513}
   m_Layer: 9
   m_Name: mixamorig:LeftHandRing3
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3122,7 +3106,7 @@ GameObject:
   - component: {fileID: 783195824315455198}
   m_Layer: 9
   m_Name: mixamorig:RightFoot
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3154,7 +3138,7 @@ GameObject:
   - component: {fileID: 5977088013818373018}
   m_Layer: 9
   m_Name: mixamorig:LeftArm
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3186,7 +3170,7 @@ GameObject:
   - component: {fileID: 2394815429284889866}
   m_Layer: 9
   m_Name: mixamorig:RightForeArm
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3219,7 +3203,7 @@ GameObject:
   - component: {fileID: 2137808383801680330}
   m_Layer: 9
   m_Name: Erika_Archer_Eyelashes_Mesh
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3355,7 +3339,7 @@ SkinnedMeshRenderer:
   - {fileID: 783195824315455198}
   - {fileID: 3086923596010219018}
   - {fileID: 7857410319999927976}
-  - {fileID: 4102938321858177418}
+  - {fileID: 0}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 5293315785412179933}
   m_AABB:
@@ -3373,7 +3357,7 @@ GameObject:
   - component: {fileID: 7551074165354306794}
   m_Layer: 9
   m_Name: mixamorig:LeftHandIndex2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3406,7 +3390,7 @@ GameObject:
   - component: {fileID: 3479139950796071753}
   m_Layer: 9
   m_Name: mixamorig:RightHandMiddle1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3438,7 +3422,7 @@ GameObject:
   - component: {fileID: 8162070460230764607}
   m_Layer: 9
   m_Name: mixamorig:RightHandThumb2
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3470,7 +3454,7 @@ GameObject:
   - component: {fileID: 1297290739098718374}
   m_Layer: 9
   m_Name: mixamorig:Spine1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3502,7 +3486,7 @@ GameObject:
   - component: {fileID: 8088256867585345354}
   m_Layer: 9
   m_Name: mixamorig:LeftHandMiddle1
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3651,7 +3635,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2608135994329353697, guid: 6c740dbd50e735a45afbf1d363a68cb6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

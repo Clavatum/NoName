@@ -1,0 +1,144 @@
+using Combat;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HealthSystem : MonoBehaviour
+{
+    public float maxHealth;
+    public float currentHealth;
+    public Slider healthBar;
+    private Animator animator;
+    private CharacterStats characterStats;
+    [SerializeField] private GameOverPanelMng gameOverPanelMng;
+    private bool isDead = false;
+
+    public float goldOnDeath = 10f;
+
+    void Start()
+    {       
+        animator = GetComponent<Animator>();
+        characterStats = GetComponent<CharacterStats>();
+
+        if (characterStats != null)
+        {
+            maxHealth = characterStats.maxHealth;
+            currentHealth = maxHealth;
+        }
+
+        UpdateHealthBar();
+    }
+
+    public void TakeDamage(float damage, string attackerTag)
+    {
+        if (attackerTag == gameObject.tag || (attackerTag == "Player" && gameObject.tag == "Soldier") || (attackerTag == "Soldier" && gameObject.tag == "Player") || (attackerTag == "Arrow" && gameObject.tag == "Player"))
+        {
+            Debug.Log("Friendly fire prevented!");
+            return;
+        }
+        if (PlayerCombat.isBlocking)
+        {
+            damage /= 2f;
+        }
+        if (characterStats != null && characterStats.hasShield && characterStats.shield > 0)
+        {
+            characterStats.shield -= damage;
+
+            if (characterStats.shield < 0)
+            {
+                damage = -characterStats.shield;
+                characterStats.shield = 0;
+            }
+            else
+            {
+                damage = 0;
+            }
+        }
+
+        currentHealth -= damage;
+        if(currentHealth <= 0 && !isDead && gameObject.CompareTag("Player"))
+        {
+            Debug.Log("d");
+            gameOverPanelMng.isGameOver = true;
+            currentHealth = 0;
+            Die(attackerTag);
+        }
+        else if (currentHealth <= 0 && !isDead)
+        {
+            currentHealth = 0;
+            Die(attackerTag);
+        }
+        else
+        {
+            TriggerImpact();
+        }
+        UpdateHealthBar();
+    }
+
+    void TriggerImpact()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Impact");
+        }
+    }
+
+    void Die(string attackerTag)
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+
+        if (animator != null)
+        {
+            animator.SetBool("IsDead", true);
+            animator.SetTrigger("Death");
+            gameObject.tag = "Dead";
+        }
+
+        DisableActions();
+
+        if (attackerTag == "Player")
+        {
+            GameStatsManager.Instance.AddKill();  
+            GameStatsManager.Instance.EarnGold(goldOnDeath);  
+        }
+
+        Invoke(nameof(DestroyCharacter), 4f);
+    }
+
+    void DestroyCharacter()
+    {
+        Destroy(gameObject);
+    }
+
+    void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.value = currentHealth / maxHealth;
+        }
+    }
+
+    void DisableActions()
+    {
+        if (TryGetComponent(out PlayerCombat playerCombat))
+        {
+            playerCombat.enabled = false;
+        }
+        if (TryGetComponent(out EnemyAI enemyAI))
+        {
+            enemyAI.enabled = false;
+        }
+        if (TryGetComponent(out SoldierAI soldierAI))
+        {
+            soldierAI.enabled = false;
+        }
+        if (TryGetComponent(out BaseAI movement))
+        {
+            movement.enabled = false;
+        }
+    }
+}

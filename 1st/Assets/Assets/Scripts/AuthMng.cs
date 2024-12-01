@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
@@ -8,12 +6,19 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class authManager : MonoBehaviour
+public class AuthMng : MonoBehaviour
 {
     [Header("UI References")]
     public TMP_InputField userNameInput;
     public TMP_InputField passwordInput;
     public TMP_Text logTxt;
+
+    public Button loginButton;
+
+    [SerializeField] private TMP_Text userNameText;
+    [SerializeField] private LoginController loginController;
+
+    private PlayerProfile playerProfile;
 
     async void Start()
     {
@@ -88,7 +93,7 @@ public class authManager : MonoBehaviour
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
             Debug.Log("SignIn is successful.");
             logTxt.text = "SignIn is successful.";
-            LoadGameSceneByIndex(1, username); 
+            LoadGameSceneByIndex(1, username);
         }
         catch (AuthenticationException ex)
         {
@@ -102,9 +107,35 @@ public class authManager : MonoBehaviour
         }
     }
 
-    void LoadGameSceneByIndex(int sceneIndex, string username)
+    public static void LoadGameSceneByIndex(int sceneIndex, string username)
     {
-        PlayerPrefs.SetString("Username", username); 
+        PlayerPrefs.SetString("Username", username);
         SceneManager.LoadScene(sceneIndex);
     }
+
+    #region - UnityAccount -
+
+    private void OnEnable()
+    {
+        loginButton.onClick.AddListener(LoginButtonPressed);
+        loginController.OnSignedIn += LoginController_OnSignedIn;
+    }
+
+    private void OnDisable()
+    {
+        loginButton.onClick.RemoveListener(LoginButtonPressed);
+        loginController.OnSignedIn -= LoginController_OnSignedIn;
+    }
+
+    private async void LoginButtonPressed()
+    {
+        await loginController.InitSignIn();
+        LoadGameSceneByIndex(1, playerProfile.Name);
+    }
+
+    private void LoginController_OnSignedIn(PlayerProfile profile)
+    {
+        userNameText.text = profile.Name;
+    }
+    #endregion
 }

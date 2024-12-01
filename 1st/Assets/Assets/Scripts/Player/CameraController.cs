@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     [Header("References")]
     private PlayerInputActions playerInputActions;
     public PausePanelMng pausePanelMng;
+    public GameOverPanelMng gameOverPanelMng;
+    public YouWinPanelMng youWinPanelMng;
     public PlayerController playerController;
     public Animator playerAnimator;
     public GameObject yGimbal;
@@ -59,7 +61,12 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (isMapCamActive || pausePanelMng.isPaused)
+        if(playerController.isFaceTarget && target == null)
+        {
+            playerController.isFaceTarget = false;
+            ChangeCamera(thirdPersonCam);
+        }
+        if (isMapCamActive || pausePanelMng.isPaused || gameOverPanelMng.isGameOver || youWinPanelMng.gameWon)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -118,10 +125,13 @@ public class CameraController : MonoBehaviour
 
     private void LookAtTarget()
     {
-        var directionToTarget = target.position - transform.position;
-        var rotationToTarget = Quaternion.LookRotation(directionToTarget);
+        if (!playerController.isFaceTarget)
+        {
+            var directionToTarget = target.position - transform.position;
+            var rotationToTarget = Quaternion.LookRotation(directionToTarget);
 
-        transform.rotation = Quaternion.Euler(0, rotationToTarget.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(0, rotationToTarget.eulerAngles.y, 0);
+        }
     }
 
     private void DetectTarget()

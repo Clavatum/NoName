@@ -27,8 +27,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749184905893875667}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 15.750763}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8427324234782459605}
@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 366.03876, y: 197.5}
+  m_AnchoredPosition: {x: 1.52, y: 0.33}
   m_SizeDelta: {x: 702, y: 395}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2198885541064182699
@@ -168,7 +168,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 959173c97dba18841a6f58636fc12c41,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.038757
+      value: -331
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 959173c97dba18841a6f58636fc12c41,
         type: 3}
@@ -706,6 +706,7 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 1.54
   rotationSpeed: 5
+  isAttacking: 0
 --- !u!114 &3842327275089948320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,7 +722,9 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   healthBar: {fileID: 5911394865256303293}
-  healthBarPosition: {fileID: 8427324234782459605}
+  gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
+    type: 3}
+  goldOnDeath: 10
 --- !u!114 &3268139088970493058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,7 +780,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 658116eb2859ba04e9f7e91ecfa07ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 6404831172947844036}
   damageAmount: 20
+  isRanged: 0
 --- !u!1001 &7920755702274162032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -906,7 +911,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2608135994329353697, guid: 6c740dbd50e735a45afbf1d363a68cb6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
