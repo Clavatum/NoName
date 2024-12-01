@@ -123,7 +123,6 @@ MonoBehaviour:
     type: 3}
   unitSpacing: 1
   produceUnitButton: {fileID: 3185512662371130441}
-  upgradeTowerButton: {fileID: 2389656337033291734}
   roadLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -276,6 +275,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3266510367517952175, guid: 57c6993092e0b5345811c25b04a71ec1,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266510367517952175, guid: 57c6993092e0b5345811c25b04a71ec1,
+        type: 3}
       propertyPath: m_TagString
       value: Tower
       objectReference: {fileID: 0}
@@ -372,8 +376,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903384069376291384, guid: 57c6993092e0b5345811c25b04a71ec1,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903384069376291384, guid: 57c6993092e0b5345811c25b04a71ec1,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903384069376291384, guid: 57c6993092e0b5345811c25b04a71ec1,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903384069376291384, guid: 57c6993092e0b5345811c25b04a71ec1,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903384069376291384, guid: 57c6993092e0b5345811c25b04a71ec1,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903384069376291384, guid: 57c6993092e0b5345811c25b04a71ec1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903384069376291384, guid: 57c6993092e0b5345811c25b04a71ec1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8032731171201558062, guid: 57c6993092e0b5345811c25b04a71ec1,
         type: 3}
@@ -437,22 +471,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1306391236716155577, guid: 57c6993092e0b5345811c25b04a71ec1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c6993092e0b5345811c25b04a71ec1, type: 3}
---- !u!114 &2389656337033291734 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8032731171201558062, guid: 57c6993092e0b5345811c25b04a71ec1,
-    type: 3}
-  m_PrefabInstance: {fileID: 5643078193369596408}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3185512662371130441 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7090085645912087985, guid: 57c6993092e0b5345811c25b04a71ec1,

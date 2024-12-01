@@ -114,6 +114,7 @@ public class EnemyAI : BaseAI
         if (escapedEnemiesCount >= maxAllowedEscapes)
         {
             gameOverManager.isGameOver = true;
+            GameStatsManager.Instance.CompleteGame();
         }
 
         Destroy(gameObject); 

@@ -24,8 +24,6 @@ public class BuildingMng : MonoBehaviour
     private bool isPanelActive = false;
 
     private GameObject towerUIPanel;
-    private Button produceUnitButton;
-    private Button upgradeTowerButton;
 
     private Color originalColor;
 

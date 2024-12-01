@@ -6,7 +6,6 @@ public class UnitProduction : MonoBehaviour
     [SerializeField] private Transform unitPrefab;
     [SerializeField] private float unitSpacing = 1f;
     [SerializeField] private Button produceUnitButton;
-    [SerializeField] private Button upgradeTowerButton;
 
     [SerializeField] private LayerMask roadLayerMask; 
     [SerializeField] private LayerMask unitLayerMask; 
@@ -14,7 +13,6 @@ public class UnitProduction : MonoBehaviour
     private void Awake()
     {
         produceUnitButton.onClick.AddListener(ProduceUnits);
-        upgradeTowerButton.onClick.AddListener(UpgradeTower);
     }
 
     private void ProduceUnits()
@@ -106,10 +104,5 @@ public class UnitProduction : MonoBehaviour
             return true; 
         }
         return false; 
-    }
-
-    private void UpgradeTower()
-    {
-        Debug.Log("Tower upgraded");
     }
 }
