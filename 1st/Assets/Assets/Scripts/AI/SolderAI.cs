@@ -22,4 +22,9 @@ public class SoldierAI : BaseAI
         transform.rotation = Quaternion.Euler(currentRotation.eulerAngles.x, lookRotation.eulerAngles.y, currentRotation.eulerAngles.z);
     }
 
+    public void UpgradeDamage(int amount)
+    {
+        damage += amount;
+    }
+
 }

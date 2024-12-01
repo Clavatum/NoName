@@ -8,14 +8,14 @@ using TMPro;
 
 public class GameOverPanelMng : MonoBehaviour
 {
-    public GameObject gameOverPanel;      
-    public TMP_Text escapeCounterText; 
-    public Button playAgainButton;        
-    public Button backToMenuButton;       
+    public GameObject gameOverPanel;
+    public TMP_Text escapeCounterText;
+    public Button playAgainButton;
+    public Button backToMenuButton;
 
     private Animator animator;
     public bool isGameOver;
-    public bool hasShownGameOver = false;  
+    public bool hasShownGameOver = false;
 
     void Awake()
     {
@@ -31,24 +31,31 @@ public class GameOverPanelMng : MonoBehaviour
     {
         if (isGameOver && !hasShownGameOver)
         {
+            SaveGameDataBeforeGameOver();
             ShowGameOverPanel();
             hasShownGameOver = true;
         }
     }
 
+    private async void SaveGameDataBeforeGameOver()
+    {
+        await CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave());
+        Debug.Log("Game data saved to the cloud before showing game over panel.");
+    }
+
     void PlayAgain()
     {
-        Time.timeScale = 1f;       
+        PlayerPrefs.SetFloat("TotalGold", GameStatsManager.Instance.totalGold);
+        Time.timeScale = 1f;
         isGameOver = false;
         SceneManager.LoadScene("GameScene");
         escapeCounterText.gameObject.SetActive(true);
         EnemyAI.escapedEnemiesCount = 0;
-
     }
 
     void BackToMenu()
     {
-        Time.timeScale = 1f;       
+        Time.timeScale = 1f;
         isGameOver = false;
         SceneManager.LoadScene("Menu");
     }
@@ -56,8 +63,8 @@ public class GameOverPanelMng : MonoBehaviour
     async void ShowGameOverPanel()
     {
         await Task.Delay(2000);
-        gameOverPanel.SetActive(true);    
-        animator.SetTrigger("Show");      
+        gameOverPanel.SetActive(true);
+        animator.SetTrigger("Show");
         StartCoroutine(StopGameAfterAnimation());
     }
 
@@ -65,6 +72,6 @@ public class GameOverPanelMng : MonoBehaviour
     {
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-        Time.timeScale = 0f;              
+        Time.timeScale = 0f;               
     }
 }

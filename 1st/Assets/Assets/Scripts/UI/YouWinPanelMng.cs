@@ -27,12 +27,19 @@ public class YouWinPanelMng : MonoBehaviour
     {
         if (gameWon && !hasShownYouWin)
         {
-            gameStatsManager.CompleteGame();
-            ShowGameOverPanel();
+            SaveGameDataBeforeYouWin();
+            ShowYouWinPanel();
         }
     }
 
-    public void ShowGameOverPanel()
+    private void SaveGameDataBeforeYouWin()
+    {
+        gameStatsManager.CompleteGame();  
+        CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave()); // check this. saving is already done in completegame.
+        Debug.Log("Game data saved before 'You Win' screen.");
+    }
+
+    public void ShowYouWinPanel()
     {
         youWinPanel.SetActive(true);
         animator.SetTrigger("Show");
@@ -48,10 +55,10 @@ public class YouWinPanelMng : MonoBehaviour
         StartCoroutine(LoadGameReviewScene());
     }
 
-    private IEnumerator LoadGameReviewScene() 
+    private IEnumerator LoadGameReviewScene()
     {
         yield return new WaitForSeconds(2f);
 
-        SceneManager.LoadScene("GameReview"); 
+        SceneManager.LoadScene("GameReview");
     }
 }

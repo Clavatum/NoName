@@ -1,28 +1,43 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Unity.Services.Core;
 
 public class GameStatsManager : MonoBehaviour
 {
     public static GameStatsManager Instance;
 
-    public int totalKills = 0;         
-    public int totalKillsInGame = 0;         
-    public float goldSpent = 0f;       
-    public float goldEarned = 0f;      
-    public float totalGold = 0f;       
+    public int totalKills = 0;
+    public int totalKillsInGame = 0;
+    public float goldSpent = 0f;
+    public float goldEarned = 0f;
+    public float totalGold = 0f;
 
-    public float completionTime = 0f;  
+    public float completionTime = 0f;
     public float bestCompletionTime = Mathf.Infinity;
-    public float totalPlayTime = 0f;   
+    public float totalPlayTime = 0f;
 
-    private float startTime;           
+    public int gamesPlayed = 0;
+    public int gamesWon = 0;
 
-    void Awake()
+    private float startTime;
+    private bool isGameActive = false;
+    public  static bool isDataLoaded = false;
+    public static bool isSignedIn = false;
+
+    async void Awake()
     {
+        await UnityServices.InitializeAsync();
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadGameStats();  
+
+            var loginController = FindObjectOfType<LoginController>();
+            loginController.OnSignedIn += HandleSignIn;
+
+            var authMng = FindObjectOfType<AuthMng>();
+            authMng.OnSignedIn += HandleSignIn;
         }
         else
         {
@@ -30,33 +45,40 @@ public class GameStatsManager : MonoBehaviour
         }
     }
 
-    void Start()
+    public void HandleSignIn(PlayerProfile profile)
     {
-        startTime = Time.time;  
+        isSignedIn = true;
+        LoadCloudData();
     }
 
-    public void AddKill()
+    public void StartGamePlayTime()
     {
-        totalKills++;
-        totalKillsInGame++;
+        if (!isGameActive)
+        {
+            startTime = Time.time;
+            isGameActive = true;
+            gamesPlayed++; 
+            SaveGameStats();
+            SaveToCloud();
+        }
     }
 
-    public void SpendGold(float amount)
+    public void StopGamePlayTime()
     {
-        goldSpent += amount;
-        totalGold -= amount;
-    }
-
-    public void EarnGold(float amount)
-    {
-        goldEarned += amount;
-        totalGold += amount;
+        if (isGameActive)
+        {
+            float elapsedTime = Time.time - startTime;
+            totalPlayTime += elapsedTime;
+            isGameActive = false;
+            SaveGameStats();
+            SaveToCloud();
+        }
     }
 
     public void CompleteGame()
     {
-        completionTime = Time.time - startTime; 
-        totalPlayTime += completionTime;         
+        completionTime = Time.time - startTime;
+        totalPlayTime += completionTime;
 
         if (completionTime < bestCompletionTime)
         {
@@ -64,6 +86,38 @@ public class GameStatsManager : MonoBehaviour
         }
 
         SaveGameStats();
+        SaveToCloud();
+    }
+
+    public void AddKill()
+    {
+        totalKills++;
+        totalKillsInGame++;
+        SaveGameStats();
+        SaveToCloud();
+    }
+
+    public void SpendGold(float amount)
+    {
+        goldSpent += amount;
+        totalGold -= amount;
+        SaveGameStats();
+        SaveToCloud();
+    }
+
+    public void EarnGold(float amount)
+    {
+        goldEarned += amount;
+        totalGold += amount;
+        SaveGameStats();
+        SaveToCloud();
+    }
+
+    public void IncrementGamesWon()
+    {
+        gamesWon++;
+        SaveGameStats();
+        SaveToCloud();
     }
 
     public void SaveGameStats()
@@ -72,14 +126,60 @@ public class GameStatsManager : MonoBehaviour
         PlayerPrefs.SetFloat("TotalPlayTime", totalPlayTime);
         PlayerPrefs.SetFloat("BestCompletionTime", bestCompletionTime);
         PlayerPrefs.SetInt("TotalKills", totalKills);
+        PlayerPrefs.SetInt("GamesPlayed", gamesPlayed);
+        PlayerPrefs.SetInt("GamesWon", gamesWon);
         PlayerPrefs.Save();
     }
 
-    public void LoadGameStats()
+    private async void SaveToCloud()
     {
-        totalGold = PlayerPrefs.GetFloat("TotalGold", 0f);
-        totalPlayTime = PlayerPrefs.GetFloat("TotalPlayTime", 0f);
-        bestCompletionTime = PlayerPrefs.GetFloat("BestCompletionTime", Mathf.Infinity);
-        totalKills = PlayerPrefs.GetInt("TotalKills", 0);
+        if (!isSignedIn) return;
+
+        var data = new Dictionary<string, object>
+        {
+            { "TotalGold", totalGold },
+            { "TotalKills", totalKills },
+            { "TotalPlayTime", totalPlayTime },
+            { "BestCompletionTime", bestCompletionTime },
+            { "GamesPlayed", gamesPlayed },
+            { "GamesWon", gamesWon }
+        };
+
+        await CloudSaveManager.SaveToCloud(data);
+    }
+
+    public async void LoadCloudData()
+    {
+        if (!isSignedIn) return;
+
+        var cloudData = await CloudSaveManager.LoadFromCloud();
+
+        if (cloudData != null)
+        {
+            if (cloudData.TryGetValue("TotalGold", out var totalGoldValue) && totalGoldValue is float totalGoldFloat)
+                totalGold = totalGoldFloat;
+
+            if (cloudData.TryGetValue("TotalKills", out var totalKillsValue) && totalKillsValue is int totalKillsInt)
+                totalKills = totalKillsInt;
+
+            if (cloudData.TryGetValue("TotalPlayTime", out var totalPlayTimeValue) && totalPlayTimeValue is float totalPlayTimeFloat)
+                totalPlayTime = totalPlayTimeFloat;
+
+            if (cloudData.TryGetValue("BestCompletionTime", out var bestCompletionTimeValue) && bestCompletionTimeValue is float bestCompletionTimeFloat)
+                bestCompletionTime = bestCompletionTimeFloat;
+
+            if (cloudData.TryGetValue("GamesPlayed", out var gamesPlayedValue) && gamesPlayedValue is int gamesPlayedInt)
+                gamesPlayed = gamesPlayedInt;
+
+            if (cloudData.TryGetValue("GamesWon", out var gamesWonValue) && gamesWonValue is int gamesWonInt)
+                gamesWon = gamesWonInt;
+
+            isDataLoaded = true;
+            SaveGameStats();
+        }
+        else
+        {
+            Debug.LogWarning("Cloud data is empty.");
+        }
     }
 }

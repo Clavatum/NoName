@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Services.Authentication.PlayerAccounts;
+using System;
+using System.Runtime.CompilerServices;
 
 public class AuthMng : MonoBehaviour
 {
@@ -19,16 +22,28 @@ public class AuthMng : MonoBehaviour
     [SerializeField] private LoginController loginController;
 
     private PlayerProfile playerProfile;
+    public event Action<PlayerProfile> OnSignedIn;
+    public PlayerProfile PlayerProfile => playerProfile;
 
-    async void Start()
+    private GameStatsManager gameStatsManager;
+    private PlayerInfo playerInfo;
+
+    private async void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        await UnityServices.InitializeAsync();
+    }
+
+    private void Start()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        await UnityServices.InitializeAsync();
     }
 
     void Update()
     {
+        gameStatsManager = GameStatsManager.Instance;
+
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.Log("No Internet Connection");
@@ -84,6 +99,27 @@ public class AuthMng : MonoBehaviour
             Debug.LogException(ex);
             logTxt.text = "Request failed: " + ex.Message;
         }
+        playerInfo = AuthenticationService.Instance.PlayerInfo;
+        var name = await AuthenticationService.Instance.GetPlayerNameAsync();
+
+        playerProfile.playerInfo = playerInfo;
+        playerProfile.Name = name;
+        PlayerPrefs.SetString("Username", name);
+
+        OnSignedIn?.Invoke(playerProfile);
+
+        var cloudData = await CloudSaveManager.LoadFromCloud();
+        if (cloudData == null || cloudData.Count == 0)
+        {
+            Debug.Log("New player detected. Initializing stats.");
+            await CloudSaveManager.InitializeNewPlayerData();
+            await CloudSaveManager.ApplyCloudDataToGame();
+        }
+        else
+        {
+            Debug.Log("Returning player detected. Loading stats.");
+            await CloudSaveManager.ApplyCloudDataToGame();
+        }
     }
 
     async Task SignInWithUsernamePasswordAsync(string username, string password)
@@ -94,6 +130,28 @@ public class AuthMng : MonoBehaviour
             Debug.Log("SignIn is successful.");
             logTxt.text = "SignIn is successful.";
             LoadGameSceneByIndex(1, username);
+
+            playerInfo = AuthenticationService.Instance.PlayerInfo;
+            var name = await AuthenticationService.Instance.GetPlayerNameAsync();
+
+            playerProfile.playerInfo = playerInfo;
+            playerProfile.Name = name;
+            PlayerPrefs.SetString("Username", name);
+
+            OnSignedIn?.Invoke(playerProfile);
+
+            var cloudData = await CloudSaveManager.LoadFromCloud();
+            if (cloudData == null || cloudData.Count == 0)
+            {
+                Debug.Log("New player detected. Initializing stats.");
+                await CloudSaveManager.InitializeNewPlayerData();
+                await CloudSaveManager.ApplyCloudDataToGame();
+            }
+            else
+            {
+                Debug.Log("Returning player detected. Loading stats.");
+                await CloudSaveManager.ApplyCloudDataToGame();
+            }
         }
         catch (AuthenticationException ex)
         {
@@ -105,6 +163,7 @@ public class AuthMng : MonoBehaviour
             Debug.LogException(ex);
             logTxt.text = "Request failed: " + ex.Message;
         }
+
     }
 
     public static void LoadGameSceneByIndex(int sceneIndex, string username)
@@ -117,17 +176,15 @@ public class AuthMng : MonoBehaviour
 
     private void OnEnable()
     {
-        loginButton.onClick.AddListener(LoginButtonPressed);
         loginController.OnSignedIn += LoginController_OnSignedIn;
     }
 
     private void OnDisable()
     {
-        loginButton.onClick.RemoveListener(LoginButtonPressed);
         loginController.OnSignedIn -= LoginController_OnSignedIn;
     }
 
-    private async void LoginButtonPressed()
+    public async void LoginButtonPressed()
     {
         await loginController.InitSignIn();
         LoadGameSceneByIndex(1, playerProfile.Name);
