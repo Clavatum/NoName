@@ -88,6 +88,29 @@ public class AuthMng : MonoBehaviour
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
             Debug.Log("SignUp is successful.");
             logTxt.text = "SignUp is successful.";
+            LoadGameSceneByIndex(1, username);
+
+            playerInfo = AuthenticationService.Instance.PlayerInfo;
+            var name = await AuthenticationService.Instance.GetPlayerNameAsync();
+
+            playerProfile.playerInfo = playerInfo;
+            playerProfile.Name = name;
+            PlayerPrefs.SetString("Username", name);
+
+            OnSignedIn?.Invoke(playerProfile);
+
+            var cloudData = await CloudSaveManager.LoadFromCloud();
+            if (cloudData == null || cloudData.Count == 0)
+            {
+                Debug.Log("New player detected. Initializing stats.");
+                await CloudSaveManager.InitializeNewPlayerData();
+                await CloudSaveManager.ApplyCloudDataToGame();
+            }
+            else
+            {
+                Debug.Log("Returning player detected. Loading stats.");
+                await CloudSaveManager.ApplyCloudDataToGame();
+            }
         }
         catch (AuthenticationException ex)
         {
@@ -99,27 +122,8 @@ public class AuthMng : MonoBehaviour
             Debug.LogException(ex);
             logTxt.text = "Request failed: " + ex.Message;
         }
-        playerInfo = AuthenticationService.Instance.PlayerInfo;
-        var name = await AuthenticationService.Instance.GetPlayerNameAsync();
 
-        playerProfile.playerInfo = playerInfo;
-        playerProfile.Name = name;
-        PlayerPrefs.SetString("Username", name);
-
-        OnSignedIn?.Invoke(playerProfile);
-
-        var cloudData = await CloudSaveManager.LoadFromCloud();
-        if (cloudData == null || cloudData.Count == 0)
-        {
-            Debug.Log("New player detected. Initializing stats.");
-            await CloudSaveManager.InitializeNewPlayerData();
-            await CloudSaveManager.ApplyCloudDataToGame();
-        }
-        else
-        {
-            Debug.Log("Returning player detected. Loading stats.");
-            await CloudSaveManager.ApplyCloudDataToGame();
-        }
+        
     }
 
     async Task SignInWithUsernamePasswordAsync(string username, string password)
