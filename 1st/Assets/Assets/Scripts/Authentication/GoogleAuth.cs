@@ -7,9 +7,10 @@ using Newtonsoft.Json.Linq;
 
 public class GoogleAuth : MonoBehaviour
 {
-    private string clientId = "Enter your client ID"; 
-    private string clientSecret = "Enter your client secret"; 
-    private string redirectUri = "http://localhost:5000"; 
+    private string clientId = "Enter your client ID: ";
+    private string clientSecret = "Enter your client secret: ";
+    private string redirectUri = "http://localhost:5000";
+    private string successRedirectUrl = "https://sites.google.com/view/log-in-approved/home";
 
     public void OpenGoogleAuthUrl()
     {
@@ -22,11 +23,12 @@ public class GoogleAuth : MonoBehaviour
     private IEnumerator StartLocalServer()
     {
         HttpListener listener = new HttpListener();
-        listener.Prefixes.Add($"{redirectUri}/");
+        string correctedRedirectUri = redirectUri.EndsWith("/") ? redirectUri : redirectUri + "/";
+        listener.Prefixes.Add(correctedRedirectUri);
         listener.Start();
 
         Debug.Log("Listening for Google Auth Response...");
-        var context = listener.GetContext(); 
+        var context = listener.GetContext();
 
         string authCode = context.Request.QueryString["code"];
         listener.Stop();
@@ -34,7 +36,7 @@ public class GoogleAuth : MonoBehaviour
         if (!string.IsNullOrEmpty(authCode))
         {
             Debug.Log("Authorization Code Received: " + authCode);
-            StartCoroutine(GetAccessToken(authCode)); 
+            StartCoroutine(GetAccessToken(authCode));
         }
         else
         {
@@ -81,12 +83,12 @@ public class GoogleAuth : MonoBehaviour
         if (www.result == UnityWebRequest.Result.Success)
         {
             JObject json = JObject.Parse(www.downloadHandler.text);
-            string userName = json["name"].ToString();  
+            string userName = json["name"].ToString();
 
             Debug.Log("User Info: " + json.ToString());
             Debug.Log("User Name: " + userName);
 
-            OnGoogleAuthSuccess(userName); 
+            OnGoogleAuthSuccess(userName);
         }
         else
         {
@@ -99,5 +101,7 @@ public class GoogleAuth : MonoBehaviour
         PlayerPrefs.SetString("Username", userName);
         Debug.Log("Google Sign In successful, UserName: " + userName);
         AuthMng.LoadGameSceneByIndex(1, userName);
+
+        Application.OpenURL(successRedirectUrl);
     }
 }

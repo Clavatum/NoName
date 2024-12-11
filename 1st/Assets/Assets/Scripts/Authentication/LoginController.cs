@@ -66,6 +66,7 @@ public class LoginController : MonoBehaviour
                 Debug.Log("Returning player detected. Loading stats.");
                 await CloudSaveManager.ApplyCloudDataToGame();
             }
+            Debug.Log("g");
         }
         catch (AuthenticationException ex)
         {

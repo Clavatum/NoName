@@ -1,3 +1,4 @@
+using System;
 using Combat;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class HealthSystem : MonoBehaviour
     private bool isDead = false;
 
     public float goldOnDeath = 10f;
+
+    public event Action<GameObject> OnDeath;
 
     private void Awake()
     {
@@ -93,6 +96,7 @@ public class HealthSystem : MonoBehaviour
         {
             return;
         }
+
         if (attackerTag == "Player")
         {
             GameStatsManager.Instance.AddKill();
@@ -100,6 +104,8 @@ public class HealthSystem : MonoBehaviour
         }
 
         isDead = true;
+
+        OnDeath?.Invoke(gameObject); // Notify listeners of death
 
         if (animator != null)
         {
@@ -114,7 +120,7 @@ public class HealthSystem : MonoBehaviour
 
     private async void HandlePlayerDeath()
     {
-        gameStatsManager.CompleteGame(); 
+        gameStatsManager.CompleteGame();
         gameOverPanelMng.isGameOver = true;
 
         await CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave());
