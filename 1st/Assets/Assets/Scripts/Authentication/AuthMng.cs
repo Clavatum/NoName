@@ -196,6 +196,7 @@ public class AuthMng : MonoBehaviour
 
     private void LoginController_OnSignedIn(PlayerProfile profile)
     {
+        if(userNameText == null) { return; }
         userNameText.text = profile.Name;
     }
     #endregion
