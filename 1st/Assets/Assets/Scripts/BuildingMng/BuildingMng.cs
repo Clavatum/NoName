@@ -17,11 +17,11 @@ public class BuildingMng : MonoBehaviour
     [SerializeField] private Camera mapCamera;
     private Transform currentTowerPreview;
     private bool isPlacingTower = false;
-
+    public static bool ignoreTowerClick = false;
     private CapsuleCollider towerCollider;
 
     private GameObject selectedTower;
-    private bool isPanelActive = false;
+    public static bool isPanelActive = false;
 
     private GameObject towerUIPanel;
 
@@ -172,6 +172,7 @@ public class BuildingMng : MonoBehaviour
 
     private void DetectTowerClick()
     {
+        if (ignoreTowerClick) { return; }
         if (towerInputActions.Actions.MouseLeft.triggered)
         {
             Ray ray = mapCamera.ScreenPointToRay(Mouse.current.position.ReadValue());

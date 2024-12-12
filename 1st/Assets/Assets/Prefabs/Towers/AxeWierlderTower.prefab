@@ -494,6 +494,12 @@ MonoBehaviour:
     type: 3}
   unitSpacing: 1
   produceUnitButton: {fileID: 1984836100797571528}
+  destroyTowerButton: {fileID: 2471352230707533373}
+  feedbackText: {fileID: 660982933649807491, guid: a51c6e1d8c1055e4099b61e62b96a888,
+    type: 3}
+  balanceText: {fileID: 2590443609227927745, guid: 2722b79371f100b44b38af1a70cf8fa1,
+    type: 3}
+  towerUIPanel: {fileID: 8700227181749459552}
   roadLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -788,9 +794,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2471352230707533373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1547104614170164439, guid: ee3efde88de826b41bf6c53d7d9535be,
+    type: 3}
+  m_PrefabInstance: {fileID: 3977921681729252074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8597122502832964644 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4646439297806479054, guid: ee3efde88de826b41bf6c53d7d9535be,
+    type: 3}
+  m_PrefabInstance: {fileID: 3977921681729252074}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8700227181749459552 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5731112237676114058, guid: ee3efde88de826b41bf6c53d7d9535be,
     type: 3}
   m_PrefabInstance: {fileID: 3977921681729252074}
   m_PrefabAsset: {fileID: 0}
