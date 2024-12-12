@@ -12,9 +12,9 @@ public class TowerUpgrading : MonoBehaviour
     public float upgradeCost = 50f;
 
     [Header("UI Elements")]
-    public Button upgradeButton;       
-    public TMP_Text feedbackText;      
-    public TMP_Text balanceText;       
+    public Button upgradeButton;
+    public TMP_Text feedbackText;
+    public TMP_Text balanceText;
 
     private void Start()
     {
@@ -65,16 +65,16 @@ public class TowerUpgrading : MonoBehaviour
         }
     }
 
-    private void UpdateBalanceUI()
+    public void UpdateBalanceUI()
     {
         PlayerPrefs.GetFloat("TotalGold", GameStatsManager.Instance.totalGold);
         balanceText.text = "Gold: " + GameStatsManager.Instance.totalGold.ToString("F2");
     }
 
-    private IEnumerator ShowFeedback(string message)
+    public IEnumerator ShowFeedback(string message)
     {
         feedbackText.text = message;
-        yield return new WaitForSeconds(3f); 
-        feedbackText.text = string.Empty;    
+        yield return new WaitForSeconds(3f);
+        feedbackText.text = string.Empty;
     }
 }
