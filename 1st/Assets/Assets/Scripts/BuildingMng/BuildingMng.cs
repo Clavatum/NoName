@@ -17,11 +17,11 @@ public class BuildingMng : MonoBehaviour
     [SerializeField] private Camera mapCamera;
     private Transform currentTowerPreview;
     private bool isPlacingTower = false;
-
-    private BoxCollider towerCollider;
+    public static bool ignoreTowerClick = false;
+    private CapsuleCollider towerCollider;
 
     private GameObject selectedTower;
-    private bool isPanelActive = false;
+    public static bool isPanelActive = false;
 
     private GameObject towerUIPanel;
 
@@ -84,7 +84,7 @@ public class BuildingMng : MonoBehaviour
 
         if (mouseWorldPosition != Vector3.zero && currentTowerPreview != null)
         {
-            currentTowerPreview.position = new Vector3(mouseWorldPosition.x, (currentTowerPreview.localScale.y / 2), mouseWorldPosition.z);
+            currentTowerPreview.position = new Vector3(mouseWorldPosition.x, currentTowerPreview.localScale.y / 6.5f, mouseWorldPosition.z);
 
             if (CanBuildHere(mouseWorldPosition) && !IsCollidingWithOtherTower())
             {
@@ -135,7 +135,7 @@ public class BuildingMng : MonoBehaviour
                 break;
         }
 
-        towerCollider = currentTowerPreview.GetComponent<BoxCollider>();
+        towerCollider = currentTowerPreview.GetComponent<CapsuleCollider>();
         if (towerCollider != null)
         {
             towerCollider.enabled = false;
@@ -172,6 +172,7 @@ public class BuildingMng : MonoBehaviour
 
     private void DetectTowerClick()
     {
+        if (ignoreTowerClick) { return; }
         if (towerInputActions.Actions.MouseLeft.triggered)
         {
             Ray ray = mapCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -190,7 +191,7 @@ public class BuildingMng : MonoBehaviour
 
                     if (isPanelActive)
                     {
-                        Vector3 panelPosition = selectedTower.transform.position + new Vector3(0, 2, 0);
+                        Vector3 panelPosition = selectedTower.transform.position + new Vector3(0, 28, 0);
                         towerUIPanel.transform.position = panelPosition;
 
                         towerUIPanel.transform.LookAt(mapCamera.transform);

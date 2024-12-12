@@ -8,7 +8,7 @@ public class PatrolGizmos : MonoBehaviour
     {
         if (patrolPoints == null || patrolPoints.Length < 2) return;
 
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.blue;
         for (int i = 0; i < patrolPoints.Length - 1; i++)
         {
             if (patrolPoints[i] != null && patrolPoints[i + 1] != null)
