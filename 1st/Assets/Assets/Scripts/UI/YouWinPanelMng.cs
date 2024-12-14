@@ -11,7 +11,7 @@ public class YouWinPanelMng : MonoBehaviour
 
     private Animator animator;
 
-    public bool gameWon;
+    public static bool gameWon;
     private bool hasShownYouWin = false;
 
     void Awake()
@@ -34,7 +34,7 @@ public class YouWinPanelMng : MonoBehaviour
 
     private void SaveGameDataBeforeYouWin()
     {
-        gameStatsManager.CompleteGame();  
+        gameStatsManager.CompleteGame();
         CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave()); // check this. saving is already done in completegame.
         Debug.Log("Game data saved before 'You Win' screen.");
     }

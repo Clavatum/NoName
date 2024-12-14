@@ -24,7 +24,7 @@ public class GameStatsManager : MonoBehaviour
 
     private float startTime;
     private bool isGameActive = false;
-    public  static bool isDataLoaded = false;
+    public static bool isDataLoaded = false;
     public static bool isSignedIn = false;
 
     async void Awake()
@@ -59,7 +59,7 @@ public class GameStatsManager : MonoBehaviour
         {
             startTime = Time.time;
             isGameActive = true;
-            gamesPlayed++; 
+            gamesPlayed++;
             SaveGameStats();
             SaveToCloud();
         }
@@ -82,9 +82,12 @@ public class GameStatsManager : MonoBehaviour
         completionTime = Time.time - startTime;
         totalPlayTime += completionTime;
 
-        if (completionTime < bestCompletionTime)
+        if (YouWinPanelMng.gameWon)
         {
-            bestCompletionTime = completionTime;
+            if (completionTime < bestCompletionTime)
+            {
+                bestCompletionTime = completionTime;
+            }
         }
 
         SaveGameStats();
