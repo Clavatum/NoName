@@ -4,20 +4,13 @@ using TMPro;
 public class EnemyAI : BaseAI
 {
     [Header("Patrol Settings")]
-    public Transform patrolPath; 
-    [SerializeField] private float waypointTolerance = 0.5f; 
+    public Transform patrolPath;
+    [SerializeField] private float waypointTolerance = 0.5f;
 
-    private Transform[] waypoints; 
+    private Transform[] waypoints;
     private int currentWaypointIndex = 0;
-    private bool isPatrolling = true; 
-    private bool returningToPatrol = false; 
-
-    [Header("Game Over Settings")]
-    [SerializeField] private TMP_Text escapeCounterText; 
-    [SerializeField] private int maxAllowedEscapes = 5; 
-    public static int escapedEnemiesCount = 0; 
-
-    public GameOverPanelMng gameOverManager; 
+    private bool isPatrolling = true;
+    private bool returningToPatrol = false;
 
     protected override void Start()
     {
@@ -31,8 +24,6 @@ public class EnemyAI : BaseAI
                 waypoints[i] = patrolPath.GetChild(i);
             }
         }
-
-        UpdateEscapeCounterUI();
     }
 
     protected override void Update()
@@ -49,7 +40,7 @@ public class EnemyAI : BaseAI
                 Patrol();
             }
         }
-        CheckGameOver();
+
     }
 
     private void Patrol()
@@ -63,13 +54,12 @@ public class EnemyAI : BaseAI
 
             if (currentWaypointIndex >= waypoints.Length)
             {
-                HandlePatrolEnd();
                 return;
             }
         }
 
         MoveTowardsTarget(currentWaypoint);
-        animator.SetFloat(verticalParam, 1f); 
+        animator.SetFloat(verticalParam, 1f);
     }
 
     private void ReturnToPatrolPath()
@@ -79,12 +69,12 @@ public class EnemyAI : BaseAI
 
         if (distanceToWaypoint <= waypointTolerance)
         {
-            returningToPatrol = false; 
-            isPatrolling = true;      
+            returningToPatrol = false;
+            isPatrolling = true;
         }
         else
         {
-            MoveTowardsTarget(closestWaypoint); 
+            MoveTowardsTarget(closestWaypoint);
         }
     }
 
@@ -104,42 +94,6 @@ public class EnemyAI : BaseAI
         }
 
         return closest;
-    }
-
-    private void HandlePatrolEnd()
-    {
-        escapedEnemiesCount++;
-        UpdateEscapeCounterUI();
-
-        if (escapedEnemiesCount >= maxAllowedEscapes)
-        {
-            gameOverManager.isGameOver = true;
-            GameStatsManager.Instance.CompleteGame();
-        }
-
-        Destroy(gameObject); 
-    }
-
-    private void UpdateEscapeCounterUI()
-    {
-        if (escapeCounterText != null)
-        {
-            if(escapedEnemiesCount >= 5) 
-            {
-                escapedEnemiesCount = 5; 
-            }
-            escapeCounterText.text = $"{escapedEnemiesCount}/{maxAllowedEscapes}";
-        }
-    }
-
-    private void CheckGameOver()
-    {
-        if (escapedEnemiesCount >= maxAllowedEscapes)
-        {
-            escapeCounterText.gameObject.SetActive(false);
-            //gameOverManager.isGameOver = true;
-        }
-       
     }
 
     public override void MoveTowardsTarget(Transform target)
@@ -165,6 +119,6 @@ public class EnemyAI : BaseAI
     protected override void HandleAttack()
     {
         base.HandleAttack();
-        returningToPatrol = true; 
+        returningToPatrol = true;
     }
 }
