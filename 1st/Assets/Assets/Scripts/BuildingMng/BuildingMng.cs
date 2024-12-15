@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -24,6 +26,8 @@ public class BuildingMng : MonoBehaviour
     public static bool isPanelActive = false;
 
     private GameObject towerUIPanel;
+
+    [SerializeField] private TMP_Text buildingFeedbackText;
 
     private Color originalColor;
 
@@ -108,7 +112,7 @@ public class BuildingMng : MonoBehaviour
         {
             if (collider.gameObject.CompareTag("Tower"))
             {
-                Debug.Log("You can not build tower here");
+                StartCoroutine(BuildingFeedback());
                 return true;
             }
         }
@@ -164,7 +168,7 @@ public class BuildingMng : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("You can not build tower here");
+                    StartCoroutine(BuildingFeedback());
                 }
             }
         }
@@ -200,5 +204,12 @@ public class BuildingMng : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator BuildingFeedback()
+    {
+        buildingFeedbackText.text = "You can not build tower here!\n";
+        yield return new WaitForSeconds(1);
+        buildingFeedbackText.text = "";
     }
 }
