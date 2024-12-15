@@ -1,48 +1,149 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class UnitProduction : MonoBehaviour
 {
     [SerializeField] private Transform unitPrefab;
     [SerializeField] private float unitSpacing = 1f;
     [SerializeField] private Button produceUnitButton;
-    [SerializeField] private Button upgradeTowerButton;
-
-    [SerializeField] private LayerMask roadLayerMask; 
-    [SerializeField] private LayerMask unitLayerMask; 
+    [SerializeField] private Button destroyTowerButton;
+    [SerializeField] private TMP_Text feedbackText;
+    [SerializeField] private TMP_Text balanceText;
+    [SerializeField] private GameObject towerUIPanel;
+    [SerializeField] private LayerMask roadLayerMask;
+    [SerializeField] private LayerMask unitLayerMask;
+    private float upgradeCost = 30f;
 
     private void Awake()
     {
         produceUnitButton.onClick.AddListener(ProduceUnits);
-        upgradeTowerButton.onClick.AddListener(UpgradeTower);
+        destroyTowerButton.onClick.AddListener(DestroyTower);
+
+        EventTrigger trigger = produceUnitButton.gameObject.AddComponent<EventTrigger>();
+
+        EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+        entryEnter.eventID = EventTriggerType.PointerEnter;
+        entryEnter.callback.AddListener((eventData) => SetIgnoreTowerClick(true));
+        trigger.triggers.Add(entryEnter);
+
+        EventTrigger.Entry entryExit = new EventTrigger.Entry();
+        entryExit.eventID = EventTriggerType.PointerExit;
+        entryExit.callback.AddListener((eventData) => SetIgnoreTowerClick(false));
+        trigger.triggers.Add(entryExit);
+    }
+
+    private void DestroyTower()
+    {
+        Destroy(gameObject);
+    }
+
+    void Update()
+    {
+        if (!BuildingMng.isPanelActive)
+        {
+            towerUIPanel.SetActive(false);
+        }
     }
 
     private void ProduceUnits()
     {
-        Vector3 roadPosition = GetNearestRoadPosition();
-        Debug.Log($"Nearest road position: {roadPosition}"); 
-
-        if (roadPosition != Vector3.zero)
+        if (GameStatsManager.Instance.totalGold >= upgradeCost)
         {
-            for (int i = 0; i < 5; i++) 
+            GameStatsManager.Instance.SpendGold(upgradeCost);
+
+            PlayerPrefs.SetFloat("TotalGold", GameStatsManager.Instance.totalGold);
+            PlayerPrefs.Save();
+
+            UpdateBalanceUI();
+            Vector3 roadPosition = GetNearestRoadPosition();
+            Debug.Log($"Nearest road position: {roadPosition}");
+
+            if (roadPosition != Vector3.zero)
             {
-                Vector3 spawnPosition = FindEmptySpawnPosition(roadPosition, i);
-                if (spawnPosition != Vector3.zero)
+                int soldiersSpawned = 0;
+                int maxSoldiers = 5;
+                int spawnAttempts = 50;
+
+                for (int attempt = 0; attempt < spawnAttempts && soldiersSpawned < maxSoldiers; attempt++)
                 {
-                    Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
+                    Vector3 spawnPosition = GetRandomPositionOnSurface(roadPosition);
+                    spawnPosition = AdjustToRoadLevel(spawnPosition);
+
+                    if (spawnPosition != Vector3.zero)
+                    {
+                        Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
+                        soldiersSpawned++;
+                    }
+                }
+
+                if (soldiersSpawned == 0)
+                {
+                    Debug.LogWarning("No valid positions found to spawn soldiers.");
                 }
                 else
                 {
-                    break; 
+                    Debug.Log($"{soldiersSpawned} soldiers successfully spawned.");
                 }
             }
+            else
+            {
+                Debug.LogError("No road detected nearby!");
+            }
         }
+        else
+        {
+            StartCoroutine(ShowFeedback("Not enough gold to upgrade towers!"));
+            Debug.Log("Upgrade failed: Not enough gold.");
+        }
+        BuildingMng.ignoreTowerClick = true;
+        Invoke(nameof(ResetIgnoreTowerClick), 2f);
+
+
+    }
+
+    public void UpdateBalanceUI()
+    {
+        PlayerPrefs.GetFloat("TotalGold", GameStatsManager.Instance.totalGold);
+        balanceText.text = "Gold: " + GameStatsManager.Instance.totalGold.ToString("F2");
+    }
+
+    public IEnumerator ShowFeedback(string message)
+    {
+        feedbackText.text = message;
+        yield return new WaitForSeconds(3f);
+        feedbackText.text = string.Empty;
+    }
+
+    private Vector3 GetRandomPositionOnSurface(Vector3 roadPosition)
+    {
+        float searchRadius = 10f;
+        int maxRandomAttempts = 10;
+
+        for (int attempt = 0; attempt < maxRandomAttempts; attempt++)
+        {
+            Vector3 randomOffset = new Vector3(
+                Random.Range(-searchRadius, searchRadius),
+                0,
+                Random.Range(-searchRadius, searchRadius)
+            );
+
+            Vector3 potentialPosition = roadPosition + randomOffset;
+
+            if (IsSpawnPositionValid(potentialPosition))
+            {
+                return potentialPosition;
+            }
+        }
+
+        return Vector3.zero;
     }
 
     private Vector3 GetNearestRoadPosition()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f, roadLayerMask);
-
         if (hitColliders.Length > 0)
         {
             Collider nearestRoad = hitColliders[0];
@@ -57,59 +158,78 @@ public class UnitProduction : MonoBehaviour
                     nearestRoad = hitColliders[i];
                 }
             }
-
-            return new Vector3(nearestRoad.transform.position.x, nearestRoad.transform.position.y, nearestRoad.transform.position.z);
+            return nearestRoad.transform.position;
         }
         return Vector3.zero;
     }
 
-
     private Vector3 FindEmptySpawnPosition(Vector3 roadPosition, int index)
     {
-        Vector3 offset = Vector3.right * (index * unitSpacing);
-        Vector3 potentialSpawnPosition = roadPosition + offset;
+        int maxCircles = 10;
+        int pointsPerCircle = 8;
 
-        if (IsSpawnPositionValid(potentialSpawnPosition))
+        for (int radius = 1; radius <= maxCircles; radius++)
         {
-            return potentialSpawnPosition; 
-        }
+            float actualRadius = radius * unitSpacing;
 
-        for (int i = 1; i <= 3; i++)
-        {
-            potentialSpawnPosition = roadPosition + offset + (Vector3.forward * i * unitSpacing);
-
-            if (IsSpawnPositionValid(potentialSpawnPosition))
+            for (int point = 0; point < pointsPerCircle; point++)
             {
-                return potentialSpawnPosition; 
+                float angle = (2 * Mathf.PI / pointsPerCircle) * point;
+
+                Vector3 offset = new Vector3(
+                    Mathf.Cos(angle) * actualRadius,
+                    0,
+                    Mathf.Sin(angle) * actualRadius
+                );
+
+                Vector3 potentialSpawnPosition = roadPosition + offset;
+
+                if (IsSpawnPositionValid(potentialSpawnPosition))
+                {
+                    return potentialSpawnPosition;
+                }
             }
 
-            potentialSpawnPosition = roadPosition + offset - (Vector3.forward * i * unitSpacing);
-
-            if (IsSpawnPositionValid(potentialSpawnPosition))
-            {
-                return potentialSpawnPosition; 
-            }
+            pointsPerCircle += 4;
         }
 
-        return Vector3.zero; 
+        return Vector3.zero;
     }
+
+
 
     private bool IsSpawnPositionValid(Vector3 position)
     {
         if (Physics.CheckSphere(position, 0.5f, unitLayerMask))
         {
-            return false; 
+            return false;
         }
-
         if (Physics.Raycast(position + Vector3.up * 10, Vector3.down, out RaycastHit hit, 15f, roadLayerMask))
         {
-            return true; 
+            return true;
         }
-        return false; 
+        return false;
     }
 
-    private void UpgradeTower()
+    private Vector3 AdjustToRoadLevel(Vector3 position)
     {
-        Debug.Log("Tower upgraded");
+        if (Physics.Raycast(position + Vector3.up * 10, Vector3.down, out RaycastHit hit, 50f, roadLayerMask))
+        {
+            position.y = hit.point.y;
+        }
+        else
+        {
+            Debug.LogWarning("No road detected for position adjustment!");
+        }
+        return position;
+    }
+
+    private void ResetIgnoreTowerClick()
+    {
+        BuildingMng.ignoreTowerClick = false;
+    }
+    private void SetIgnoreTowerClick(bool state)
+    {
+        BuildingMng.ignoreTowerClick = state;
     }
 }

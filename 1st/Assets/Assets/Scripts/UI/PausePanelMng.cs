@@ -28,25 +28,24 @@ public class PausePanelMng : MonoBehaviour
     private float countdownDuration = 3f;
     private float countdownTimer;
 
+    private bool settingsChanged = false; 
+
     private void Awake()
     {
         UIInputs = new UIInputActions();
 
-        // Keep your existing input system setup for pausing
         UIInputs.Actions.Pause.performed += e => SetPauseFlag();
         UIInputs.Enable();
     }
 
     void Start()
     {
-        // Initialize buttons with their respective event listeners
         resumeButton.onClick.AddListener(ResumeGame);
         restartButton.onClick.AddListener(RestartGame);
         settingsButton.onClick.AddListener(OpenSettings);
         exitButton.onClick.AddListener(ExitToMenu);
         closeSettingsButton.onClick.AddListener(CloseSettings);
 
-        // Initialize settings panel elements
         settingsPanel.SetActive(false);
         PopulateQualityDropdown();
 
@@ -54,16 +53,13 @@ public class PausePanelMng : MonoBehaviour
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume", 0.6f);
         UpdateSoundValueText();
 
-        // Hide countdown text at the start
         countdownText.gameObject.SetActive(false);
 
-        // Ensure the game starts unpaused
         Time.timeScale = 1;
     }
 
     void Update()
     {
-        // When paused, activate the pause panel
         if (isPaused)
         {
             PauseGame();
@@ -72,14 +68,13 @@ public class PausePanelMng : MonoBehaviour
 
     void SetPauseFlag()
     {
-        isPaused = true; // Pause triggered by the input action
+        isPaused = true;
     }
 
     void PauseGame()
     {
-        // Ensure the game is paused properly
         Time.timeScale = 0;
-        if (!settingsPanel.activeSelf) // Pause panel should only be visible when settings are not active
+        if (!settingsPanel.activeSelf)
         {
             pausePanel.SetActive(true);
         }
@@ -87,70 +82,63 @@ public class PausePanelMng : MonoBehaviour
 
     public void ResumeGame()
     {
-        /*// Only resume if the game is actually paused
-        if (isPaused)
-        {
-            pausePanel.SetActive(false); // Deactivate pause panel immediately
-            countdownText.gameObject.SetActive(true); // Activate countdown text
-            StartCoroutine(ResumeAfterCountdown());
-        }*/
         isPaused = false;
-        pausePanel.SetActive(false); // Deactivate pause panel immediately
-        countdownText.gameObject.SetActive(true); // Activate countdown text
+        pausePanel.SetActive(false);
+        countdownText.gameObject.SetActive(true);
         StartCoroutine(ResumeAfterCountdown());
     }
 
     private IEnumerator ResumeAfterCountdown()
     {
-        // Start countdown
         countdownTimer = countdownDuration;
 
         while (countdownTimer > 0)
         {
             countdownText.text = "Resuming in " + countdownTimer.ToString("F0") + "...";
-            yield return new WaitForSecondsRealtime(1f); // Use unscaled time to avoid dependency on timeScale
+            yield return new WaitForSecondsRealtime(1f);
             countdownTimer--;
         }
 
-        // Clear countdown text, hide it, and resume the game
         countdownText.text = "";
-        countdownText.gameObject.SetActive(false); // Deactivate countdown text
-        Time.timeScale = 1; // Resume the game
-        isPaused = false; // Reset the pause flag to indicate the game is no longer paused
+        countdownText.gameObject.SetActive(false);
+        Time.timeScale = 1;
+        isPaused = false;
     }
 
     public void RestartGame()
     {
-        // Ensure timeScale is reset before restarting
+        GameStatsManager.Instance.StopGamePlayTime(); 
+        GameStatsManager.Instance.StartGamePlayTime(); 
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OpenSettings()
     {
-        // Show settings and hide the pause panel
         settingsPanel.SetActive(true);
-        pausePanel.SetActive(false); // Deactivate pause panel when opening settings
+        pausePanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        // Close settings and show the pause panel again if the game is still paused
         settingsPanel.SetActive(false);
         if (isPaused)
         {
-            pausePanel.SetActive(true); // Show pause panel again when settings are closed
+            pausePanel.SetActive(true);
         }
     }
 
     public void ExitToMenu()
     {
-        // Ensure timeScale is reset before exiting to the menu
-        Time.timeScale = 1;
-        SceneManager.LoadScene("Menu"); // Load Menu scene
-    }
+        GameStatsManager.Instance.StopGamePlayTime(); 
+        if (settingsChanged)
+        {
+            SaveSettings();
+        }
 
-    // Settings functions
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Menu");
+    }
 
     void PopulateQualityDropdown()
     {
@@ -166,6 +154,7 @@ public class PausePanelMng : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
+        settingsChanged = true; 
     }
 
     public void SetSoundVolume(float volume)
@@ -173,6 +162,7 @@ public class PausePanelMng : MonoBehaviour
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("SoundVolume", volume);
         UpdateSoundValueText();
+        settingsChanged = true; 
     }
 
     void UpdateSoundValueText()
@@ -180,9 +170,14 @@ public class PausePanelMng : MonoBehaviour
         soundValueText.text = (soundSlider.value * 100).ToString("0") + "%";
     }
 
+    private void SaveSettings()
+    {
+        PlayerPrefs.Save();
+        Debug.Log("Settings saved.");
+    }
+
     private void OnDestroy()
     {
-        // Unbind event listeners to avoid memory leaks
         resumeButton.onClick.RemoveListener(ResumeGame);
         restartButton.onClick.RemoveListener(RestartGame);
         settingsButton.onClick.RemoveListener(OpenSettings);
@@ -193,7 +188,7 @@ public class PausePanelMng : MonoBehaviour
         soundSlider.onValueChanged.RemoveListener(SetSoundVolume);
     }
 
-    #region - Enable/Disable -
+    #region - Enable/Disable - 
 
     private void OnEnable()
     {

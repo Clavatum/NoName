@@ -5,7 +5,7 @@ public static class Models
 {
     #region - Player -
 
-    public enum PlayerStance // enum works like list
+    public enum PlayerStance 
     {
         Stand,
         Crouch,

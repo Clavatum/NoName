@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     [Header("References")]
     private PlayerInputActions playerInputActions;
     public PausePanelMng pausePanelMng;
+    public GameOverPanelMng gameOverPanelMng;
     public PlayerController playerController;
     public Animator playerAnimator;
     public GameObject yGimbal;
@@ -23,7 +24,7 @@ public class CameraController : MonoBehaviour
     public Transform target;
     public GameObject towerButtons;
     [HideInInspector]
-    public Vector3 targetRotation;   
+    public Vector3 targetRotation;
     private Vector3 yGimbalRotation;
 
     [Header("Settings")]
@@ -59,7 +60,16 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (isMapCamActive || pausePanelMng.isPaused)
+        if (!isMapCamActive)
+        {
+            BuildingMng.isPanelActive = false;
+        }
+        if (playerController.isFaceTarget && target == null)
+        {
+            playerController.isFaceTarget = false;
+            ChangeCamera(thirdPersonCam);
+        }
+        if (isMapCamActive || pausePanelMng.isPaused || gameOverPanelMng.isGameOver || YouWinPanelMng.gameWon)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -87,7 +97,7 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region - Position / Rotation -  
-    
+
     private void CameraRotation()
     {
         var viewInput = playerController.inputView;
@@ -102,7 +112,8 @@ public class CameraController : MonoBehaviour
             cameraSettings.SensitivityX = 0;
             cameraSettings.SensitivityY = 0;
         }
-        else {
+        else
+        {
             yGimbalRotation.x = Mathf.Clamp(yGimbalRotation.x, cameraSettings.YClampMin, cameraSettings.YClampMax);
             cameraSettings.SensitivityX = 12;
             cameraSettings.SensitivityY = 12;
@@ -118,10 +129,13 @@ public class CameraController : MonoBehaviour
 
     private void LookAtTarget()
     {
-        var directionToTarget = target.position - transform.position;
-        var rotationToTarget = Quaternion.LookRotation(directionToTarget);
+        if (!playerController.isFaceTarget)
+        {
+            var directionToTarget = target.position - transform.position;
+            var rotationToTarget = Quaternion.LookRotation(directionToTarget);
 
-        transform.rotation = Quaternion.Euler(0, rotationToTarget.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(0, rotationToTarget.eulerAngles.y, 0);
+        }
     }
 
     private void DetectTarget()
@@ -129,7 +143,7 @@ public class CameraController : MonoBehaviour
         if (IsEnemyNearby() && !playerController.isFaceTarget)
         {
             playerController.isFaceTarget = true;
-            lookAtTargetCam.LookAt = target; 
+            lookAtTargetCam.LookAt = target;
             ChangeCamera(lookAtTargetCam);
         }
         else if (playerController.isFaceTarget)
@@ -157,7 +171,7 @@ public class CameraController : MonoBehaviour
 
         if (isHit)
         {
-            target = hitInfo.transform;  
+            target = hitInfo.transform;
         }
 
         return isHit;
@@ -173,7 +187,7 @@ public class CameraController : MonoBehaviour
         {
             if (newCam == lookAtTargetCam && target != null)
             {
-                lookAtTargetCam.LookAt = target; 
+                lookAtTargetCam.LookAt = target;
             }
 
             currentCam = newCam;
@@ -192,7 +206,7 @@ public class CameraController : MonoBehaviour
     private void EnableMapCam()
     {
         isMapCamActive = !isMapCamActive;
-        
+
         if (isMapCamActive)
         {
             towerButtons.SetActive(true);

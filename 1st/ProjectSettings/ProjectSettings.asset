@@ -155,14 +155,14 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.UnityTechnologies.com.unity.template.urpblank
-    Standalone: com.Unity-Technologies.com.unity.template.urp-blank
+    Standalone: com.DefaultCompany.1st
     iPhone: com.Unity-Technologies.com.unity.template.urp-blank
   buildNumber:
     Bratwurst: 0
     Standalone: 0
     iPhone: 0
     tvOS: 0
-  overrideDefaultApplicationIdentifier: 1
+  overrideDefaultApplicationIdentifier: 0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
@@ -907,11 +907,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 92f5fbca-73fd-42a0-bb1e-8f0acdf35570
+  cloudProjectId: 8674717d-e875-4e6f-bb28-ec4c31c7143f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 1st 2024-08-13_17-15-00
-  organizationId: vasarecta
+  projectName: 1st
+  organizationId: glatois
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

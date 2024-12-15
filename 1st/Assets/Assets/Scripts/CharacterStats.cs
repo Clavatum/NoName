@@ -9,8 +9,8 @@ public class CharacterStats : MonoBehaviour
         Soldier
     }
 
-    public CharacterType characterType; // Character type selected from the enum
+    public CharacterType characterType; 
     public float maxHealth = 100f;
-    public float shield = 0f; // Shield is only defined here
-    public bool hasShield = false; // Does the character have shield?
+    public float shield = 0f; 
+    public bool hasShield = false; 
 }
