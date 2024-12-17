@@ -40,7 +40,10 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage, string attackerTag)
     {
-        if (attackerTag == gameObject.tag || (attackerTag == "Player" && gameObject.tag == "Soldier") || (attackerTag == "Soldier" && gameObject.tag == "Player") || (attackerTag == "Arrow" && gameObject.tag == "Player"))
+        if (attackerTag == gameObject.tag ||
+        (attackerTag == "Player" && gameObject.tag == "Soldier") ||
+        (attackerTag == "Soldier" && gameObject.tag == "Player") ||
+        (attackerTag == "Arrow" && gameObject.tag == "Player"))
         {
             Debug.Log("Friendly fire prevented!");
             return;
@@ -132,7 +135,7 @@ public class HealthSystem : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         if (healthBar != null)
         {

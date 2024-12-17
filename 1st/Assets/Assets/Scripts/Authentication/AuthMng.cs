@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.Services.Authentication.PlayerAccounts;
 using System;
-using System.Runtime.CompilerServices;
 
 public class AuthMng : MonoBehaviour
 {
@@ -56,14 +55,19 @@ public class AuthMng : MonoBehaviour
         string userName = userNameInput.text;
         string password = passwordInput.text;
 
-        if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
+        if (!AssertionScript.IsValidUsername(userName, out string usernameError))
         {
-            await SignInWithUsernamePasswordAsync(userName, password);
+            logTxt.text = usernameError;
+            return;
         }
-        else
+
+        if (!AssertionScript.IsValidPassword(password, out string passwordError))
         {
-            logTxt.text = "Username or password cannot be empty!";
+            logTxt.text = passwordError;
+            return;
         }
+
+        await SignInWithUsernamePasswordAsync(userName, password);
     }
 
     public async void SignUp()
@@ -71,14 +75,19 @@ public class AuthMng : MonoBehaviour
         string userName = userNameInput.text;
         string password = passwordInput.text;
 
-        if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
+        if (!AssertionScript.IsValidUsername(userName, out string usernameError))
         {
-            await SignUpWithUsernamePasswordAsync(userName, password);
+            logTxt.text = usernameError;
+            return;
         }
-        else
+
+        if (!AssertionScript.IsValidPassword(password, out string passwordError))
         {
-            logTxt.text = "Username or password cannot be empty!";
+            logTxt.text = passwordError;
+            return;
         }
+
+        await SignUpWithUsernamePasswordAsync(userName, password);
     }
 
     async Task SignUpWithUsernamePasswordAsync(string username, string password)
@@ -122,8 +131,6 @@ public class AuthMng : MonoBehaviour
             Debug.LogException(ex);
             logTxt.text = "Request failed: " + ex.Message;
         }
-
-        
     }
 
     async Task SignInWithUsernamePasswordAsync(string username, string password)
@@ -167,7 +174,6 @@ public class AuthMng : MonoBehaviour
             Debug.LogException(ex);
             logTxt.text = "Request failed: " + ex.Message;
         }
-
     }
 
     public static void LoadGameSceneByIndex(int sceneIndex, string username)
@@ -196,7 +202,7 @@ public class AuthMng : MonoBehaviour
 
     private void LoginController_OnSignedIn(PlayerProfile profile)
     {
-        if(userNameText == null) { return; }
+        if (userNameText == null) { return; }
         userNameText.text = profile.Name;
     }
     #endregion
