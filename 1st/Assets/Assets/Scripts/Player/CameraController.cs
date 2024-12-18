@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     public Transform Player;
     public Transform target;
     public GameObject towerButtons;
+    public GameObject shopPanel;
     [HideInInspector]
     public Vector3 targetRotation;
     private Vector3 yGimbalRotation;
@@ -63,6 +64,7 @@ public class CameraController : MonoBehaviour
         if (!isMapCamActive)
         {
             BuildingMng.isPanelActive = false;
+            shopPanel.SetActive(false);
         }
         if (playerController.isFaceTarget && target == null)
         {
