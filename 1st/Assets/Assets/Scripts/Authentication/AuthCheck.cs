@@ -7,14 +7,14 @@ using UnityEngine.SceneManagement;
 public class AuthCheck : MonoBehaviour
 {
     public TMP_Text logTxt;
-    public TMP_Text statusTxt; // Status göstermek için yeni text
+    public TMP_Text statusTxt;
     private bool isCheckingConnection = false;
     private bool isConnectionLost = false;
-    private float countdownTime = 5f; // Geri sayým süresi
+    private float countdownTime = 5f;
 
     private void Start()
     {
-        statusTxt.text = "Status: Online"; // Baþlangýç durumu
+        statusTxt.text = "Status: Online";
         StartCoroutine(CheckInternetConnectionRoutine());
     }
 
@@ -26,7 +26,7 @@ public class AuthCheck : MonoBehaviour
             {
                 StartCoroutine(CheckInternetConnection());
             }
-            yield return new WaitForSeconds(1f); // Her saniye baðlantýyý kontrol eder
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -44,14 +44,14 @@ public class AuthCheck : MonoBehaviour
             {
                 if (!isConnectionLost)
                 {
-                    OnConnectionLost(); // Baðlantý ilk kez kaybedildiðinde baþlat
+                    OnConnectionLost();
                 }
             }
             else
             {
                 if (isConnectionLost)
                 {
-                    OnConnectionRestored(); // Baðlantý tekrar geldiðinde
+                    OnConnectionRestored();
                 }
             }
         }
@@ -62,19 +62,19 @@ public class AuthCheck : MonoBehaviour
     void OnConnectionLost()
     {
         isConnectionLost = true;
-        Time.timeScale = 0; // Oyunu duraklatýr
+        Time.timeScale = 0;
         statusTxt.text = "Status: Connection Lost";
-        countdownTime = 5f; // Geri sayýmý baþlat
+        countdownTime = 5f;
         StartCoroutine(CountdownToReturn());
     }
 
     void OnConnectionRestored()
     {
         isConnectionLost = false;
-        Time.timeScale = 1; // Oyunu devam ettirir
+        Time.timeScale = 1;
         statusTxt.text = "Status: Online";
-        logTxt.gameObject.SetActive(false); // Hata mesajýný gizler
-        StopCoroutine(CountdownToReturn()); // Geri sayýmý durdurur
+        logTxt.gameObject.SetActive(false);
+        StopCoroutine(CountdownToReturn());
     }
 
     IEnumerator CountdownToReturn()
@@ -84,17 +84,15 @@ public class AuthCheck : MonoBehaviour
         while (countdownTime > 0)
         {
             logTxt.text = $"Internet connection lost! Returning in {countdownTime:F0} seconds...";
-            yield return new WaitForSecondsRealtime(1f); // Her saniye günceller
+            yield return new WaitForSecondsRealtime(1f);
             countdownTime--;
 
-            // Baðlantý geri geldiyse geri sayýmý durdurur
             if (!isConnectionLost)
             {
                 yield break;
             }
         }
 
-        // Geri sayým bittiðinde giriþ ekranýna döner
         if (isConnectionLost)
         {
             ReturnToSignIn();
@@ -103,7 +101,7 @@ public class AuthCheck : MonoBehaviour
 
     void ReturnToSignIn()
     {
-        SceneManager.LoadScene(0); // Giriþ ekranýna döner
+        SceneManager.LoadScene(0);
         logTxt.gameObject.SetActive(false);
     }
 }

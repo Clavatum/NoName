@@ -2,7 +2,6 @@ using System.Text.RegularExpressions;
 
 public static class AssertionScript
 {
-    // Username validation
     public static bool IsValidUsername(string username, out string errorMessage)
     {
         if (string.IsNullOrEmpty(username))
@@ -21,7 +20,6 @@ public static class AssertionScript
         return true;
     }
 
-    // Password validation
     public static bool IsValidPassword(string password, out string errorMessage)
     {
         if (string.IsNullOrEmpty(password))
