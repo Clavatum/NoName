@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
+using System.Threading.Tasks;
 using TMPro;
+using Unity.Services.Authentication;
+using Unity.Services.Authentication.PlayerAccounts;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -101,7 +105,23 @@ public class AuthCheck : MonoBehaviour
 
     void ReturnToSignIn()
     {
+        HandleLogout();
         SceneManager.LoadScene(0);
         logTxt.gameObject.SetActive(false);
     }
+
+    public void HandleLogout()
+    {
+        try
+        {
+            AuthenticationService.Instance.SignOut();
+            PlayerAccountService.Instance.SignOut();
+            Debug.Log("User successfully logged out.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Logout failed: {ex.Message}");
+        }
+    }
+
 }
