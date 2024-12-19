@@ -50,7 +50,7 @@ public class GameOverPanelMng : MonoBehaviour
         isGameOver = false;
         SceneManager.LoadScene("GameScene");
         escapeCounterText.gameObject.SetActive(true);
-        EnemyAI.escapedEnemiesCount = 0;
+        PatrolEndTrigger.escapedEnemiesCount = 0;
     }
 
     void BackToMenu()
@@ -72,6 +72,6 @@ public class GameOverPanelMng : MonoBehaviour
     {
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-        Time.timeScale = 0f;               
+        Time.timeScale = 0f;
     }
 }

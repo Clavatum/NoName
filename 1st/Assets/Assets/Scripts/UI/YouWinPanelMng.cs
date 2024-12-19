@@ -35,7 +35,7 @@ public class YouWinPanelMng : MonoBehaviour
     private void SaveGameDataBeforeYouWin()
     {
         gameStatsManager.CompleteGame();
-        CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave()); // check this. saving is already done in completegame.
+        CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave());
         Debug.Log("Game data saved before 'You Win' screen.");
     }
 
