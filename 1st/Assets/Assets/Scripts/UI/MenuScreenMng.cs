@@ -58,12 +58,12 @@ public class MenuScreenManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         string username = PlayerPrefs.GetString("Username", "Guest");
         usernameText.text = username;
-        totalGoldText.text = "Total Gold: " + PlayerPrefs.GetFloat("TotalGold", 0f).ToString("F2");
+        totalGoldText.text = "Total Gold: " + PlayerPrefs.GetFloat("TotalGold").ToString("F2");
     }
 
     public void StartGame()
     {
-        GameStatsManager.Instance.StartGamePlayTime(); 
+        GameStatsManager.Instance.StartGamePlayTime();
         SceneManager.LoadScene("GameScene");
     }
 

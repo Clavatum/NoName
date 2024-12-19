@@ -27,6 +27,8 @@ public class GameStatsManager : MonoBehaviour
     public static bool isDataLoaded = false;
     public static bool isSignedIn = false;
 
+    private bool isLoadData;
+
     async void Awake()
     {
         await UnityServices.InitializeAsync();
@@ -45,6 +47,11 @@ public class GameStatsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Update()
+    {
+        SaveGameStats();
     }
 
     public void HandleSignIn(PlayerProfile profile)
