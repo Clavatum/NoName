@@ -3,7 +3,32 @@ guid: 4635f30c83f71d9438ea1f944374f318
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAW_MAT
+    second: {fileID: 2100000, guid: 9d2dd4ab7f2e133438875ad46d67d20c, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MAW_diffuse
+    second: {fileID: 2800000, guid: 0958c9a61e4b3a94185af2885cf57a9f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MAW_glow
+    second: {fileID: 2800000, guid: 057bb86a114ebe741a6dcb4a226e04ae, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MAW_normal
+    second: {fileID: 2800000, guid: d59a8c6cdbc8fdb4ca4935bc5908ffe2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: maria_specular
+    second: {fileID: 2800000, guid: dd2588a6a79de33498a3762ad954d00c, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -24,7 +49,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -93,13 +118,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
