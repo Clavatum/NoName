@@ -2505,7 +2505,6 @@ MonoBehaviour:
   bigAttackCd: 1
   crouchSlashCd: 0.35
   isAttacking: 0
-  isBlocking: 0
 --- !u!114 &766994695557527296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2537,8 +2536,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 0
   maxHealth: 100
-  shield: 50
-  hasShield: 1
+  shield: 0
+  hasShield: 0
 --- !u!1 &7883427562134965149
 GameObject:
   m_ObjectHideFlags: 0

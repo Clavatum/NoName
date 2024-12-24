@@ -50,26 +50,16 @@ public class AuthMng : MonoBehaviour
         }
     }
 
+    // Button event
     public async void SignIn()
     {
         string userName = userNameInput.text;
         string password = passwordInput.text;
 
-        if (!AssertionScript.IsValidUsername(userName, out string usernameError))
-        {
-            logTxt.text = usernameError;
-            return;
-        }
-
-        if (!AssertionScript.IsValidPassword(password, out string passwordError))
-        {
-            logTxt.text = passwordError;
-            return;
-        }
-
         await SignInWithUsernamePasswordAsync(userName, password);
     }
 
+    // Button event
     public async void SignUp()
     {
         string userName = userNameInput.text;
