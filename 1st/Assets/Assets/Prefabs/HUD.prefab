@@ -1993,7 +1993,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1627238832424868687}
-  - {fileID: 2183840052990034262}
+  - {fileID: 6773164257096112110}
   m_Father: {fileID: 4529105584177511030}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2288,9 +2288,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 950873723118198873}
+  escapeCounterText: {fileID: 0}
   playAgainButton: {fileID: 3100670011980164943}
   backToMenuButton: {fileID: 1601495064199134224}
   isGameOver: 0
+  hasShownGameOver: 0
 --- !u!114 &6936260401564951245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2304,7 +2306,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   youWinPanel: {fileID: 5559508645708811502}
-  gameWon: 0
 --- !u!1 &5381056293257298516
 GameObject:
   m_ObjectHideFlags: 0
@@ -4042,7 +4043,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c740dbd50e735a45afbf1d363a68cb6, type: 3}
---- !u!224 &2183840052990034262 stripped
+--- !u!224 &6773164257096112110 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4421590813731255429, guid: 6c740dbd50e735a45afbf1d363a68cb6,
     type: 3}

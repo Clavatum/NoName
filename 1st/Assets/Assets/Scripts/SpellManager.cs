@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -8,11 +9,14 @@ public class SpellManager : MonoBehaviour
 
     [Header("Spell Settings")]
     public GameObject spellIndicatorPrefab;
-    public GameObject spellVFXPrefab;
     public float spellRadius = 5f;
     public float spellDamage = 50f;
     public float spellCooldown = 5f;
     public float spellCost = 20f;
+
+    [Header("Meteor Settings")]
+    public GameObject meteorPrefab;
+    public float meteorSpawnDelay = 0f; // set a value after get an meteor vfx
 
     [Header("References")]
     public Camera mapCamera;
@@ -71,6 +75,7 @@ public class SpellManager : MonoBehaviour
         {
             isSpellActive = true;
             spellIndicator.SetActive(true);
+            Debug.Log("Spell indicator activated.");
         }
         else
         {
@@ -83,21 +88,25 @@ public class SpellManager : MonoBehaviour
         Ray ray = mapCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayer))
         {
-            // Restrict position to the ground layer
             spellIndicator.transform.position = new Vector3(hit.point.x, 2.25f, hit.point.z);
             spellIndicator.transform.localScale = new Vector3(spellRadius, 1, spellRadius);
         }
     }
 
-
     void CastSpell()
     {
         Vector3 spellPosition = spellIndicator.transform.position;
 
-        if (spellVFXPrefab != null)
+        Debug.Log($"Casting spell at position: {spellPosition}");
+
+        if (meteorPrefab != null)
         {
-            GameObject vfxInstance = Instantiate(spellVFXPrefab, spellPosition, Quaternion.identity);
-            Destroy(vfxInstance, 2f);
+            Debug.Log("Spawning meteor...");
+            StartCoroutine(SpawnMeteorWithDelay(spellPosition, meteorSpawnDelay));
+        }
+        else
+        {
+            Debug.LogError("Meteor prefab is not assigned in the inspector!");
         }
 
         Collider[] hitColliders = Physics.OverlapSphere(spellPosition, spellRadius);
@@ -108,6 +117,7 @@ public class SpellManager : MonoBehaviour
                 var health = hitCollider.GetComponent<HealthSystem>();
                 if (health != null)
                 {
+                    Debug.Log($"Damaging enemy: {hitCollider.name}");
                     health.TakeDamage(spellDamage, "Player");
                 }
             }
@@ -120,6 +130,26 @@ public class SpellManager : MonoBehaviour
         isSpellActive = false;
 
         Debug.Log("Spell cast successfully!");
+    }
+
+    IEnumerator SpawnMeteorWithDelay(Vector3 position, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Vector3 meteorSpawnPosition = position + new Vector3(0, 0, 0);
+        Debug.Log($"Spawning meteor at position: {meteorSpawnPosition}");
+
+        GameObject meteorInstance = Instantiate(meteorPrefab, meteorSpawnPosition, Quaternion.identity);
+
+        if (meteorInstance != null)
+        {
+            Debug.Log("Meteor spawned successfully.");
+            Destroy(meteorInstance, 2f);
+        }
+        else
+        {
+            Debug.LogError("Failed to spawn meteor.");
+        }
     }
 
     void HandleCooldown()
