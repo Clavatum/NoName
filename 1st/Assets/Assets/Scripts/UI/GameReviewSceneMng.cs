@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;  
+using TMPro;
 
 public class GameReviewSceneMng : MonoBehaviour
 {
@@ -31,11 +31,13 @@ public class GameReviewSceneMng : MonoBehaviour
 
     void PlayAgain()
     {
+        AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadScene("GameScene");
     }
 
     void BackToMenu()
     {
+        AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadScene("Menu");
     }
 

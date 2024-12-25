@@ -28,7 +28,7 @@ public class PausePanelMng : MonoBehaviour
     private float countdownDuration = 3f;
     private float countdownTimer;
 
-    private bool settingsChanged = false; 
+    private bool settingsChanged = false;
 
     private void Awake()
     {
@@ -82,6 +82,7 @@ public class PausePanelMng : MonoBehaviour
 
     public void ResumeGame()
     {
+        AudioManager.Instance.PlayButtonClick();
         isPaused = false;
         pausePanel.SetActive(false);
         countdownText.gameObject.SetActive(true);
@@ -107,20 +108,23 @@ public class PausePanelMng : MonoBehaviour
 
     public void RestartGame()
     {
-        GameStatsManager.Instance.StopGamePlayTime(); 
-        GameStatsManager.Instance.StartGamePlayTime(); 
+        AudioManager.Instance.PlayButtonClick();
+        GameStatsManager.Instance.StopGamePlayTime();
+        GameStatsManager.Instance.StartGamePlayTime();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OpenSettings()
     {
+        AudioManager.Instance.PlayButtonClick();
         settingsPanel.SetActive(true);
         pausePanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
+        AudioManager.Instance.PlayButtonClick();
         settingsPanel.SetActive(false);
         if (isPaused)
         {
@@ -130,7 +134,9 @@ public class PausePanelMng : MonoBehaviour
 
     public void ExitToMenu()
     {
-        GameStatsManager.Instance.StopGamePlayTime(); 
+        MenuScreenManager.hasComebackToMenu = true;
+        AudioManager.Instance.PlayButtonClick();
+        GameStatsManager.Instance.StopGamePlayTime();
         if (settingsChanged)
         {
             SaveSettings();
@@ -152,9 +158,10 @@ public class PausePanelMng : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
+        AudioManager.Instance.PlayButtonClick();
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
-        settingsChanged = true; 
+        settingsChanged = true;
     }
 
     public void SetSoundVolume(float volume)
@@ -162,7 +169,7 @@ public class PausePanelMng : MonoBehaviour
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("SoundVolume", volume);
         UpdateSoundValueText();
-        settingsChanged = true; 
+        settingsChanged = true;
     }
 
     void UpdateSoundValueText()

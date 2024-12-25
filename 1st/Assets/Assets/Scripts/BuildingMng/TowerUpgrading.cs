@@ -31,6 +31,7 @@ public class TowerUpgrading : MonoBehaviour
     {
         if (GameStatsManager.Instance.totalGold >= upgradeCost)
         {
+            AudioManager.Instance.PlayUpdateTowerSound();
             GameStatsManager.Instance.SpendGold(upgradeCost);
 
             PlayerPrefs.SetFloat("TotalGold", GameStatsManager.Instance.totalGold);

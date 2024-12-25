@@ -57,6 +57,7 @@ public class AuthMng : MonoBehaviour
         string password = passwordInput.text;
 
         await SignInWithUsernamePasswordAsync(userName, password);
+
     }
 
     // Button event

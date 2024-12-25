@@ -45,6 +45,7 @@ public class GameOverPanelMng : MonoBehaviour
 
     void PlayAgain()
     {
+        AudioManager.Instance.PlayButtonClick();
         PlayerPrefs.SetFloat("TotalGold", GameStatsManager.Instance.totalGold);
         Time.timeScale = 1f;
         isGameOver = false;
@@ -55,6 +56,7 @@ public class GameOverPanelMng : MonoBehaviour
 
     void BackToMenu()
     {
+        AudioManager.Instance.PlayButtonClick();
         Time.timeScale = 1f;
         isGameOver = false;
         SceneManager.LoadScene("Menu");
@@ -62,7 +64,8 @@ public class GameOverPanelMng : MonoBehaviour
 
     async void ShowGameOverPanel()
     {
-        await Task.Delay(2000);
+        await Task.Delay(750);
+        AudioManager.Instance.PlayGameOverSound();
         gameOverPanel.SetActive(true);
         animator.SetTrigger("Show");
         StartCoroutine(StopGameAfterAnimation());

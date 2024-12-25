@@ -28,12 +28,15 @@ public class HealthPotion : MonoBehaviour
 
     public void OpenShopPanel()
     {
+        //AudioManager.Instance.PlayButtonClick();
         isShopOpen = !isShopOpen;
         shopPanel.SetActive(isShopOpen);
     }
 
     public void UsePotion()
     {
+        //AudioManager.Instance.PlayButtonClick();
+
         if (statsManager.totalGold < potionCost)
         {
             DisplayFeedback("Not enough gold!");

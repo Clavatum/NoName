@@ -96,7 +96,7 @@ public class CloudSaveManager : MonoBehaviour
             QualitySettings.SetQualityLevel(Convert.ToInt32(qualityLevel));
 
         if (cloudData.TryGetValue("GamesPlayed", out var gamesPlayed))
-            GameStatsManager.Instance.gamesPlayed = Convert.ToInt32(gamesPlayed); 
+            GameStatsManager.Instance.gamesPlayed = Convert.ToInt32(gamesPlayed);
     }
 
     public static Dictionary<string, object> CollectDataForSave()
@@ -107,9 +107,9 @@ public class CloudSaveManager : MonoBehaviour
             { "TotalKills", GameStatsManager.Instance.totalKills },
             { "TotalPlayTime", GameStatsManager.Instance.totalPlayTime },
             { "BestCompletionTime", GameStatsManager.Instance.bestCompletionTime },
-            { "SoundVolume", PlayerPrefs.GetFloat("SoundVolume", 0.6f) },
+            { "SoundVolume", PlayerPrefs.GetFloat("SoundVolume") },
             { "QualityLevel", PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel()) },
-            { "GamesPlayed", GameStatsManager.Instance.gamesPlayed } 
+            { "GamesPlayed", GameStatsManager.Instance.gamesPlayed }
         };
     }
 }
