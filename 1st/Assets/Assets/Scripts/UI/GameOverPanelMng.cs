@@ -17,6 +17,8 @@ public class GameOverPanelMng : MonoBehaviour
     public bool isGameOver;
     public bool hasShownGameOver = false;
 
+    public HealthPotion healthPotion;
+
     void Awake()
     {
         gameOverPanel.SetActive(false);
@@ -33,6 +35,7 @@ public class GameOverPanelMng : MonoBehaviour
         {
             SaveGameDataBeforeGameOver();
             ShowGameOverPanel();
+            healthPotion.shopPanel.SetActive(false);
             hasShownGameOver = true;
         }
     }
@@ -62,7 +65,8 @@ public class GameOverPanelMng : MonoBehaviour
 
     async void ShowGameOverPanel()
     {
-        await Task.Delay(2000);
+        await Task.Delay(400);
+        AudioManager.Instance.PlayGameOverSound();
         gameOverPanel.SetActive(true);
         animator.SetTrigger("Show");
         StartCoroutine(StopGameAfterAnimation());

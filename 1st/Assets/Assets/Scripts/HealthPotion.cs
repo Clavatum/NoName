@@ -9,7 +9,7 @@ public class HealthPotion : MonoBehaviour
     [SerializeField] private TextMeshProUGUI feedbackText;
     [SerializeField] private Button useHealthPotionButton;
     [SerializeField] private Button openShopPanelButton;
-    [SerializeField] private GameObject shopPanel;
+    public GameObject shopPanel;
 
     private bool isShopOpen = false;
     private GameStatsManager statsManager;

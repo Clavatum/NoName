@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,8 +40,10 @@ public class YouWinPanelMng : MonoBehaviour
         Debug.Log("Game data saved before 'You Win' screen.");
     }
 
-    public void ShowYouWinPanel()
+    async void ShowYouWinPanel()
     {
+        await Task.Delay(750);
+        AudioManager.Instance.PlayGameWinSound();
         youWinPanel.SetActive(true);
         animator.SetTrigger("Show");
         hasShownYouWin = true;

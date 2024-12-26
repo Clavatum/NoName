@@ -28,7 +28,7 @@ public class PausePanelMng : MonoBehaviour
     private float countdownDuration = 3f;
     private float countdownTimer;
 
-    private bool settingsChanged = false; 
+    private bool settingsChanged = false;
 
     private void Awake()
     {
@@ -107,8 +107,8 @@ public class PausePanelMng : MonoBehaviour
 
     public void RestartGame()
     {
-        GameStatsManager.Instance.StopGamePlayTime(); 
-        GameStatsManager.Instance.StartGamePlayTime(); 
+        GameStatsManager.Instance.StopGamePlayTime();
+        GameStatsManager.Instance.StartGamePlayTime();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -130,7 +130,8 @@ public class PausePanelMng : MonoBehaviour
 
     public void ExitToMenu()
     {
-        GameStatsManager.Instance.StopGamePlayTime(); 
+        MenuScreenManager.hasComebackToMenu = true;
+        GameStatsManager.Instance.StopGamePlayTime();
         if (settingsChanged)
         {
             SaveSettings();
@@ -154,7 +155,7 @@ public class PausePanelMng : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
-        settingsChanged = true; 
+        settingsChanged = true;
     }
 
     public void SetSoundVolume(float volume)
@@ -162,7 +163,7 @@ public class PausePanelMng : MonoBehaviour
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("SoundVolume", volume);
         UpdateSoundValueText();
-        settingsChanged = true; 
+        settingsChanged = true;
     }
 
     void UpdateSoundValueText()

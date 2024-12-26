@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class DamageTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject character; 
-    public float damageAmount = 10f; 
+    [SerializeField] private GameObject character;
+    public float damageAmount = 10f;
     private Collider triggerCollider;
     private bool isAttacking = false;
 
@@ -19,7 +19,7 @@ public class DamageTrigger : MonoBehaviour
         if (character == null)
         {
             Debug.LogError("Character reference is missing on DamageTrigger.");
-            return; 
+            return;
         }
 
         if (character.tag == "Player")
@@ -53,7 +53,7 @@ public class DamageTrigger : MonoBehaviour
             Debug.LogError("Trigger collider is missing on DamageTrigger.");
             return;
         }
-        if (!isRanged) 
+        if (!isRanged)
         {
             triggerCollider.enabled = false;
         }
@@ -63,7 +63,7 @@ public class DamageTrigger : MonoBehaviour
     {
         if (character == null)
         {
-            return; 
+            return;
         }
 
         if (playerCombat != null)
@@ -83,7 +83,7 @@ public class DamageTrigger : MonoBehaviour
         {
             EnableCollider();
         }
-        else if(!isAttacking && !isRanged)
+        else if (!isAttacking && !isRanged)
         {
             DisableCollider();
         }
@@ -94,6 +94,7 @@ public class DamageTrigger : MonoBehaviour
         HealthSystem health = other.GetComponent<HealthSystem>();
         if (health != null)
         {
+            if (character.tag == "Player") { AudioManager.Instance.PlaySwordSwingSound(); }
             health.TakeDamage(damageAmount, character.tag);
             Debug.Log($"Damage applied to {other.name} by {character.name}.");
         }

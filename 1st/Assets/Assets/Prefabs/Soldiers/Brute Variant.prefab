@@ -898,9 +898,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 2
-  detectionRange: 8
+  detectionRange: 10
   attackInterval: 1.5
-  damage: 10
+  damage: 7
   moveSpeed: 2
   rotationSpeed: 5
   isAttacking: 0

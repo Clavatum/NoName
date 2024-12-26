@@ -703,7 +703,7 @@ MonoBehaviour:
   attackRange: 2
   detectionRange: 8
   attackInterval: 1.5
-  damage: 10
+  damage: 12
   moveSpeed: 1.54
   rotationSpeed: 5
   isAttacking: 0
