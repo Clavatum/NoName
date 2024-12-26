@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 2
-  detectionRange: 5
+  detectionRange: 10
   attackInterval: 2
   damage: 15
   moveSpeed: 4
@@ -330,11 +330,6 @@ MonoBehaviour:
   isAttacking: 0
   patrolPath: {fileID: 0}
   waypointTolerance: 0.5
-  escapeCounterText: {fileID: 6498355958796397348, guid: eb2c6218f9eda5941b3b214d311abe5a,
-    type: 3}
-  maxAllowedEscapes: 5
-  gameOverManager: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
-    type: 3}
 --- !u!114 &7239484351814649332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 1
   maxHealth: 100
-  shield: 70
+  shield: 10
   hasShield: 1
 --- !u!1 &2528912129079305423
 GameObject:

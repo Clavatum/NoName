@@ -2242,7 +2242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e9524eb2d56ed419a4746e0a36d689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonClickSound: {fileID: 8300000, guid: 7131d701ae015a54aa3d856feccd513f, type: 3}
   gameOverSound: {fileID: 8300000, guid: 1cb3d0e88d248a94ea996005f9c26422, type: 3}
   gameWinSound: {fileID: 8300000, guid: dc13cba853cb7454eb9caf7e696da7a2, type: 3}
   walkingFootstepSound: {fileID: 8300000, guid: 5c9bdbce37b06a24fa6ea793bcfd1907,
@@ -2254,7 +2253,7 @@ MonoBehaviour:
   updateTowerSound: {fileID: 8300000, guid: a06902d1ce4dec74795eb020525e640c, type: 3}
   backgroundMusic: {fileID: 8300000, guid: 4676dcf222ab9114fa71451bac2ab517, type: 3}
   musicSource: {fileID: 1320966938}
-  audioSource: {fileID: 568099038}
+  effectsSource: {fileID: 1320966937}
 --- !u!82 &1320966937
 AudioSource:
   m_ObjectHideFlags: 0

@@ -65,8 +65,6 @@ public class SpellManager : MonoBehaviour
 
     void ActivateSpellIndicator()
     {
-        AudioManager.Instance.PlayButtonClick();
-
         if (cooldownTimer > 0)
         {
             Debug.Log("Spell is on cooldown!");

@@ -69,7 +69,6 @@ public class MenuScreenManager : MonoBehaviour
 
     public void StartGame()
     {
-        AudioManager.Instance.PlayButtonClick();
         AudioManager.Instance.StopBackgroundMusic();
         GameStatsManager.Instance.StartGamePlayTime();
         SceneManager.LoadScene("GameScene");
@@ -77,7 +76,6 @@ public class MenuScreenManager : MonoBehaviour
 
     public void OpenStats()
     {
-        AudioManager.Instance.PlayButtonClick();
         statsPanel.SetActive(true);
         settingsPanel.SetActive(false);
         UpdateStats();
@@ -85,26 +83,22 @@ public class MenuScreenManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        AudioManager.Instance.PlayButtonClick();
         settingsPanel.SetActive(true);
         statsPanel.SetActive(false);
     }
 
     public void CloseStats()
     {
-        AudioManager.Instance.PlayButtonClick();
         statsPanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        AudioManager.Instance.PlayButtonClick();
         settingsPanel.SetActive(false);
     }
 
     public void ExitGame()
     {
-        AudioManager.Instance.PlayButtonClick();
         Application.Quit();
     }
 
@@ -135,7 +129,6 @@ public class MenuScreenManager : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
-        AudioManager.Instance.PlayButtonClick();
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
     }

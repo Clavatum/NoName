@@ -602,11 +602,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c07d76ca13e8b46b824c6120cfe824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 100
-  detectionRange: 100
+  attackRange: 20
+  detectionRange: 30
   attackInterval: 1
-  damage: 8
-  moveSpeed: 2
+  damage: 6
+  moveSpeed: 4
   rotationSpeed: 5
   isAttacking: 0
 --- !u!114 &-4420456103519033144
@@ -641,7 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 2
   maxHealth: 100
-  shield: 50
+  shield: 5
   hasShield: 1
 --- !u!114 &2720483773111569135
 MonoBehaviour:
@@ -659,7 +659,7 @@ MonoBehaviour:
     type: 3}
   arrowSpawnPoint: {fileID: 4196109278957654455}
   launchForce: 100
-  noHitLifetime: 5
+  noHitLifetime: 3
 --- !u!1 &1169309035409016655
 GameObject:
   m_ObjectHideFlags: 0

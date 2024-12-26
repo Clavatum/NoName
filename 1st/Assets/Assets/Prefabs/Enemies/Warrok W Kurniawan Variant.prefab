@@ -2898,16 +2898,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 2
   detectionRange: 10
-  attackInterval: 2
-  damage: 10
+  attackInterval: 1.5
+  damage: 20
   moveSpeed: 2
   rotationSpeed: 5
   isAttacking: 0
   patrolPath: {fileID: 0}
   waypointTolerance: 0.5
-  escapeCounterText: {fileID: 0}
-  maxAllowedEscapes: 5
-  gameOverManager: {fileID: 0}
 --- !u!114 &215576078072405842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2925,7 +2922,7 @@ MonoBehaviour:
   healthBar: {fileID: 3413908786582085560}
   gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
     type: 3}
-  goldOnDeath: 10
+  goldOnDeath: 20
 --- !u!114 &8060033786822507201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2940,7 +2937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 1
   maxHealth: 100
-  shield: 75
+  shield: 20
   hasShield: 1
 --- !u!1 &7962930853449796388
 GameObject:

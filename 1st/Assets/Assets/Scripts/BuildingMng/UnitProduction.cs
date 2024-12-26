@@ -37,7 +37,6 @@ public class UnitProduction : MonoBehaviour
 
     private void DestroyTower()
     {
-        AudioManager.Instance.PlayButtonClick();
         Destroy(gameObject);
     }
 
@@ -51,7 +50,6 @@ public class UnitProduction : MonoBehaviour
 
     private void ProduceUnits()
     {
-        AudioManager.Instance.PlayButtonClick();
         if (GameStatsManager.Instance.totalGold >= upgradeCost)
         {
             GameStatsManager.Instance.SpendGold(upgradeCost);

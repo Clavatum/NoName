@@ -121,7 +121,6 @@ public class BuildingMng : MonoBehaviour
 
     public void SelectTower(int towerType)
     {
-        AudioManager.Instance.PlayButtonClick();
         if (currentTowerPreview != null)
         {
             Destroy(currentTowerPreview.gameObject);

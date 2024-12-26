@@ -82,7 +82,6 @@ public class PausePanelMng : MonoBehaviour
 
     public void ResumeGame()
     {
-        AudioManager.Instance.PlayButtonClick();
         isPaused = false;
         pausePanel.SetActive(false);
         countdownText.gameObject.SetActive(true);
@@ -108,7 +107,6 @@ public class PausePanelMng : MonoBehaviour
 
     public void RestartGame()
     {
-        AudioManager.Instance.PlayButtonClick();
         GameStatsManager.Instance.StopGamePlayTime();
         GameStatsManager.Instance.StartGamePlayTime();
         Time.timeScale = 1;
@@ -117,14 +115,12 @@ public class PausePanelMng : MonoBehaviour
 
     public void OpenSettings()
     {
-        AudioManager.Instance.PlayButtonClick();
         settingsPanel.SetActive(true);
         pausePanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        AudioManager.Instance.PlayButtonClick();
         settingsPanel.SetActive(false);
         if (isPaused)
         {
@@ -135,7 +131,6 @@ public class PausePanelMng : MonoBehaviour
     public void ExitToMenu()
     {
         MenuScreenManager.hasComebackToMenu = true;
-        AudioManager.Instance.PlayButtonClick();
         GameStatsManager.Instance.StopGamePlayTime();
         if (settingsChanged)
         {
@@ -158,7 +153,6 @@ public class PausePanelMng : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
-        AudioManager.Instance.PlayButtonClick();
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
         settingsChanged = true;

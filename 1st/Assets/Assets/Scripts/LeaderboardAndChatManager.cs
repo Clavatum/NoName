@@ -54,13 +54,11 @@ public class LeaderboardAndChatManager : MonoBehaviour
 
     private void CloseChat()
     {
-        AudioManager.Instance.PlayButtonClick();
         chatPanel.SetActive(false);
     }
 
     private void SendMessage()
     {
-        AudioManager.Instance.PlayButtonClick();
         string message = chatInput.text;
         if (string.IsNullOrWhiteSpace(message))
         {

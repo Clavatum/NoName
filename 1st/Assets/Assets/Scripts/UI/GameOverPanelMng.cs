@@ -17,6 +17,8 @@ public class GameOverPanelMng : MonoBehaviour
     public bool isGameOver;
     public bool hasShownGameOver = false;
 
+    public HealthPotion healthPotion;
+
     void Awake()
     {
         gameOverPanel.SetActive(false);
@@ -33,6 +35,7 @@ public class GameOverPanelMng : MonoBehaviour
         {
             SaveGameDataBeforeGameOver();
             ShowGameOverPanel();
+            healthPotion.shopPanel.SetActive(false);
             hasShownGameOver = true;
         }
     }
@@ -45,7 +48,6 @@ public class GameOverPanelMng : MonoBehaviour
 
     void PlayAgain()
     {
-        AudioManager.Instance.PlayButtonClick();
         PlayerPrefs.SetFloat("TotalGold", GameStatsManager.Instance.totalGold);
         Time.timeScale = 1f;
         isGameOver = false;
@@ -56,7 +58,6 @@ public class GameOverPanelMng : MonoBehaviour
 
     void BackToMenu()
     {
-        AudioManager.Instance.PlayButtonClick();
         Time.timeScale = 1f;
         isGameOver = false;
         SceneManager.LoadScene("Menu");
@@ -64,7 +65,7 @@ public class GameOverPanelMng : MonoBehaviour
 
     async void ShowGameOverPanel()
     {
-        await Task.Delay(750);
+        await Task.Delay(400);
         AudioManager.Instance.PlayGameOverSound();
         gameOverPanel.SetActive(true);
         animator.SetTrigger("Show");

@@ -31,13 +31,11 @@ public class GameReviewSceneMng : MonoBehaviour
 
     void PlayAgain()
     {
-        AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadScene("GameScene");
     }
 
     void BackToMenu()
     {
-        AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadScene("Menu");
     }
 

@@ -9,7 +9,7 @@ public class HealthPotion : MonoBehaviour
     [SerializeField] private TextMeshProUGUI feedbackText;
     [SerializeField] private Button useHealthPotionButton;
     [SerializeField] private Button openShopPanelButton;
-    [SerializeField] private GameObject shopPanel;
+    public GameObject shopPanel;
 
     private bool isShopOpen = false;
     private GameStatsManager statsManager;
@@ -28,15 +28,12 @@ public class HealthPotion : MonoBehaviour
 
     public void OpenShopPanel()
     {
-        //AudioManager.Instance.PlayButtonClick();
         isShopOpen = !isShopOpen;
         shopPanel.SetActive(isShopOpen);
     }
 
     public void UsePotion()
     {
-        //AudioManager.Instance.PlayButtonClick();
-
         if (statsManager.totalGold < potionCost)
         {
             DisplayFeedback("Not enough gold!");
