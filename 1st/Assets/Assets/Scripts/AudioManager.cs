@@ -92,5 +92,4 @@ public class AudioManager : MonoBehaviour
     public void PlayRunningFootstepSound() => PlaySoundEffect(runningFootstepSound);
     public void PlaySwordSwingSound() => PlaySoundEffect(swordSwingSound);
     public void PlayPlayerAttackSound() => PlaySoundEffect(playerAttackSound);
-    public void PlayUpdateTowerSound() => PlaySoundEffect(updateTowerSound);
 }
