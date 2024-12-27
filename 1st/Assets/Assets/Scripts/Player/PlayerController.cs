@@ -78,9 +78,9 @@ public class PlayerController : MonoBehaviour
     public float fallingMovementSpeed;
     public float fallingRunningMovementSpeed;
     public float maxFallingMovementSpeed = 5f;
-    public bool jumpingTriggered; // make it private later
+    public bool jumpingTriggered;
     public bool fallingTriggered;
-    
+
     #region - Awake / Start -
 
     private void Awake()
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Enable();
 
         #endregion
-        
+
         cameraHeight = cameraTarget.localPosition.y;
     }
 
@@ -293,7 +293,7 @@ public class PlayerController : MonoBehaviour
         verticalSpeed = Mathf.SmoothDamp(verticalSpeed, targetVerticalSpeed, ref verticalSpeedVelocity, movementSmoothDamp);
         horizontalSpeed = Mathf.SmoothDamp(horizontalSpeed, targetHorizontalSpeed, ref horizontalSpeedVelocity, movementSmoothDamp);
 
-        if (isTargetMode )
+        if (isTargetMode)
         {
             var relativeMovement = transform.InverseTransformDirection(playerMovement);
 
@@ -308,7 +308,7 @@ public class PlayerController : MonoBehaviour
             float animatorVertical = verticalActualSpeed > horizontalActualSpeed ? verticalActualSpeed : horizontalActualSpeed;
 
             characterAnimator.SetFloat("Vertical", animatorVertical);
-            if(animatorVertical < 0.01f)
+            if (animatorVertical < 0.01f)
             {
                 characterAnimator.SetFloat("Vertical", 0);
             }
@@ -435,7 +435,7 @@ public class PlayerController : MonoBehaviour
             playerStance = PlayerStance.Stand;
             characterAnimator.SetTrigger("CrouchToStand");
             return;
-        }    
+        }
         jumpingTriggered = true;
         if (IsMoving() && IsInputMoving() && (isWalking || isRunning)) // there is no walking jump anim
         {
@@ -462,8 +462,8 @@ public class PlayerController : MonoBehaviour
     #region - Slide -
     private void CalculateSlide()
     {
-        if(playerSettings.slideCd <= 0) { playerSettings.slideCd = 0; }
-        if(playerSettings.slideCd > 0) { playerSettings.slideCd -= Time.deltaTime; }
+        if (playerSettings.slideCd <= 0) { playerSettings.slideCd = 0; }
+        if (playerSettings.slideCd > 0) { playerSettings.slideCd -= Time.deltaTime; }
         if (isSliding) { StartCoroutine(Slide()); }
         isSliding = false;
     }
@@ -474,7 +474,7 @@ public class PlayerController : MonoBehaviour
         characterAnimator.SetTrigger("Slide");
         characterAnimator.SetBool("CanIdle", false);
         yield return new WaitForSeconds(playerSettings.slideTime);
-        
+
         playerStance = PlayerStance.Stand;
         characterAnimator.SetBool("CanIdle", true);
     }
@@ -501,10 +501,10 @@ public class PlayerController : MonoBehaviour
             characterAnimator.SetBool("CanIdle", false); // there is no any different crouch idle anim
             currentStance = playerCrouchStance;
         }
-        if (!IsGrounded()) 
+        if (!IsGrounded())
         {
             currentStance.colliderHeight = 1.2f;
-            if(IsNearGround())
+            if (IsNearGround())
             {
                 currentStance.colliderHeight = 1.8f;
                 return;

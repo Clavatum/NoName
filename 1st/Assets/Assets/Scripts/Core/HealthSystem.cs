@@ -108,7 +108,7 @@ public class HealthSystem : MonoBehaviour
 
         isDead = true;
 
-        OnDeath?.Invoke(gameObject); // Notify listeners of death
+        OnDeath?.Invoke(gameObject);
 
         if (animator != null)
         {

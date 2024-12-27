@@ -196,8 +196,6 @@ public class UnitProduction : MonoBehaviour
         return Vector3.zero;
     }
 
-
-
     private bool IsSpawnPositionValid(Vector3 position)
     {
         if (Physics.CheckSphere(position, 0.5f, unitLayerMask))

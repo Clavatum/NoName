@@ -223,14 +223,6 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    //void SetVirtualCameraActive(CinemachineVirtualCamera camera, bool isActive)
-    //{
-    //    if (camera != null)
-    //    {
-    //        camera.gameObject.SetActive(isActive);
-    //    }
-    //}
-
     #endregion
 
     #region - Enable/Disable -
