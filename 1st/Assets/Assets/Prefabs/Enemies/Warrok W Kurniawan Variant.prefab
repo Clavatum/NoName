@@ -2937,7 +2937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 1
   maxHealth: 100
-  shield: 20
+  shield: 90
   hasShield: 1
 --- !u!1 &7962930853449796388
 GameObject:
