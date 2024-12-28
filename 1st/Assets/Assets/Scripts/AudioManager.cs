@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
     {
         currentScene = scene;
 
-        if (currentScene.name != "Menu")
+        if (currentScene.name == "GameScene")
         {
             StopBackgroundMusic();
         }

@@ -32,7 +32,7 @@ public class PatrolEndTrigger : MonoBehaviour
     {
         if (escapeCounterText != null)
         {
-            escapeCounterText.text = $"{escapedEnemiesCount}/{maxAllowedEscapes}";
+            escapeCounterText.text = $"{escapedEnemiesCount}/{maxAllowedEscapes} Enemy passed";
         }
     }
 
