@@ -664,7 +664,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &2948915468598620084
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -724,7 +724,7 @@ MonoBehaviour:
   healthBar: {fileID: 5911394865256303293}
   gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
     type: 3}
-  goldOnDeath: 10
+  goldOnDeath: 30
 --- !u!114 &3268139088970493058
 MonoBehaviour:
   m_ObjectHideFlags: 0

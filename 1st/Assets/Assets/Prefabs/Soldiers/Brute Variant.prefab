@@ -843,7 +843,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6881776992615434023}
   serializedVersion: 4
-  m_Mass: 100
+  m_Mass: 90
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -861,7 +861,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &2878246687205599743
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -937,7 +937,7 @@ MonoBehaviour:
   healthBar: {fileID: 4278497450524653265}
   gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
     type: 3}
-  goldOnDeath: 10
+  goldOnDeath: 30
 --- !u!1 &8569843381452642167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2715566404302941441, guid: b9e2d185c99b0204e8594e5aabfde3a8,
