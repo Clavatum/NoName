@@ -15,7 +15,7 @@ public class HealthSystem : MonoBehaviour
 
     private bool isDead = false;
 
-    public float goldOnDeath = 10f;
+    public float goldOnDeath = 30f;
 
     public event Action<GameObject> OnDeath;
 
@@ -100,7 +100,7 @@ public class HealthSystem : MonoBehaviour
             return;
         }
 
-        if (attackerTag == "Player")
+        if (attackerTag == "Player" || attackerTag == "Soldier")
         {
             GameStatsManager.Instance.AddKill();
             GameStatsManager.Instance.EarnGold(goldOnDeath);

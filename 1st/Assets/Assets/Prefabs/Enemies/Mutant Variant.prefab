@@ -347,7 +347,7 @@ MonoBehaviour:
   healthBar: {fileID: 5577178695774925358}
   gameOverPanelMng: {fileID: 7285651126010500186, guid: 5ffa9bd07ca8f0e46b9be90d72434ec3,
     type: 3}
-  goldOnDeath: 10
+  goldOnDeath: 30
 --- !u!114 &506853138797238095
 MonoBehaviour:
   m_ObjectHideFlags: 0
