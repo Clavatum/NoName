@@ -65,6 +65,7 @@ public class CameraController : MonoBehaviour
         {
             BuildingMng.isPanelActive = false;
             shopPanel.SetActive(false);
+            HealthPotion.isShopOpen = false;
         }
         if (playerController.isFaceTarget && target == null)
         {

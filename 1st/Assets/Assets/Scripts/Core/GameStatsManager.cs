@@ -105,8 +105,6 @@ public class GameStatsManager : MonoBehaviour
     {
         totalKills++;
         totalKillsInGame++;
-        SaveGameStats();
-        SaveToCloud();
     }
 
     public void SpendGold(float amount)

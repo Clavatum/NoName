@@ -147,10 +147,12 @@ public class MenuScreenManager : MonoBehaviour
 
     private string FormatTime(float time)
     {
-        int minutes = Mathf.FloorToInt(time / 60);
+        int hours = Mathf.FloorToInt(time / 3600);
+        int minutes = Mathf.FloorToInt((time % 3600) / 60);
         int seconds = Mathf.FloorToInt(time % 60);
-        return string.Format("{0:00}:{1:00}", minutes, seconds);
+        return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
+
 
     private void OnDestroy()
     {

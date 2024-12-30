@@ -53,6 +53,10 @@ public class AudioManager : MonoBehaviour
         {
             StopBackgroundMusic();
         }
+        else
+        {
+            PlayBackgroundMusic();
+        }
     }
 
     public void PlayBackgroundMusic()
