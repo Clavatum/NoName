@@ -33,10 +33,9 @@ public class YouWinPanelMng : MonoBehaviour
         }
     }
 
-    private async void SaveGameDataBeforeYouWin()
+    private void SaveGameDataBeforeYouWin()
     {
         gameStatsManager.CompleteGame();
-        await CloudSaveManager.SaveToCloud(CloudSaveManager.CollectDataForSave());
         Debug.Log("Game data saved before 'You Win' screen.");
     }
 

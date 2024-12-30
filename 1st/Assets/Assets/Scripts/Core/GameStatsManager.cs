@@ -128,8 +128,6 @@ public class GameStatsManager : MonoBehaviour
     public void IncrementGamesWon()
     {
         gamesWon++;
-        SaveGameStats();
-        SaveToCloud();
     }
 
     public void SaveGameStats()
