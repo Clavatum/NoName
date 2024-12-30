@@ -97,6 +97,9 @@ public class CloudSaveManager : MonoBehaviour
 
         if (cloudData.TryGetValue("GamesPlayed", out var gamesPlayed))
             GameStatsManager.Instance.gamesPlayed = Convert.ToInt32(gamesPlayed);
+
+        if (cloudData.TryGetValue("GamesWon", out var gamesWon))
+            GameStatsManager.Instance.gamesWon = Convert.ToInt32(gamesWon);
     }
 
     public static Dictionary<string, object> CollectDataForSave()
@@ -109,7 +112,8 @@ public class CloudSaveManager : MonoBehaviour
             { "BestCompletionTime", GameStatsManager.Instance.bestCompletionTime },
             { "SoundVolume", PlayerPrefs.GetFloat("SoundVolume") },
             { "QualityLevel", PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel()) },
-            { "GamesPlayed", GameStatsManager.Instance.gamesPlayed }
+            { "GamesPlayed", GameStatsManager.Instance.gamesPlayed },
+            { "GamesWon", GameStatsManager.Instance.gamesWon }
         };
     }
 }
