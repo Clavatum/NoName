@@ -2061,6 +2061,7 @@ MonoBehaviour:
     type: 3}
   swordSwingSound: {fileID: 8300000, guid: 853444a5a2efd3447a4db7cc7110b157, type: 3}
   playerAttackSound: {fileID: 8300000, guid: a45b022f224ad774ebd6867bb61bc714, type: 3}
+  arrowSound: {fileID: 8300000, guid: b65c177592a2d564daede91f9704a4cc, type: 3}
   backgroundMusic: {fileID: 8300000, guid: 4676dcf222ab9114fa71451bac2ab517, type: 3}
   monsterSound: {fileID: 8300000, guid: f042ec482d34f94438f0124f4c3140a8, type: 3}
   musicSource: {fileID: 1320966938}

@@ -11,7 +11,7 @@ public class DamageTrigger : MonoBehaviour
     private PlayerCombat playerCombat;
     private EnemyAI enemyAI;
     private SoldierAI soldierAI;
-    [SerializeField] private bool isRanged = false;
+    public static bool isRanged = false;
 
 
     private void Start()

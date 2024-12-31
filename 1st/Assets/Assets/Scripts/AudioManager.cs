@@ -15,6 +15,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip swordSwingSound;
     public AudioClip playerAttackSound;
 
+    public AudioClip arrowSound;
+
     [Header("Background Music")]
     public AudioClip backgroundMusic;
 
@@ -22,6 +24,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource musicSource;
     public AudioSource effectsSource;
+
+    //public AudioSource archerAudioSource;
     private Scene currentScene;
 
     private void Awake()
@@ -81,6 +85,7 @@ public class AudioManager : MonoBehaviour
         if (clip != null && !effectsSource.isPlaying)
         {
             effectsSource.PlayOneShot(clip);
+            return;
         }
         else
         {
@@ -94,6 +99,8 @@ public class AudioManager : MonoBehaviour
     public void PlayGameWinSound() => PlaySoundEffect(gameWinSound);
     public void PlayWalkingFootStepSound() => PlaySoundEffect(walkingFootstepSound);
     public void PlayRunningFootstepSound() => PlaySoundEffect(runningFootstepSound);
+
+    //public void PlayArrowSound() => PlaySoundEffect(arrowSound);
     public void PlaySwordSwingSound() => PlaySoundEffect(swordSwingSound);
     public void PlayPlayerAttackSound() => PlaySoundEffect(playerAttackSound);
 }

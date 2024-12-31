@@ -15,12 +15,12 @@ public abstract class BaseAI : MonoBehaviour
     protected string verticalParam = "Vertical";
     protected string attackTrigger = "Attack";
 
-    public bool isAttacking; 
+    public bool isAttacking;
 
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
-        isAttacking = false; 
+        isAttacking = false;
     }
 
     protected virtual void Update()
@@ -63,13 +63,13 @@ public abstract class BaseAI : MonoBehaviour
         if (distanceToTarget > attackRange)
         {
             MoveTowardsTarget(target);
-            animator.SetFloat(verticalParam, 1f); 
+            animator.SetFloat(verticalParam, 1f);
         }
         else
         {
             LookAtTarget(target);
 
-            animator.SetFloat(verticalParam, 0f); 
+            animator.SetFloat(verticalParam, 0f);
             HandleAttack();
         }
 
@@ -99,12 +99,16 @@ public abstract class BaseAI : MonoBehaviour
 
     public void OnAttackStart()
     {
-        isAttacking = true; 
+        /*if (DamageTrigger.isRanged)
+        {
+            AudioManager.Instance.PlayArrowSound();
+        }*/
+        isAttacking = true;
     }
 
     public void OnAttackEnd()
     {
-        isAttacking = false; 
+        isAttacking = false;
     }
 
     public abstract void MoveTowardsTarget(Transform target);
