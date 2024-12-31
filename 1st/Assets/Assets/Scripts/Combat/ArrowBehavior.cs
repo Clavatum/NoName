@@ -3,6 +3,7 @@ using UnityEngine;
 public class ArrowBehavior : MonoBehaviour
 {
     [SerializeField] private AudioSource archerAudioSource;
+    [SerializeField] private AudioClip arrowSound;
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private Transform arrowSpawnPoint;
     [SerializeField] private float launchForce = 1000f;
@@ -33,7 +34,7 @@ public class ArrowBehavior : MonoBehaviour
 
     public void PlayArrowSound()
     {
-        archerAudioSource.Play();
+        archerAudioSource.PlayOneShot(arrowSound);
     }
 
     public void SetIsAttackingTrue()

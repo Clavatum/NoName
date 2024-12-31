@@ -656,6 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   archerAudioSource: {fileID: 7921430602130367881}
+  arrowSound: {fileID: 8300000, guid: b65c177592a2d564daede91f9704a4cc, type: 3}
   arrowPrefab: {fileID: 7606342212473484132, guid: ea1b3072cd137e64da53f5ab56619c34,
     type: 3}
   arrowSpawnPoint: {fileID: 4196109278957654455}
