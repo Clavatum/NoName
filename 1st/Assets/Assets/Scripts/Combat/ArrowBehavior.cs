@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class ArrowBehavior : MonoBehaviour
 {
-    [SerializeField] private GameObject arrowPrefab; 
-    [SerializeField] private Transform arrowSpawnPoint; 
-    [SerializeField] private float launchForce = 1000f; 
-    [SerializeField] private float noHitLifetime = 5f; 
+    [SerializeField] private AudioSource archerAudioSource;
+    [SerializeField] private AudioClip arrowSound;
+    [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private Transform arrowSpawnPoint;
+    [SerializeField] private float launchForce = 1000f;
+    [SerializeField] private float noHitLifetime = 5f;
 
     private SoldierAI soldierAI;
-    private GameObject currentArrow; 
+    private GameObject currentArrow;
 
     private void Start()
     {
@@ -28,6 +30,11 @@ public class ArrowBehavior : MonoBehaviour
 
         Destroy(currentArrow, noHitLifetime);
         Debug.Log("Arrow launched");
+    }
+
+    public void PlayArrowSound()
+    {
+        archerAudioSource.PlayOneShot(arrowSound);
     }
 
     public void SetIsAttackingTrue()

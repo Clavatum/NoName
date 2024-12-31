@@ -140,6 +140,10 @@ public class HealthSystem : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.value = currentHealth / maxHealth;
+            if (healthBar.value == 0)
+            {
+                healthBar.gameObject.transform.parent.gameObject.SetActive(false);
+            }
         }
     }
 

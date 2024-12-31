@@ -2055,14 +2055,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverSound: {fileID: 8300000, guid: 1cb3d0e88d248a94ea996005f9c26422, type: 3}
   gameWinSound: {fileID: 8300000, guid: dc13cba853cb7454eb9caf7e696da7a2, type: 3}
-  walkingFootstepSound: {fileID: 8300000, guid: 5c9bdbce37b06a24fa6ea793bcfd1907,
+  walkingFootstepSound: {fileID: 8300000, guid: 551d550ab98e3cc4bb7793e752fe8628,
     type: 3}
-  runningFootstepSound: {fileID: 8300000, guid: 062aac8f0463d7945a5a16732efbea51,
+  runningFootstepSound: {fileID: 8300000, guid: 1dfe79dddddf54c479404a9d669ff92e,
     type: 3}
-  swordSwingSound: {fileID: 8300000, guid: 90a2ae12307068e429ba93ba835a147f, type: 3}
-  playerAttackSound: {fileID: 8300000, guid: e57fa819dea87cb4cac504a45bca7198, type: 3}
-  updateTowerSound: {fileID: 0}
+  swordSwingSound: {fileID: 8300000, guid: 853444a5a2efd3447a4db7cc7110b157, type: 3}
+  playerAttackSound: {fileID: 8300000, guid: a45b022f224ad774ebd6867bb61bc714, type: 3}
+  arrowSound: {fileID: 8300000, guid: b65c177592a2d564daede91f9704a4cc, type: 3}
   backgroundMusic: {fileID: 8300000, guid: 4676dcf222ab9114fa71451bac2ab517, type: 3}
+  monsterSound: {fileID: 8300000, guid: f042ec482d34f94438f0124f4c3140a8, type: 3}
   musicSource: {fileID: 1320966938}
   effectsSource: {fileID: 1320966937}
 --- !u!82 &1320966937

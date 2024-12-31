@@ -43,13 +43,33 @@ public class PhaseManager : MonoBehaviour
 
     private List<GameObject> activeEnemies = new List<GameObject>();
     private bool phaseInProgress = false;
+
+    private int totalEnemyCount = 0;  // Total enemies across all phases
+    private int currentPhaseEnemyCount = 0; // Enemies in the current phase
+
     void Awake()
     {
         gameStatsManager = GameStatsManager.Instance;
     }
+
     private void Start()
     {
+        CalculateTotalEnemies();
         StartPhase();
+    }
+
+    private void CalculateTotalEnemies()
+    {
+        foreach (PhaseConfig phase in phases)
+        {
+            foreach (EnemySpawnConfig enemyConfig in phase.enemies)
+            {
+                foreach (PatrolRouteConfig routeConfig in enemyConfig.patrolRoutes)
+                {
+                    totalEnemyCount += routeConfig.spawnCount;
+                }
+            }
+        }
     }
 
     public void StartPhase()
@@ -58,16 +78,28 @@ public class PhaseManager : MonoBehaviour
         {
             phaseInProgress = true;
             phaseStartTime = Time.time;
+            currentPhaseEnemyCount = CalculatePhaseEnemyCount(phases[currentPhaseIndex]);
             StartCoroutine(SpawnPhaseEnemies(phases[currentPhaseIndex]));
-
             UpdatePhaseMessage($"Phase {currentPhaseIndex + 1} started", 3.0f);
+            AudioManager.Instance.PlayMonsterSound();
         }
         else
         {
-            gameStatsManager.IncrementGamesWon();
-            YouWinPanelMng.gameWon = true;
-            UpdatePhaseMessage("All phases completed! You win!", 3.0f);
+            HandleGameWin();
         }
+    }
+
+    private int CalculatePhaseEnemyCount(PhaseConfig phaseConfig)
+    {
+        int count = 0;
+        foreach (EnemySpawnConfig enemyConfig in phaseConfig.enemies)
+        {
+            foreach (PatrolRouteConfig routeConfig in enemyConfig.patrolRoutes)
+            {
+                count += routeConfig.spawnCount;
+            }
+        }
+        return count;
     }
 
     private IEnumerator SpawnPhaseEnemies(PhaseConfig phaseConfig)
@@ -98,33 +130,42 @@ public class PhaseManager : MonoBehaviour
                 }
             }
         }
-
-        yield return new WaitForSeconds(phaseInterval);
-
-        if (phaseInProgress)
-        {
-            CompletePhase();
-        }
     }
 
     private void HandleEnemyDeath(GameObject enemy)
     {
         activeEnemies.Remove(enemy);
+        currentPhaseEnemyCount--;
+        totalEnemyCount--;
 
-        if (activeEnemies.Count == 0 && phaseInProgress)
+        if (currentPhaseEnemyCount == 0 && phaseInProgress)
         {
             CompletePhase();
+        }
+
+        if (totalEnemyCount == 0)
+        {
+            HandleGameWin();
         }
     }
 
     private void CompletePhase()
     {
+        if (Time.time - phaseStartTime >= phaseInterval || currentPhaseEnemyCount == 0)
+        {
+            phaseInProgress = false;
+            UpdatePhaseMessage($"Phase {currentPhaseIndex + 1} completed", 3.0f);
+            currentPhaseIndex++;
+            StartPhase();
+        }
+    }
+
+    private void HandleGameWin()
+    {
         phaseInProgress = false;
-
-        UpdatePhaseMessage($"Phase {currentPhaseIndex + 1} completed", 3.0f);
-
-        currentPhaseIndex++;
-        StartPhase();
+        UpdatePhaseMessage("All enemies defeated! You win!", 3.0f);
+        gameStatsManager.IncrementGamesWon();
+        YouWinPanelMng.gameWon = true;
     }
 
     private void UpdatePhaseMessage(string message, float duration)
@@ -146,5 +187,3 @@ public class PhaseManager : MonoBehaviour
         }
     }
 }
-
-

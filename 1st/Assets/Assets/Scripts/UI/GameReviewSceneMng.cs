@@ -32,6 +32,7 @@ public class GameReviewSceneMng : MonoBehaviour
     void PlayAgain()
     {
         SceneManager.LoadScene("GameScene");
+        AudioManager.Instance.PlayBackgroundMusic();
     }
 
     void BackToMenu()

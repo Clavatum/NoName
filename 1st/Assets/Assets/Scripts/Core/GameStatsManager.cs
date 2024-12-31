@@ -105,8 +105,6 @@ public class GameStatsManager : MonoBehaviour
     {
         totalKills++;
         totalKillsInGame++;
-        SaveGameStats();
-        SaveToCloud();
     }
 
     public void SpendGold(float amount)
@@ -128,8 +126,6 @@ public class GameStatsManager : MonoBehaviour
     public void IncrementGamesWon()
     {
         gamesWon++;
-        SaveGameStats();
-        SaveToCloud();
     }
 
     public void SaveGameStats()

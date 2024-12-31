@@ -51,6 +51,11 @@ public class MenuScreenManager : MonoBehaviour
         qualityDropdown.onValueChanged.AddListener(SetQuality);
         PopulateQualityDropdown();
 
+        int savedQualityLevel = PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel());
+        QualitySettings.SetQualityLevel(savedQualityLevel);
+        qualityDropdown.value = savedQualityLevel;
+        qualityDropdown.RefreshShownValue();
+
         soundSlider.onValueChanged.AddListener(SetSoundVolume);
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");
         UpdateSoundValueText();
@@ -121,9 +126,10 @@ public class MenuScreenManager : MonoBehaviour
         qualityDropdown.ClearOptions();
 
         List<string> qualityNames = new List<string>(QualitySettings.names);
-
         qualityDropdown.AddOptions(qualityNames);
-        qualityDropdown.value = PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel());
+
+        int savedQualityLevel = PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel());
+        qualityDropdown.value = savedQualityLevel;
         qualityDropdown.RefreshShownValue();
     }
 
@@ -131,6 +137,7 @@ public class MenuScreenManager : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
+        PlayerPrefs.Save();
     }
 
     public void SetSoundVolume(float volume)
@@ -147,9 +154,10 @@ public class MenuScreenManager : MonoBehaviour
 
     private string FormatTime(float time)
     {
-        int minutes = Mathf.FloorToInt(time / 60);
+        int hours = Mathf.FloorToInt(time / 3600);
+        int minutes = Mathf.FloorToInt((time % 3600) / 60);
         int seconds = Mathf.FloorToInt(time % 60);
-        return string.Format("{0:00}:{1:00}", minutes, seconds);
+        return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
 
     private void OnDestroy()

@@ -11,7 +11,7 @@ public class DamageTrigger : MonoBehaviour
     private PlayerCombat playerCombat;
     private EnemyAI enemyAI;
     private SoldierAI soldierAI;
-    [SerializeField] private bool isRanged = false;
+    public static bool isRanged = false;
 
 
     private void Start()
@@ -94,7 +94,7 @@ public class DamageTrigger : MonoBehaviour
         HealthSystem health = other.GetComponent<HealthSystem>();
         if (health != null)
         {
-            if (character.tag == "Player") { AudioManager.Instance.PlaySwordSwingSound(); }
+            if (character.tag == "Player" || character.tag == "Soldier") { AudioManager.Instance.PlaySwordSwingSound(); }
             health.TakeDamage(damageAmount, character.tag);
             Debug.Log($"Damage applied to {other.name} by {character.name}.");
         }

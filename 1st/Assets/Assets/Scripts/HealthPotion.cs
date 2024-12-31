@@ -11,7 +11,7 @@ public class HealthPotion : MonoBehaviour
     [SerializeField] private Button openShopPanelButton;
     public GameObject shopPanel;
 
-    private bool isShopOpen = false;
+    public static bool isShopOpen = false;
     private GameStatsManager statsManager;
     [SerializeField] private HealthSystem playerHealth;
 

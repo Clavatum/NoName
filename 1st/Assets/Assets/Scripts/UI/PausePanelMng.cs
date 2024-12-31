@@ -33,7 +33,6 @@ public class PausePanelMng : MonoBehaviour
     private void Awake()
     {
         UIInputs = new UIInputActions();
-
         UIInputs.Actions.Pause.performed += e => SetPauseFlag();
         UIInputs.Enable();
     }
@@ -49,12 +48,16 @@ public class PausePanelMng : MonoBehaviour
         settingsPanel.SetActive(false);
         PopulateQualityDropdown();
 
+        int savedQualityLevel = PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel());
+        QualitySettings.SetQualityLevel(savedQualityLevel);
+        qualityDropdown.value = savedQualityLevel;
+        qualityDropdown.RefreshShownValue();
+
         soundSlider.onValueChanged.AddListener(SetSoundVolume);
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume", 0.6f);
         UpdateSoundValueText();
 
         countdownText.gameObject.SetActive(false);
-
         Time.timeScale = 1;
     }
 
@@ -147,7 +150,8 @@ public class PausePanelMng : MonoBehaviour
         List<string> qualityNames = new List<string>(QualitySettings.names);
         qualityDropdown.AddOptions(qualityNames);
 
-        qualityDropdown.value = PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel());
+        int currentQualityLevel = PlayerPrefs.GetInt("QualityLevel", QualitySettings.GetQualityLevel());
+        qualityDropdown.value = currentQualityLevel;
         qualityDropdown.RefreshShownValue();
     }
 
@@ -155,6 +159,7 @@ public class PausePanelMng : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("QualityLevel", qualityIndex);
+        PlayerPrefs.Save();
         settingsChanged = true;
     }
 

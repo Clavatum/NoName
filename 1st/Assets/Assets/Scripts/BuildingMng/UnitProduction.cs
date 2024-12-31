@@ -54,8 +54,8 @@ public class UnitProduction : MonoBehaviour
         {
             GameStatsManager.Instance.SpendGold(upgradeCost);
 
-            PlayerPrefs.SetFloat("TotalGold", GameStatsManager.Instance.totalGold);
-            PlayerPrefs.Save();
+            //PlayerPrefs.SetFloat("TotalGold", GameStatsManager.Instance.totalGold);
+            //PlayerPrefs.Save();
 
             UpdateBalanceUI();
             Vector3 roadPosition = GetNearestRoadPosition();
