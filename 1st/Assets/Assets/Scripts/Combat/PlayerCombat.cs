@@ -56,22 +56,24 @@ namespace Combat
 
         private void Slash()
         {
-            if(combatCoolDown == 0 && playerController.playerStance == PlayerStance.Slide)
+            if (combatCoolDown == 0 && playerController.playerStance == PlayerStance.Slide)
             {
                 StartAttacking();
                 playerAnimator.SetTrigger("SlideAttack");
+                AudioManager.Instance.PlayPlayerAttackSound();
                 combatCoolDown += bigAttackCd;
                 return;
             }
 
-            if (combatCoolDown == 0 && playerController.isRunning ) 
+            if (combatCoolDown == 0 && playerController.isRunning)
             {
                 StartAttacking();
                 playerAnimator.SetTrigger("RunningAttack");
+                AudioManager.Instance.PlayPlayerAttackSound();
                 combatCoolDown += bigAttackCd;
-                return; 
+                return;
             }
-            
+
             if (playerAnimator.GetCurrentAnimatorStateInfo(3).IsTag("Slash") && playerAnimator.GetCurrentAnimatorStateInfo(3).normalizedTime < 0.9f)
             {
                 return;
@@ -95,6 +97,7 @@ namespace Combat
                         combatCoolDown += crouchSlashCd;
                         crouchAttackType = Random.Range(1, 3);
                         playerAnimator.SetTrigger("CrouchAttackSlash" + crouchAttackType);
+                        AudioManager.Instance.PlayPlayerAttackSound();
                         return;
                     }
                 }
@@ -105,6 +108,7 @@ namespace Combat
                         playerAnimator.runtimeAnimatorController = slashCombo[slashComboCounter].animatorOV;
                         StartAttacking();
                         playerAnimator.Play("Slash", 3, 0);
+                        AudioManager.Instance.PlayPlayerAttackSound();
                         slashComboCounter++;
                         combatCoolDown += slashCd;
 
@@ -165,6 +169,7 @@ namespace Combat
                     playerAnimator.runtimeAnimatorController = kickCombo[kickComboCounter].animatorOV;
                     //StartAttacking();
                     playerAnimator.Play("Kick", 3, 0);
+                    AudioManager.Instance.PlayPlayerAttackSound();
                     kickComboCounter++;
                     combatCoolDown += slashCd;
 

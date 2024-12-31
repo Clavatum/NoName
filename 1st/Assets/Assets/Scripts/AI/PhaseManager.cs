@@ -81,6 +81,7 @@ public class PhaseManager : MonoBehaviour
             currentPhaseEnemyCount = CalculatePhaseEnemyCount(phases[currentPhaseIndex]);
             StartCoroutine(SpawnPhaseEnemies(phases[currentPhaseIndex]));
             UpdatePhaseMessage($"Phase {currentPhaseIndex + 1} started", 3.0f);
+            AudioManager.Instance.PlayMonsterSound();
         }
         else
         {

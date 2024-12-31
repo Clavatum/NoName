@@ -110,7 +110,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Euler(targetRotation);
         yGimbalRotation.x += (cameraSettings.InvertedY ? (viewInput.y * cameraSettings.SensitivityY) : -(viewInput.y * cameraSettings.SensitivityY) * Time.deltaTime);
 
-        if (playerController.isFaceTarget || isMapCamActive)
+        if (playerController.isFaceTarget || isMapCamActive || pausePanelMng.isPaused)
         {
             cameraSettings.SensitivityX = 0;
             cameraSettings.SensitivityY = 0;

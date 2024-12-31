@@ -39,7 +39,10 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float movementSpeedOffset = 1f;
     public float movementSmoothDamp = 0.25f;
-
+    private float walkingFootstepTimer;
+    private float runningFootstepTimer;
+    private float walkingFootstepInterval = 0.36f;
+    public float runningFootstepInterval = 0.1f;
     private float verticalSpeed;
     private float targetVerticalSpeed;
     private float verticalSpeedVelocity;
@@ -284,7 +287,6 @@ public class PlayerController : MonoBehaviour
 
             targetVerticalSpeed = playerSpeed;
             targetHorizontalSpeed = playerSpeed;
-
         }
 
         targetVerticalSpeed = (targetVerticalSpeed * movementSpeedOffset) * inputMovement.y;
@@ -318,6 +320,8 @@ public class PlayerController : MonoBehaviour
         {
             cameraRelativeForward = cameraController.transform.forward;
             cameraRelativeRight = cameraController.transform.right;
+
+            HandleFootstepSounds();
         }
 
         playerMovement = cameraRelativeForward * verticalSpeed;
@@ -330,14 +334,36 @@ public class PlayerController : MonoBehaviour
             if (Vector3.Dot(characterRb.velocity, playerMovement) < maxFallingMovementSpeed)
             {
                 characterRb.AddForce(playerMovement * (isWalking ? fallingMovementSpeed : fallingRunningMovementSpeed));
-
             }
         }
         else
         {
             characterAnimator.applyRootMotion = true;
         }
+    }
 
+    private void HandleFootstepSounds()
+    {
+        if (isWalking)
+        {
+            walkingFootstepTimer += Time.deltaTime;
+
+            if (walkingFootstepTimer >= walkingFootstepInterval)
+            {
+                AudioManager.Instance.PlayWalkingFootStepSound();
+                walkingFootstepTimer = 0f;
+            }
+        }
+        else if (isRunning)
+        {
+            runningFootstepTimer += Time.deltaTime;
+
+            if (runningFootstepTimer >= runningFootstepInterval)
+            {
+                AudioManager.Instance.PlayRunningFootstepSound();
+                runningFootstepTimer = 0f;
+            }
+        }
     }
 
     #endregion

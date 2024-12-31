@@ -15,11 +15,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip swordSwingSound;
     public AudioClip playerAttackSound;
 
-    [Header("Game Mechanic Sounds")]
-    public AudioClip updateTowerSound;
-
     [Header("Background Music")]
     public AudioClip backgroundMusic;
+
+    public AudioClip monsterSound;
 
     public AudioSource musicSource;
     public AudioSource effectsSource;
@@ -91,6 +90,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public void PlayGameOverSound() => PlaySoundEffect(gameOverSound);
+    public void PlayMonsterSound() => PlaySoundEffect(monsterSound);
     public void PlayGameWinSound() => PlaySoundEffect(gameWinSound);
     public void PlayWalkingFootStepSound() => PlaySoundEffect(walkingFootstepSound);
     public void PlayRunningFootstepSound() => PlaySoundEffect(runningFootstepSound);
