@@ -80,17 +80,6 @@ public class AudioManager : MonoBehaviour
     public void PlaySoundEffect(AudioClip clip)
     {
         effectsSource.PlayOneShot(clip);
-
-        /*if (clip != null && !effectsSource.isPlaying)
-        {
-            effectsSource.PlayOneShot(clip);
-            return;
-        }
-        else
-        {
-            Debug.LogWarning("Sound effect clip is not set or already playing!");
-        }*/
-        return;
     }
 
     public void PlayGameOverSound() => PlaySoundEffect(gameOverSound);

@@ -322,7 +322,7 @@ public class PlayerController : MonoBehaviour
             cameraRelativeRight = cameraController.transform.right;
 
         }
-        if ((verticalSpeed > 0.1f || horizontalSpeed > 0.1f) && isGrounded && !isSliding && !playerCombat.isAttacking)
+        if ((verticalSpeed > 0.1f || horizontalSpeed > 0.1f) && isGrounded && !isSliding && !playerCombat.isAttacking && !PlayerCombat.isBlocking)
         {
             HandleFootstepSounds();
         }
