@@ -897,7 +897,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 342}
-  m_SizeDelta: {x: 600, y: 60}
+  m_SizeDelta: {x: 708.32, y: 117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401891901
 MonoBehaviour:
@@ -921,16 +921,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 127684941b83a0044b0e0f7566821e6c, type: 2}
-  m_sharedMaterial: {fileID: -9214744406811752702, guid: 127684941b83a0044b0e0f7566821e6c,
+  m_fontAsset: {fileID: 11400000, guid: 18f975cb8ebac7747b7e67cb0b8b6e2b, type: 2}
+  m_sharedMaterial: {fileID: 7724314052402340548, guid: 18f975cb8ebac7747b7e67cb0b8b6e2b,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286611584
-  m_fontColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2061,7 +2061,7 @@ MonoBehaviour:
     type: 3}
   swordSwingSound: {fileID: 8300000, guid: 853444a5a2efd3447a4db7cc7110b157, type: 3}
   playerAttackSound: {fileID: 8300000, guid: a45b022f224ad774ebd6867bb61bc714, type: 3}
-  arrowSound: {fileID: 8300000, guid: b65c177592a2d564daede91f9704a4cc, type: 3}
+  femaleImpactSound: {fileID: 8300000, guid: 5be94f341b12f614d92ff863a1da0416, type: 3}
   backgroundMusic: {fileID: 8300000, guid: 4676dcf222ab9114fa71451bac2ab517, type: 3}
   monsterSound: {fileID: 8300000, guid: f042ec482d34f94438f0124f4c3140a8, type: 3}
   musicSource: {fileID: 1320966938}

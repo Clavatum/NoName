@@ -41,8 +41,8 @@ public class PlayerController : MonoBehaviour
     public float movementSmoothDamp = 0.25f;
     private float walkingFootstepTimer;
     private float runningFootstepTimer;
-    private float walkingFootstepInterval = 0.36f;
-    public float runningFootstepInterval = 0.1f;
+    private float walkingFootstepInterval = 0.7f;
+    private float runningFootstepInterval = 0.25f;
     private float verticalSpeed;
     private float targetVerticalSpeed;
     private float verticalSpeedVelocity;
@@ -321,6 +321,9 @@ public class PlayerController : MonoBehaviour
             cameraRelativeForward = cameraController.transform.forward;
             cameraRelativeRight = cameraController.transform.right;
 
+        }
+        if ((verticalSpeed > 0.1f || horizontalSpeed > 0.1f) && isGrounded && !isSliding && !playerCombat.isAttacking && !PlayerCombat.isBlocking)
+        {
             HandleFootstepSounds();
         }
 

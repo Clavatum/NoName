@@ -15,6 +15,7 @@ public class LeaderboardAndChatManager : MonoBehaviour
     [SerializeField] private TMP_Text chatDisplay;
     [SerializeField] private TMP_InputField chatInput;
     [SerializeField] private Button sendButton;
+    [SerializeField] private Button clearChatButton;
     [SerializeField] private Button closeChatPanelButton;
 
     private string currentChatKey = "";
@@ -26,6 +27,7 @@ public class LeaderboardAndChatManager : MonoBehaviour
 
         sendButton.onClick.AddListener(SendMessage);
         closeChatPanelButton.onClick.AddListener(CloseChat);
+        clearChatButton.onClick.AddListener(ClearChatHistory);
     }
 
     private void InitializeLeaderboard()
@@ -85,6 +87,22 @@ public class LeaderboardAndChatManager : MonoBehaviour
     {
         return PlayerPrefs.GetString(key, "");
     }
+
+    private void ClearChatHistory()
+    {
+        if (string.IsNullOrEmpty(currentChatKey))
+        {
+            Debug.LogWarning("No chat selected to clear.");
+            return;
+        }
+
+        PlayerPrefs.DeleteKey(currentChatKey);
+        PlayerPrefs.Save();
+
+        chatDisplay.text = "";
+        Debug.Log($"Cleared chat history for {currentChatKey}");
+    }
+
 }
 
 [System.Serializable]

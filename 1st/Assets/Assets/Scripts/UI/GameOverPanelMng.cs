@@ -19,6 +19,8 @@ public class GameOverPanelMng : MonoBehaviour
 
     public HealthPotion healthPotion;
 
+    public AudioSource inGameBackgroundMusic;
+
     void Awake()
     {
         gameOverPanel.SetActive(false);
@@ -52,6 +54,7 @@ public class GameOverPanelMng : MonoBehaviour
         Time.timeScale = 1f;
         isGameOver = false;
         SceneManager.LoadScene("GameScene");
+        AudioManager.Instance.PlayMonsterSound();
         escapeCounterText.gameObject.SetActive(true);
         PatrolEndTrigger.escapedEnemiesCount = 0;
     }
@@ -65,6 +68,7 @@ public class GameOverPanelMng : MonoBehaviour
 
     async void ShowGameOverPanel()
     {
+        inGameBackgroundMusic.Stop();
         await Task.Delay(400);
         AudioManager.Instance.PlayGameOverSound();
         gameOverPanel.SetActive(true);
