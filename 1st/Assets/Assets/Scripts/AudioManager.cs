@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip runningFootstepSound;
     public AudioClip swordSwingSound;
     public AudioClip playerAttackSound;
+    public AudioClip femaleImpactSound;
 
     [Header("Background Music")]
     public AudioClip backgroundMusic;
@@ -78,7 +79,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundEffect(AudioClip clip)
     {
-        if (clip != null && !effectsSource.isPlaying)
+        effectsSource.PlayOneShot(clip);
+
+        /*if (clip != null && !effectsSource.isPlaying)
         {
             effectsSource.PlayOneShot(clip);
             return;
@@ -86,11 +89,12 @@ public class AudioManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Sound effect clip is not set or already playing!");
-        }
+        }*/
         return;
     }
 
     public void PlayGameOverSound() => PlaySoundEffect(gameOverSound);
+    public void PlayFemaleImpactSound() => PlaySoundEffect(femaleImpactSound);
     public void PlayMonsterSound() => PlaySoundEffect(monsterSound);
     public void PlayGameWinSound() => PlaySoundEffect(gameWinSound);
     public void PlayWalkingFootStepSound() => PlaySoundEffect(walkingFootstepSound);

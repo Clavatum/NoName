@@ -926,11 +926,11 @@ MonoBehaviour:
     type: 3}
   players:
   - playerName: Anna
-    killScore: 76
+    killScore: 715
   - playerName: David
-    killScore: 63
+    killScore: 632
   - playerName: Lucy
-    killScore: 51
+    killScore: 596
   chatPanel: {fileID: 1341408570}
   chatDisplay: {fileID: 1314736721}
   chatInput: {fileID: 1808285945}
@@ -5211,7 +5211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -47, y: -30}
+  m_AnchoredPosition: {x: -78, y: -59}
   m_SizeDelta: {x: 67.4584, y: 43.5293}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &850031097
@@ -5258,6 +5258,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 190162873}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -6526,7 +6538,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1252806434}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.96452916
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7762,7 +7774,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.96452916}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9750,7 +9762,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1689118889}
   m_HandleRect: {fileID: 1689118888}
   m_Direction: 0
-  m_Value: 0.9733217
+  m_Value: 0.9733214
   m_Size: 0.88455945
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -40,6 +40,7 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage, string attackerTag)
     {
+        if (gameObject.tag == "Player") { AudioManager.Instance.PlayFemaleImpactSound(); }
         if (attackerTag == gameObject.tag ||
         (attackerTag == "Player" && gameObject.tag == "Soldier") ||
         (attackerTag == "Soldier" && gameObject.tag == "Player") ||
